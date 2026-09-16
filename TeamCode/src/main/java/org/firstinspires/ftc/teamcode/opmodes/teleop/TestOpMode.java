@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.teleop;
+package org.firstinspires.ftc.teamcode.opmodes.teleop;
 
 
 import dev.nextftc.robot.opmode.BulkReadHook;
