@@ -24,6 +24,26 @@ android {
     }
 }
 
+//added 9/15/26 //JS
+repositories {
+
+    //NEXT FTC Hardware and control modules
+    //https://nextftc.dev/introduction/installation/
+    maven {
+        url 'https://repo.dairy.foundation/releases'
+    }
+}
+
 dependencies {
     implementation project(':FtcRobotController')
+
+    /**
+     * NEXT FTC
+     */
+    implementation 'dev.nextftc.v2:control:0.2.0'//added 9/15/26 //JS
+    implementation 'dev.nextftc.v2:hardware:0.2.0'//added 9/15/26 //JS
+    implementation 'dev.nextftc.v2:robot:0.2.0'//added 9/15/26 //JS
+
+
+
 }
