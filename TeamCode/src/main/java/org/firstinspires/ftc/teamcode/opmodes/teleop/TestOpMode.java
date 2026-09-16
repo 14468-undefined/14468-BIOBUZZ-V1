@@ -1,44 +1,69 @@
 package org.firstinspires.ftc.teamcode.opmodes.teleop;
 
-
+import com.pedropathing.follower.Follower;
+import com.pedropathing.ivy.Command;
+import com.pedropathing.math.Pose;
 import dev.nextftc.robot.opmode.BulkReadHook;
-import dev.nextftc.robot.opmode.NextOpMode;
 import dev.nextftc.robot.opmode.NextTeleop;
+import dev.nextftc.robot.opmode.NextOpMode;
 import dev.nextftc.robot.triggers.CommandGamepad;
+import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.subsystem.BaseRobot;
 
-@NextTeleop(name = "TeleOp")//@NextAutonomous(name, group, preselectTeleop)
+import static com.pedropathing.ivy.commands.Commands.*;
+
+@NextTeleop(name = "TeleOp")
 public class TestOpMode extends NextOpMode {
 
-    CommandGamepad driver1 = new CommandGamepad(gamepad1);
-    CommandGamepad driver2 = new CommandGamepad(gamepad2);
+    private final BaseRobot robot;
+    private final Follower follower;
+
+    private final CommandGamepad driver1 = new CommandGamepad(gamepad1);
+    private final CommandGamepad driver2 = new CommandGamepad(gamepad2);
 
     public TestOpMode(BaseRobot robot) {
         super(robot, BulkReadHook.INSTANCE);
+        this.robot = robot;
 
+        // Constructor = old init(). Runs once, on INIT press.
+        follower = Constants.create(hardwareMap);
 
+        // Bindings can live here or in start() — constructor is fine.
+        driver1.rightBumper().whileTrue(robot.intake.intake());
+        driver1.leftBumper().whileTrue(robot.intake.intakeReverse());
+        // whileTrue -> runs while held, auto-cancels (and your default
+        // command, if you add one, resumes) on release.
 
+        driver1.a().onTrue(robot.intake.stop());   // example - swap in real methods
+        driver1.b().onTrue(robot.intake.intake());
+
+        driver1.start().onTrue(relocalize());
     }
 
-    @Override //ON INIT - Repeatedly
-    public void disabledPeriodic(){
-
-    }
-    @Override //ONCE - right after start button
-    public void start(){
-
-        //driver1.a().onTrue(());
-
+    private Command relocalize() {
+        return instant(() -> {
+            Pose cornerPose = new Pose(10.5, 10.5, Math.toRadians(90));
+            follower.setPose(cornerPose);
+        });
     }
 
-    @Override //REPEATEDLY - while OpMode running
+    @Override
+    public void start() {
+        // pass pose from auto to teleop here
+        // follower.setPose(pose);
+    }
+
+    @Override
     public void periodic() {
+        double forward = -gamepad1.left_stick_y;
+        double lateral = gamepad1.left_stick_x;
+        double turn = gamepad1.right_stick_x;
+        follower.manual(forward, lateral, turn);
+        follower.update();
 
-
-    }
-
-    @Override //ONCE - when OpMode ends
-    public void end(){
-
+        Pose robotPose = follower.pose();
+        telemetry.addData("Robot X", robotPose.x());
+        telemetry.addData("Robot Y", robotPose.y());
+        telemetry.addData("Robot Heading", Math.toDegrees(robotPose.heading()));
     }
 }

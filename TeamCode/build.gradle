@@ -45,5 +45,10 @@ dependencies {
     implementation 'dev.nextftc.v2:robot:0.2.0'//added 9/15/26 //JS
 
 
+    /**
+     * pedro - added 9/16/26
+     */
+    implementation 'com.pedropathing.ivy:pedro:1.1.1'
+
 
 }
