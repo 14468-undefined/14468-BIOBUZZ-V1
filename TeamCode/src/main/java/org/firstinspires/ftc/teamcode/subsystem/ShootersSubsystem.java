@@ -37,8 +37,9 @@ public class ShootersSubsystem implements Mechanism {
     }
 
     //TODO
-    //add PID and distance getter method to determine RPM
+    //add PIDF and distance getter method to determine RPM
     //LUT as well - maybe make it in its own class
+
 
 
 
