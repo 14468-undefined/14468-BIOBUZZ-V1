@@ -1,17 +1,24 @@
 package org.firstinspires.ftc.teamcode.subsystem;
 
+import com.pedropathing.ivy.Command;
 import com.pedropathing.math.Pose;
-import dev.nextftc.hardware.actuators.NextServo;
+import dev.nextftc.hardware.actuators.NextCRServo;
+import dev.nextftc.hardware.actuators.NextFeedbackCRServo;
+
+import dev.nextftc.hardware.sensors.NextAnalogInput;
+import dev.nextftc.hardware.util.AnalogFeedback;
 import dev.nextftc.robot.Mechanism;
 
 import java.util.function.Supplier;
 
 public class TurretsSubsystem implements Mechanism {
 
-    private final NextServo pollenTurret1 = new NextServo("pollenTurret1");
-    private final NextServo pollenTurret2 = new NextServo("pollenTurret2");
-    private final NextServo nectarTurret1 = new NextServo("nectarTurret1");
-    private final NextServo nectarTurret2 = new NextServo("nectarTurret2");
+    //TODO - fix this for actual feedback servo initialization - see nextFTC stuff
+    //can also do this by port but configuration name makes most sense imo
+    private final NextFeedbackCRServo pollenTurret1 = new NextFeedbackCRServo("pollenTurret1", new NextAnalogInput("pollenTurret"));
+    private final NextCRServo pollenTurret2 = new NextCRServo("pollenTurret2");
+    private final NextFeedbackCRServo nectarTurret1 = new NextFeedbackCRServo("nectarTurret1", new NextAnalogInput("nectarTurret"));
+    private final NextCRServo nectarTurret2 = new NextCRServo("nectarTurret2");
 
 
     //GOAL COORDINATES
@@ -138,6 +145,13 @@ public class TurretsSubsystem implements Mechanism {
      * --------------------------------------------------------------------------------------------------------------------------------
      * --------------------------------------------------------------------------------------------------------------------------------
      * --------------------------------------------------------------------------------------------------------------------------------
+     */
+
+    /*
+    need the following:
+    - set power command
+    - PID for the power using the analog input
+    - stop method
      */
 
 
