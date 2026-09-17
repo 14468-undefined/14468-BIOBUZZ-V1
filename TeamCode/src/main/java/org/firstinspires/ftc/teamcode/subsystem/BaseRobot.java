@@ -34,4 +34,6 @@ public class BaseRobot implements NextRobot {
 
         );
     }
+
+    //TODO - put pose and field logic in here so that i can get distance in hood and shooter and turret class without recoding it all
 }
