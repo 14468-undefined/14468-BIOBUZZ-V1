@@ -3,11 +3,15 @@ package org.firstinspires.ftc.teamcode.subsystem;
 
 import dev.nextftc.robot.NextRobot;
 import dev.nextftc.robot.Mechanism;
+import org.firstinspires.ftc.teamcode.util.FieldState;
 
 
 import java.util.Set;
 
 public class BaseRobot implements NextRobot {
+
+
+    public final FieldState fieldState = new FieldState();
 
     public final BrakesSubsystem brakes = new BrakesSubsystem();
     public final FlowerScorerSubsystem flowerScorer = new FlowerScorerSubsystem();
@@ -16,8 +20,8 @@ public class BaseRobot implements NextRobot {
     public final LimelightSubsystem limelight = new LimelightSubsystem();
     public final SensorsSubsystem sensors = new SensorsSubsystem();
 
-    public final ShootersSubsystem shooters = new ShootersSubsystem();
-    public final TurretsSubsystem turrets = new TurretsSubsystem();
+    public final ShootersSubsystem shooters = new ShootersSubsystem(fieldState);
+    public final TurretsSubsystem turrets = new TurretsSubsystem(fieldState);
 
 
     @Override

@@ -6,7 +6,10 @@ import dev.nextftc.robot.Mechanism;
 
 public class LimelightSubsystem implements Mechanism {
 
+
+    //TODO: just get whether or not can see april tag for whether goal is up or down
     private final NextLimelight limelight = new NextLimelight("limelight");
+
 
     private static final int DEFAULT_PIPELINE = 0;
     private static final int POLL_RATE_HZ = 100;
