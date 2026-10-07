@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.subsystem.BaseRobot;
 
 import static com.pedropathing.ivy.commands.Commands.*;
 
-@NextTeleop(name = "TeleOp")
+@NextTeleop(name = "Test TeleOp")
 public class TestOpMode extends NextOpMode {
 
     private final BaseRobot robot;
@@ -36,10 +36,10 @@ public class TestOpMode extends NextOpMode {
         driver1.a().onTrue(robot.intake.stop());
         driver1.b().onTrue(robot.intake.intake());
 
-        driver1.x().whileTrue(robot.shooters.spinNectar());
+        driver1.x().whileTrue(robot.shooters.spinNectar(2000));
         driver1.x().whileFalse(robot.shooters.stopNectar());
 
-        driver1.b().onTrue(robot.shooters.spinPollen());
+        driver1.b().onTrue(robot.shooters.spinPollen(2000));
         driver1.b().whileFalse(robot.shooters.stopPollen());
 
 
