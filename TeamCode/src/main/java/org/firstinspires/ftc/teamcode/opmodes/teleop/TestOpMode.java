@@ -28,14 +28,21 @@ public class TestOpMode extends NextOpMode {
         // Constructor = old init(). Runs once, on INIT press.
         follower = Constants.create(hardwareMap);
 
-        // Bindings can live here or in start() — constructor is fine.
         driver1.rightBumper().whileTrue(robot.intake.intake());
         driver1.leftBumper().whileTrue(robot.intake.intakeReverse());
         // whileTrue -> runs while held, auto-cancels (and your default
         // command, if you add one, resumes) on release.
 
-        driver1.a().onTrue(robot.intake.stop());   // example - swap in real methods
+        driver1.a().onTrue(robot.intake.stop());
         driver1.b().onTrue(robot.intake.intake());
+
+        driver1.x().whileTrue(robot.shooters.spinNectar());
+        driver1.x().whileFalse(robot.shooters.stopNectar());
+
+        driver1.b().onTrue(robot.shooters.spinPollen());
+        driver1.b().whileFalse(robot.shooters.stopPollen());
+
+
 
         driver1.start().onTrue(relocalize());
     }

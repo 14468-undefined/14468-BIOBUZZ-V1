@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystem;
 
+import com.pedropathing.ivy.Command;
 import dev.nextftc.hardware.actuators.NextMotor;
 import dev.nextftc.robot.Mechanism;
 import org.firstinspires.ftc.teamcode.util.Constants;
@@ -39,6 +40,20 @@ public class ShootersSubsystem implements Mechanism {
     //TODO
     //add PIDF and distance getter method to determine RPM
     //LUT as well - maybe make it in its own class
+
+    public Command spinNectar() {
+        return instant(() -> nectarShooter.setThrottle(.5));
+    }
+    public Command spinPollen() {
+        return instant(() -> pollenShooter.setThrottle(.5));
+    }
+
+    public Command stopPollen(){
+        return instant(() -> pollenShooter.setThrottle(0));
+    }
+    public Command stopNectar(){
+        return instant(() -> nectarShooter.setThrottle(0));
+    }
 
 
 
