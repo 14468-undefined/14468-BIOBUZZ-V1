@@ -13,10 +13,10 @@ import static org.firstinspires.ftc.teamcode.util.Constants.TurretConstants.NECT
 
 public class TurretsSubsystem implements Mechanism {
 
-    private final NextFeedbackCRServo pollenTurret1 = new NextFeedbackCRServo("pollenTurret1", new NextAnalogInput("pollenTurret"));
-    private final NextCRServo pollenTurret2 = new NextCRServo("pollenTurret2");
-    private final NextFeedbackCRServo nectarTurret1 = new NextFeedbackCRServo("nectarTurret1", new NextAnalogInput("nectarTurret"));
-    private final NextCRServo nectarTurret2 = new NextCRServo("nectarTurret2");
+    private final NextFeedbackCRServo pollenTurret1 = new NextFeedbackCRServo("pollen_turret1", new NextAnalogInput("pollenTurret"));
+    private final NextCRServo pollenTurret2 = new NextCRServo("pollen_turret2");
+    private final NextFeedbackCRServo nectarTurret1 = new NextFeedbackCRServo("nectar_turret1", new NextAnalogInput("nectarTurret"));
+    private final NextCRServo nectarTurret2 = new NextCRServo("nectar_turret2");
 
     private final PIDController pollenPID = new PIDController(new PIDCoefficients(Constants.TurretConstants.POLLEN_KP, Constants.TurretConstants.POLLEN_KI, Constants.TurretConstants.POLLEN_KD));
     private final PIDController nectarPID = new PIDController(new PIDCoefficients(Constants.TurretConstants.NECTAR_KP, Constants.TurretConstants.NECTAR_KI, Constants.TurretConstants.NECTAR_KD));

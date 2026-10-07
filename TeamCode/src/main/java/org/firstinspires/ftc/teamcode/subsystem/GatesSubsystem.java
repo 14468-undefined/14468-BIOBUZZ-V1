@@ -5,8 +5,8 @@ import dev.nextftc.robot.Mechanism;
 
 public class GatesSubsystem implements Mechanism {
 
-    private final NextServo nectarGate = new NextServo("nectarGate");
-    private final NextServo pollenGate = new NextServo("pollenGate");
+    //private final NextServo nectarGate = new NextServo("nectarGate");
+    //private final NextServo pollenGate = new NextServo("pollenGate");
 
     @Override
     public void periodic() {

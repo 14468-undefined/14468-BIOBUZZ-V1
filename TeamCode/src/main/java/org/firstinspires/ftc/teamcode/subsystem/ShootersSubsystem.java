@@ -7,8 +7,8 @@ import org.firstinspires.ftc.teamcode.util.FieldState;
 
 public class ShootersSubsystem implements Mechanism {
 
-    private final NextMotor nectarShooter = new NextMotor("nectarShooter");
-    private final NextMotor pollenShooter = new NextMotor("pollenShooter");
+    private final NextMotor nectarShooter = new NextMotor("nectar_shooter");
+    private final NextMotor pollenShooter = new NextMotor("pollen_shooter");
 
 
     private final FieldState fieldState;

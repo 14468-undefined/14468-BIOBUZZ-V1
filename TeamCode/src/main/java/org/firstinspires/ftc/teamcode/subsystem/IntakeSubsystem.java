@@ -6,7 +6,7 @@ import dev.nextftc.robot.Mechanism;
 
 
 public class IntakeSubsystem implements Mechanism {
-    private final NextMotor motor = new NextMotor("intakeMotor");
+    private final NextMotor motor = new NextMotor("intake");
 
     @Override
     public void periodic() {

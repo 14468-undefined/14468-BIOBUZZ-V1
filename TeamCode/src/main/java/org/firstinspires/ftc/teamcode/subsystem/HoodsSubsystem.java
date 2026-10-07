@@ -5,8 +5,8 @@ import dev.nextftc.robot.Mechanism;
 
 public class HoodsSubsystem implements Mechanism {
 
-    private final NextServo nectarHood = new NextServo("nectarHood");
-    private final NextServo pollenHood = new NextServo("pollenHood");
+    private final NextServo nectarHood = new NextServo("nectar_hood");
+    private final NextServo pollenHood = new NextServo("pollen_hood");
 
 
     //TODO:
