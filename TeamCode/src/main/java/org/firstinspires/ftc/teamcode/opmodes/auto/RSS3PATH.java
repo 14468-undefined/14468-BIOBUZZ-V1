@@ -16,8 +16,8 @@ import com.pedropathing.ivy.Command;
 import com.pedropathing.ivy.Scheduler;
 import static com.pedropathing.ivy.Scheduler.schedule;
 import static com.pedropathing.ivy.pedro.PedroCommands.*; // needs com.pedropathing.ivy:pedro:1.1.1
-@NextAutonomous(name = "RSS3PATH")
-public class RSS3PATH extends NextOpMode {
+
+public class RSS3PATH {
 
     private final PoseFactory poseFactory = PoseFactory.degrees();
 

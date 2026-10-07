@@ -16,8 +16,8 @@ import com.pedropathing.ivy.Command;
 import com.pedropathing.ivy.Scheduler;
 import static com.pedropathing.ivy.Scheduler.schedule;
 import static com.pedropathing.ivy.pedro.PedroCommands.*; // needs com.pedropathing.ivy:pedro:1.1.1
-@NextAutonomous(name = "BA3PATH")
-public class BA3PATH extends NextOpMode{
+
+public class BA3PATH {
 
     private final PoseFactory poseFactory = PoseFactory.degrees();
 
@@ -73,42 +73,3 @@ public class BA3PATH extends NextOpMode{
     }
 }
 
-
-Pedro Pathing Visualizer
-/
-        14468-BLUE-AUDIENCE-2.pp *
-        15.0s / 21.0s
-        (387 in)
-
-
-
-
-
-
-
-
-Multiple Paths
-
-
-
-
-File
-v1.5.0
-        ‹
-Export name
-
-14468-BLUE-AUDIENCE-2.pp
-Path List
-Group
-        Ungroup
-9 paths
-
-        Field
-Click a line or point to select it
-+ Add Path
-+ Control Point
-- Control Point
-Create Path to Last Point
-
-
-Field · 141.5" x 141.5"

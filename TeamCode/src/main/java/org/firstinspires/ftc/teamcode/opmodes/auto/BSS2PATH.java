@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.opmodes.auto;
 
 import dev.nextftc.robot.opmode.BulkReadHook;
 import dev.nextftc.robot.opmode.NextAutonomous;
-import dev.nextftc.robot.opmode.N5extOpMode;
+import dev.nextftc.robot.opmode.NextOpMode;
 import org.firstinspires.ftc.teamcode.subsystem.BaseRobot;
 
 import com.pedropathing.follower.Follower;
@@ -17,7 +17,7 @@ import com.pedropathing.ivy.Scheduler;
 import static com.pedropathing.ivy.Scheduler.schedule;
 import static com.pedropathing.ivy.pedro.PedroCommands.*; // needs com.pedropathing.ivy:pedro:1.1.1
 @NextAutonomous(name = "BSS2PATH")
-public class BSS2PATH extends NextOpMode {
+public class BSS2PATH{
 
     private final PoseFactory poseFactory = PoseFactory.degrees();
 
