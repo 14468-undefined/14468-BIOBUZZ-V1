@@ -16,6 +16,9 @@ public class IntakeSubsystem implements Mechanism {
         return instant(() -> motor.setThrottle(1.0));
     }
 
+    public Command setIntakePower(double value) {return instant(() -> motor.setThrottle(value));}
+
+
     public Command intakeReverse() {
         return instant(() -> motor.setThrottle(-1.0));
     }
