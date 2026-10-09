@@ -28,13 +28,17 @@ public class Meet1Teleop extends NextOpMode {
         // Constructor = old init(). Runs once, on INIT press.
         follower = Constants.create(hardwareMap);
 
-        driver1.rightBumper().whileTrue(robot.intake.intake());
-        driver1.leftBumper().whileTrue(robot.intake.intakeReverse());
+        driver1.b().onTrue(robot.intake.intake());
+        driver1.b().onFalse(robot.intake.stop());
+
+        driver1.a().onTrue(robot.intake.intakeReverse());
+        driver1.a().onFalse(robot.intake.stop());
+
         // whileTrue -> runs while held, auto-cancels (and your default
         // command, if you add one, resumes) on release.
 
-        driver1.a().onTrue(robot.shooters.toggleSpin(3000));//spins both shooters at 3k rpm
-        driver1.a().onTrue(robot.shooters.toggleAutoSpin());//makes the shooters spin using odometry position and LUT
+        driver1.y().onTrue(robot.shooters.toggleSpin(3000));//spins both shooters at 3k rpm
+        driver1.a().onTrue(robot.shooters.toggleSpin(6000));//makes the shooters spin using odometry position and LUT
 
 
 
