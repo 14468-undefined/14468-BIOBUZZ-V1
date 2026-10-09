@@ -1,0 +1,150 @@
+[33m2e88ad2[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m deleted field centric
+[33ma95d842[m Added Field Centric Tele Opmode
+[33m668c512[m shooter updates
+[33ma86d881[m added shooters to test
+[33mc8b9564[m changed naming in congi
+[33m1daa2fb[m added localizer
+[33ma5dab1b[m fixed broken autos
+[33m6dd96d1[m Added Pedropathing Auto Paths
+[33m2ae3390[m Made ServoTester OpMode
+[33m18a295c[m turret updates
+[33m7c9c426[m field state in 1 class and turret updates
+[33mc1f2fcc[m todo
+[33m4dff5bd[m more turret updates
+[33mfbc6731[m turret odo aim
+[33m6cdfe29[m added sample auto and teleop
+[33mc182bd7[m test op mode
+[33mc1ae59e[m added all subsystems
+[33m4e8e37d[m initial commit
+[33mb431238[m Merge remote-tracking branch 'origin/master'
+[33mb95e5d0[m Thread sleep to Pinpoint, Tests, and Foresight
+[33m0b8d2a4[m add Thread waits to Foresight tuners
+[33m3738d5b[m make odo test abort
+[33m5382641[m Merge branch 'master' of https://github.com/Pedro-Pathing/Quickstart
+[33m0e3556e[m automated odometry test
+[33m07eef83[m Merge pull request #103 from KBjona/master
+[33m94955ed[m Fixed abs values missing for velocity and pos and added minimum distance for correct reuslts
+[33mbb27610[m Pedro Pathing 3.0
+[33m20796c6[m Merge remote-tracking branch 'origin/pedro3'
+[33mf96afa6[m Pedro Pathing 3.0.0
+[33m54cd4c2[m Merge pull request #100
+[33md261cde[m different options for tuners based on what you have tuned
+[33m07122b9[m Fixed the 3 wheel and 2 wheel tuners
+[33m20768b3[m different options for tuners based on what you have tuned
+[33m4c5c5d4[m reset position on pinpoint before offsets
+[33m68f8e7a[m reset position on pinpoint before offsets
+[33md34e75d[m reset position on pinpoint before offsets
+[33m9cca9e4[m telemetry heading during offset tuners
+[33ma47bc20[m Add counterclockwise rotation to offset's instructions
+[33m3375542[m fix title of pinpoint offsets
+[33mbb022e6[m pinpoint custom scalar
+[33mbc2bb7a[m pinpoint custom scalar
+[33m1aa7384[m patch octoquad tuner somehow ig
+[33m6b9e1c2[m patch pinpoint tuner
+[33m38e2a43[m Merge branch 'pedro3' of https://github.com/Pedro-Pathing/Quickstart into pedro3
+[33m71578c5[m patch every single tuner
+[33m130eb00[m fix octoquad offsets
+[33m1995eac[m patch OctoquadTuner
+[33ma1a53a3[m fix octoquad config output
+[33m5aa67d8[m capitalize OctoQuad and say to the left instead of side for strafe
+[33mcc9c525[m patch OctoquadTuner
+[33ma171bf0[m Merge branch 'pedro3' of https://github.com/Pedro-Pathing/Quickstart into pedro3
+[33m2a3aedf[m patch natural decel tuners to use coast not brake
+[33mef374a7[m DcMotor direction should be REVERSE not REVERSED
+[33mefa5c5a[m patch imu config
+[33mcc47e22[m Merge branch 'pedro3' of https://github.com/Pedro-Pathing/Quickstart into pedro3
+[33m7302994[m patch foresight tuner
+[33m0f86188[m hmm
+[33me2e1156[m OTOS tuner fixed
+[33m55c366f[m remove swerve + fusion and fix output java config names
+[33m431d1e5[m localization test
+[33m6b77029[m Merge branch 'pedro3' of https://github.com/Pedro-Pathing/Quickstart into pedro3
+[33m90fb1b2[m add possible patches to braking identification tuners
+[33m0470fdd[m Swerve tuners
+[33m724a62a[m braking distance at 32 with cap and deceleration check
+[33m0832a28[m have nonzero controller coefficients
+[33m9d6fdec[m Merge branch 'pedro3' of https://github.com/Pedro-Pathing/Quickstart into pedro3
+[33m2ed104b[m ForesightTuner
+[33m711c63c[m add Tests procedure to autotune
+[33m76de01c[m create Tests procedure and remove everything not autotune
+[33m2c5320d[m decel tuner
+[33m8af0bc8[m Merge pull request #97 from Mithilessh2010/pedro3
+[33m048f008[m IMU tuner + removed telemetry
+[33m224a021[m Three Wheel Autotune tuner
+[33mfa67aee[m patch Braking Identifiers
+[33md6bbcb8[m update OTOSTuner.java
+[33m6e1a7b2[m Merge branch 'pedro3' of https://github.com/Pedro-Pathing/Quickstart into pedro3
+[33maee4b80[m patch BrakingIdentification
+[33m9759520[m OTOS Tuner
+[33md80a2a7[m update seeds try to fix braking identification
+[33m207e3b0[m Merge branch 'pedro3' of https://github.com/Pedro-Pathing/Quickstart into pedro3
+[33mbe55b3b[m octoquad tuner patches
+[33mea68f61[m lil push on the braking tuners
+[33m565a09c[m add localizer update
+[33m1d496d7[m update autotuners & fix all offset tuners
+[33m549ff9c[m Merge branch 'pedro3' of https://github.com/Pedro-Pathing/Quickstart into pedro3
+[33mf39a409[m autotuners
+[33meafeace[m fixed offsets by checking for a zero pose
+[33m222cc80[m use !isStopRequested() instead of opmode active
+[33mb63279a[m trying to fix offsets
+[33m9ef0620[m Merge pull request #95 from Mithilessh2010/pedro3
+[33m2281ddc[m Two Wheel + IMU tuner
+[33m15d2b73[m update kp (alpha) and seeds & add what the robot will do during each tuner
+[33m457f9f2[m OctoquadTuner
+[33mf0e6660[m Merge branch 'pedro3' of https://github.com/Pedro-Pathing/Quickstart into pedro3
+[33mfe1b983[m update PID autotuners
+[33me4c3fe4[m try to fix -0.0 offsets calculation
+[33m3d416b7[m update seeds + input distance for the braking tuners
+[33m64ed2aa[m braking lower trials and wait time remove voltage sensor
+[33m2a0d818[m Merge pull request #93 from Mithilessh2010/pedro3
+[33m80dfb9a[m Changed From Expansion to Control Hub for Foresight
+[33m5fea5c8[m foresight tuner
+[33mb11a8be[m fix error
+[33m73700ba[m foresight tuner done!
+[33m735d782[m Merge branch 'pedro3' of https://github.com/Pedro-Pathing/Quickstart into pedro3
+[33m6c7d7ac[m MeasurementStdevTuner.java
+[33madfc204[m add mecanum tuner
+[33m0ee8fb8[m Merge branch 'pedro3' of https://github.com/Pedro-Pathing/Quickstart into pedro3
+[33mf01ca47[m update BrakingIdentification tuners
+[33m82d0548[m fix decel identifiers
+[33m0596cf1[m added the velocity + decel identifiers brake coefficients next
+[33mffb5e09[m change tuner pole placement a bit to mirror lambda tuning
+[33m47b004a[m Trying to ensure offsets tuner works
+[33mc6bb25d[m Make sure direction identification have resolution
+[33m6e2705e[m Working on the Foresight AutoTuner
+[33m581973c[m AutoTune Pinpoint Tuner (Hardware)
+[33mceeaa34[m AutoTune Pinpoint Tuner (No Hardware)
+[33mbd114c4[m Deprecate HeadingAutoTuner
+[33m0e2f49a[m update StrafeTranslationalAutoTuner telemetry to match ForwardTranslationalAutoTuner
+[33m4e57355[m update automatic tuners
+[33mac115f0[m use baron's values
+[33m4ef45e4[m Merge branch 'pedro3' of https://github.com/Pedro-Pathing/Quickstart into pedro3
+[33m8531b55[m overwriting baron's parameters for funsies
+[33m4685d2a[m offset tuners
+[33mbc3f093[m seems good
+[33m60169cd[m 4 -> 5
+[33m1aecd05[m Revert "local"
+[33m9524eaa[m Merge branch 'pedro3' of https://github.com/Pedro-Pathing/Quickstart into pedro3
+[33m428c315[m local
+[33m814152e[m added time-based failsafes to predictive tuners
+[33mb651a7f[m Merge pull request #91 from Invicta8110/fix/offset-tuner
+[33m0537931[m fix offset display in AutomaticOffsetsTuner
+[33m34f43fd[m baron testing
+[33md4d41aa[m baron testing
+[33m8025bdc[m baron testing
+[33m4f7023e[m change translational controller makeup and add coast constants
+[33mf7d15e3[m 5 trials
+[33mf8318aa[m patch offset tuners
+[33me10b86f[m update AutomatedOffsetsTuner to average 4 trials
+[33m364ac2b[m patch Tuners for ForesightV3
+[33m369885d[m patch ThreeWheelAutomaticOffsetsTuner.java
+[33mbfa4698[m ThreeWheelAutomaticOffsetsTuner.java
+[33m9d3bb24[m patch ForwardBrakingIdentification and StrafeBrakingIdentification
+[33m8bb714d[m Merge branch 'pedro3' of https://github.com/Pedro-Pathing/Quickstart into pedro3
+[33m9d377ef[m HeadingBrakingIdentification.java
+[33m6e2390e[m Merge pull request #87 from TechonVS/patch-1
+[33mbf1fce7[m Fix StrafeVelocityIdentificator from returning 0
+[33m67c0288[m Update tuners to ensure Pose is set to compensate for Pinpoint reset
+[33m6f73b57[m Merge remote-tracking branch 'origin/pedro3' into pedro3
+[33m94f07dd[m Update tuners to ensure Pose is set to compensate for Pinpoint reset
+[33m27deb7a[m Merge branch 
