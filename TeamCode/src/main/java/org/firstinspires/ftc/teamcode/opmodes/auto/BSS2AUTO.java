@@ -90,12 +90,12 @@ public class BSS2AUTO extends NextOpMode {//TODO: rename
 
         Scheduler.reset(); //resets from previous op mode
         follower = Constants.create(hardwareMap);
-        follower.setPose(startPose);
+        //TODO: follower.setPose();//starting pose
     }
 
     @Override
     public void start() {
-        schedule(_____);
+        //TODO: schedule(_____);
     }
 
     @Override

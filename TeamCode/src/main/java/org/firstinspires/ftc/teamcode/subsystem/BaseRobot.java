@@ -1,15 +1,21 @@
 package org.firstinspires.ftc.teamcode.subsystem;
 
 
+import androidx.annotation.NonNull;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.ivy.Command;
+import com.qualcomm.robotcore.hardware.Gamepad;
+import dev.nextftc.hardware.RobotController;
 import dev.nextftc.robot.NextRobot;
 import dev.nextftc.robot.Mechanism;
+import dev.nextftc.robot.drive.DriveCommands;
+import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.util.FieldState;
 
 
 import java.util.Set;
 
+import static com.pedropathing.ivy.groups.Groups.parallel;
 import static com.pedropathing.ivy.groups.Groups.sequential;
 
 public class BaseRobot implements NextRobot {
@@ -31,15 +37,31 @@ public class BaseRobot implements NextRobot {
 
 
 
+
+    public Follower getFollower() {//TODO: actually integrate this follower into opmod3es
+        if (follower == null) {
+            follower = Constants.create(RobotController.hardwareMap());
+        }
+
+        return follower;
+    }
+
+
+    public Command init(){
+        return parallel(
+                //DO THINGS HERE FOR INITIALIZATION
+        );
+    }
+
     public Command launch(){
         return sequential(
-                intake.setSpeed(IntakeSubsystem.IntakeState.OFF),
-                shooters.auto();//auto spinup
-        )
+                intake.setSpeed(IntakeSubsystem.IntakeState.OFF)
+        );
 
 
     }
 
+    @NonNull
     @Override
     public Set<Mechanism> getMechanisms() {
         return Set.of(
