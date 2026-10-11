@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.subsystem;
 
 
+import com.pedropathing.follower.Follower;
+import com.pedropathing.ivy.Command;
 import dev.nextftc.robot.NextRobot;
 import dev.nextftc.robot.Mechanism;
 import org.firstinspires.ftc.teamcode.util.FieldState;
@@ -8,8 +10,10 @@ import org.firstinspires.ftc.teamcode.util.FieldState;
 
 import java.util.Set;
 
-public class BaseRobot implements NextRobot {
+import static com.pedropathing.ivy.groups.Groups.sequential;
 
+public class BaseRobot implements NextRobot {
+    private Follower follower;
 
     public final FieldState fieldState = new FieldState();
 
@@ -23,6 +27,18 @@ public class BaseRobot implements NextRobot {
     public final ShootersSubsystem shooters = new ShootersSubsystem(fieldState);
     public final TurretsSubsystem turrets = new TurretsSubsystem(fieldState);
 
+    public BaseRobot(){}
+
+
+
+    public Command launch(){
+        return sequential(
+                intake.setSpeed(IntakeSubsystem.IntakeState.OFF),
+                shooters.auto();//auto spinup
+        )
+
+
+    }
 
     @Override
     public Set<Mechanism> getMechanisms() {

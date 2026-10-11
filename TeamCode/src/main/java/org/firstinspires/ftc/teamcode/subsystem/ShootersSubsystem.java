@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystem;
 
 import static dev.nextftc.units.Units.RotationsPerMinute;
+import static org.firstinspires.ftc.teamcode.util.Constants.ShooterConstants.*;
 
 import com.pedropathing.ivy.Command;
 import dev.nextftc.hardware.actuators.NextMotor;
@@ -8,7 +9,23 @@ import dev.nextftc.robot.Mechanism;
 import org.firstinspires.ftc.teamcode.util.Constants;
 import org.firstinspires.ftc.teamcode.util.FieldState;
 
+
+
 public class ShootersSubsystem implements Mechanism {
+
+    private ShooterState shooterState = ShooterState.OFF;
+    public enum ShooterState {
+        AUTO,
+        MANUAL,
+        OFF
+    }
+
+    private void stateSetter(ShooterState shooterState) {
+        this.shooterState = shooterState;
+    }
+    public Command setState(ShooterState s) {
+        return instant(() -> this.stateSetter(s));
+    }
 
     private static final double RPM_DEADBAND = 25; // ignore setpoint changes smaller than this in auto mode
 
@@ -18,7 +35,9 @@ public class ShootersSubsystem implements Mechanism {
     private double nectarTargetRpm = 0;
     private double pollenTargetRpm = 0;
 
-    private boolean autoRpm = false; // when true, periodic() tracks distance -> RPM
+    private double manualNectarRpm = 0;
+    private double manualPollenRpm = 0;
+
 
     private final FieldState fieldState;
 
@@ -32,8 +51,8 @@ public class ShootersSubsystem implements Mechanism {
 
 
         // Separate gains per shooter. F = kV
-        setNectarPIDF(0.0, 0.0, 0.0, 0.0);
-        setPollenPIDF(0.0, 0.0, 0.0, 0.0);
+        setNectarPIDF(S_NECTAR_KP, S_POLLEN_KI, S_POLLEN_KD, S_NECTAR_KF);
+        setPollenPIDF(S_POLLEN_KP, S_POLLEN_KI, S_POLLEN_KD, S_POLLEN_KF);
     }
 
     // ---- PIDF tuning ----
@@ -65,24 +84,22 @@ public class ShootersSubsystem implements Mechanism {
         return fieldState.distanceToGoal(Constants.TurretConstants.NECTAR_TURRET_FORWARD_OFFSET, Constants.TurretConstants.NECTAR_TURRET_LATERAL_OFFSET);
     }
 
-    // ---- Low-level setters (only place that talks to the motors) ----
-    private void setNectarRpm(double rpm) {
-        nectarTargetRpm = rpm;
-        if (rpm == 0) nectarShooter.setThrottle(0);
-        else nectarShooter.setVelocitySetpoint(RotationsPerMinute.of(rpm));
+    private void setOff() {
+        shooterState = ShooterState.OFF;
+        nectarTargetRpm = 0;
+        pollenTargetRpm = 0;
     }
 
-    private void setPollenRpm(double rpm) {
-        pollenTargetRpm = rpm;
-        if (rpm == 0) pollenShooter.setThrottle(0);
-        else pollenShooter.setVelocitySetpoint(RotationsPerMinute.of(rpm));
+    // Direct (non-command) setters so an opmode can adjust RPM live.
+    // These store the manual RPMs and switch to MANUAL, periodic() applies them.
+    public void setManualRpm(double nectarRpm, double pollenRpm) {
+        manualNectarRpm = nectarRpm;
+        manualPollenRpm = pollenRpm;
+        shooterState = ShooterState.MANUAL;
     }
 
-    // Direct (non-command) setter so an opmode can adjust RPM live
     public void setBothRpm(double rpm) {
-        autoRpm = false;
-        setNectarRpm(rpm);
-        setPollenRpm(rpm);
+        setManualRpm(rpm, rpm);
     }
 
     // TODO: LUT (distance -> RPM) in its own class, ideally one table per goalSide
@@ -91,96 +108,90 @@ public class ShootersSubsystem implements Mechanism {
     }
 
     // ---- Commands (mode switches / one-shots) ----
-    public Command enableAutoRpm()  { return instant(() -> autoRpm = true); }
-    public Command disableAutoRpm() { return instant(() -> autoRpm = false); }
+    public Command enableAutoRpm()  { return instant(() -> shooterState = ShooterState.AUTO); }
+
+    // Keeps the shooters at whatever auto last set
+    public Command disableAutoRpm() {
+        return instant(() -> setManualRpm(nectarTargetRpm, pollenTargetRpm));
+    }
 
     // Teleop: press to spin both at a fixed RPM, press again to stop
-    public Command toggleSpin(double rpm) {
+    public Command spinAuto(double rpm) {
         return instant(() -> {
-            boolean spinning = isSpinning();
-            autoRpm = false;
-            setNectarRpm(spinning ? 0 : rpm);
-            setPollenRpm(spinning ? 0 : rpm);
+            if (isSpinning()) setOff();
+            else setBothRpm(rpm);
         });
     }
 
     // Teleop: press to track distance -> RPM, press again to stop
     public Command toggleAutoSpin() {
         return instant(() -> {
-            if (autoRpm) {
-                autoRpm = false;
-                setNectarRpm(0);
-                setPollenRpm(0);
-            } else {
-                autoRpm = true;
-            }
+            if (shooterState == ShooterState.AUTO) setOff();
+            else shooterState = ShooterState.AUTO;
         });
     }
 
-    // Manual commands turn auto off so periodic() doesn't overwrite them
     public Command spinNectar(double rpm) {
-        return instant(() -> {
-            autoRpm = false;
-            setNectarRpm(rpm);
-        });
+        return instant(() -> setManualRpm(rpm, manualPollenRpm));
     }
 
     public Command spinPollen(double rpm) {
-        return instant(() -> {
-            autoRpm = false;
-            setPollenRpm(rpm);
-        });
+        return instant(() -> setManualRpm(manualNectarRpm, rpm));
     }
 
     public Command spinBoth(double rpm) {
-        return instant(() -> {
-            autoRpm = false;
-            setNectarRpm(rpm);
-            setPollenRpm(rpm);
-        });
+        return instant(() -> setBothRpm(rpm));
     }
 
     public Command stopNectar() {
-        return instant(() -> {
-            autoRpm = false;
-            setNectarRpm(0);
-        });
+        return instant(() -> setManualRpm(0, manualPollenRpm));
     }
 
     public Command stopPollen() {
-        return instant(() -> {
-            autoRpm = false;
-            setPollenRpm(0);
-        });
+        return instant(() -> setManualRpm(manualNectarRpm, 0));
     }
 
     public Command stopBoth() {
-        return instant(() -> {
-            autoRpm = false;
-            setNectarRpm(0);
-            setPollenRpm(0);
-        });
+        return instant(this::setOff);
     }
 
-    // ---- State ----
+    public ShooterState getState() { return shooterState; }
     public double getNectarTargetRpm() { return nectarTargetRpm; }
     public double getPollenTargetRpm() { return pollenTargetRpm; }
+    public double getManualNectarRpm() { return manualNectarRpm; }
+    public double getManualPollenRpm() { return manualPollenRpm; }
 
-    /** True when distance-based auto RPM mode is on. */
-    public boolean isAutoRpm() { return autoRpm; }
+    public boolean isAutoRpm() { return shooterState == ShooterState.AUTO; }
 
-    /** True when either shooter has a nonzero target (manual or auto). */
     public boolean isSpinning() { return nectarTargetRpm != 0 || pollenTargetRpm != 0; }
 
     @Override
     public void periodic() {
-        if (!autoRpm) return;
+        switch (shooterState) {
+            case AUTO:
+                double nectarAuto = rpmForDistance(getNectarShooterDistanceToGoal());
+                double pollenAuto = rpmForDistance(getPollenShooterDistanceToGoal());
 
-        double nectarTargetRPM = rpmForDistance(getNectarShooterDistanceToGoal());
-        double pollenTargetRPM = rpmForDistance(getPollenShooterDistanceToGoal());
+                // Deadband so pose jitter doesn't constantly rewrite the setpoint
+                if (Math.abs(nectarAuto - nectarTargetRpm) > RPM_DEADBAND) nectarTargetRpm = nectarAuto;
+                if (Math.abs(pollenAuto - pollenTargetRpm) > RPM_DEADBAND) pollenTargetRpm = pollenAuto;
+                break;
+            case MANUAL:
+                nectarTargetRpm = manualNectarRpm;
+                pollenTargetRpm = manualPollenRpm;
+                break;
+            case OFF:
+                nectarTargetRpm = 0;
+                pollenTargetRpm = 0;
+                break;
+        }
 
-        // Deadband so pose jitter doesn't constantly rewrite the setpoint
-        if (Math.abs(nectarTargetRPM - nectarTargetRpm) > RPM_DEADBAND) setNectarRpm(nectarTargetRPM);
-        if (Math.abs(pollenTargetRPM - pollenTargetRpm) > RPM_DEADBAND) setPollenRpm(pollenTargetRPM);
+        applyRpm(nectarShooter, nectarTargetRpm);
+        applyRpm(pollenShooter, pollenTargetRpm);
+    }
+
+    private void applyRpm(NextMotor motor, double rpm) {
+        if (rpm == 0) motor.setThrottle(0);
+        else motor.setVelocitySetpoint(RotationsPerMinute.of(rpm));
     }
 }
