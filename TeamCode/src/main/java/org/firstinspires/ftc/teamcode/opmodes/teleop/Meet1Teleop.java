@@ -18,8 +18,8 @@ public class Meet1Teleop extends NextOpMode {
     private final BaseRobot robot;
     private final Follower follower;
 
-    private final CommandGamepad driver1 = new CommandGamepad(gamepad1);
-    private final CommandGamepad driver2 = new CommandGamepad(gamepad2);
+    private final CommandGamepad g1 = new CommandGamepad(gamepad1);
+    private final CommandGamepad g2 = new CommandGamepad(gamepad2);
 
     public Meet1Teleop(BaseRobot robot) {
         super(robot, BulkReadHook.INSTANCE);
@@ -28,21 +28,19 @@ public class Meet1Teleop extends NextOpMode {
         // Constructor = old init(). Runs once, on INIT press.
         follower = Constants.create(hardwareMap);
 
-        driver1.b().onTrue(robot.intake.intake());
-        driver1.b().onFalse(robot.intake.stop());
+        g1.b().whileTrue(robot.intake.run(1.0));
+        g1.x().whileTrue(robot.intake.runReverse(1.0));
 
-        driver1.a().onTrue(robot.intake.intakeReverse());
-        driver1.a().onFalse(robot.intake.stop());
 
         // whileTrue -> runs while held, auto-cancels (and your default
         // command, if you add one, resumes) on release.
 
-        driver1.y().onTrue(robot.shooters.toggleSpin(3000));//spins both shooters at 3k rpm
-        driver1.a().onTrue(robot.shooters.toggleSpin(6000));//makes the shooters spin using odometry position and LUT
+        g1.y().onTrue(robot.shooters.toggleSpin(3000));//spins both shooters at 3k rpm
+        g1.a().onTrue(robot.shooters.toggleSpin(6000));//makes the shooters spin using odometry position and LUT
 
 
 
-        driver1.start().onTrue(relocalize());
+        g1.start().onTrue(relocalize());
     }
 
     private Command relocalize() {

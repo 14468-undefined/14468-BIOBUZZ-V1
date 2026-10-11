@@ -12,12 +12,20 @@ public class IntakeSubsystem implements Mechanism {
     public void periodic() {
     }
 
-    public Command intake() {
-        return instant(() -> motor.setThrottle(1.0));
+    public Command run(double power) {
+        return Command.build()
+                .setStart(() -> motor.setThrottle(power))
+                .setDone(() -> false)
+                .setEnd(endCondition -> motor.setThrottle(0.0))
+                .requiring(this);
     }
 
-    public Command intakeReverse() {
-        return instant(() -> motor.setThrottle(-1.0));
+    public Command runReverse(double power) {
+        return Command.build()
+                .setStart(() -> motor.setThrottle(-power))
+                .setDone(() -> false)
+                .setEnd(endCondition -> motor.setThrottle(0.0))
+                .requiring(this);
     }
 
     public Command stop() {
