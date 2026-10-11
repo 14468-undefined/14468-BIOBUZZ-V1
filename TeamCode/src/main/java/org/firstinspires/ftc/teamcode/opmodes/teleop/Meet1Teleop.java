@@ -9,6 +9,7 @@ import dev.nextftc.robot.opmode.NextOpMode;
 import dev.nextftc.robot.triggers.CommandGamepad;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.subsystem.BaseRobot;
+import org.firstinspires.ftc.teamcode.util.AutoToTeleopPoseStorage;
 
 import static com.pedropathing.ivy.commands.Commands.*;
 
@@ -54,6 +55,8 @@ public class Meet1Teleop extends NextOpMode {
     public void start() {
         // pass pose from auto to teleop here
         // follower.setPose(pose);
+        follower.setPose(AutoToTeleopPoseStorage.getEndPoseOr(new Pose(0, 0, 0)));
+
     }
 
     @Override
@@ -69,4 +72,11 @@ public class Meet1Teleop extends NextOpMode {
         telemetry.addData("Robot Y", robotPose.y());
         telemetry.addData("Robot Heading", Math.toDegrees(robotPose.heading()));
     }
+
+    @Override
+    public void end(){
+        AutoToTeleopPoseStorage.clear();//so it doesnt keep between runs
+
+    }
+
 }

@@ -9,16 +9,14 @@ import com.pedropathing.follower.Follower;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.math.Pose;
-import static com.pedropathing.api.Paths.*;
-import com.pedropathing.paths.Path;
 
-import com.pedropathing.ivy.Command;
 import com.pedropathing.ivy.Scheduler;
-import static com.pedropathing.ivy.Scheduler.schedule;
-import static com.pedropathing.ivy.pedro.PedroCommands.*; // needs com.pedropathing.ivy:pedro:1.1.1
+import org.firstinspires.ftc.teamcode.util.AutoToTeleopPoseStorage;
 
-@NextAutonomous(name = "blueup")//rename
-public class BlueUpSideAuto extends NextOpMode {//TODO: rename
+import static com.pedropathing.ivy.Scheduler.schedule;
+
+@NextAutonomous(name = "BSS2AUTO")//rename
+public class BSS2AUTO extends NextOpMode {//TODO: rename
 
     private final Follower follower;
     private final PoseFactory p = PoseFactory.degrees();
@@ -29,7 +27,7 @@ public class BlueUpSideAuto extends NextOpMode {//TODO: rename
 
 
 
-    public BlueUpSideAuto(BaseRobot robot) {
+    public BSS2AUTO(BaseRobot robot) {
         super(robot, BulkReadHook.INSTANCE);
 
         Scheduler.reset(); //resets from previous op mode
@@ -54,7 +52,7 @@ public class BlueUpSideAuto extends NextOpMode {//TODO: rename
     @Override
     public void end() {
 
-        //TODO: store pose for teleop
-        // OpModeStorage.autonomousEndPose = follower.pose();
+        //store pose for teleop
+        AutoToTeleopPoseStorage.autonomousEndPose = follower.pose();
     }
 }
