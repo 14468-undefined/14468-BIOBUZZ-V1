@@ -34,8 +34,26 @@ public class FieldCentric extends NextOpMode {
         // Constructor = old init(). Runs once, on INIT press.
         follower = Constants.create(hardwareMap);
 
-        driver1.rightBumper().whileTrue(robot.intake.intake());
-        driver1.leftBumper().whileTrue(robot.intake.intakeReverse());
+        //driver1.rightTrigger().whileTrue(robot.intake.intake());
+        //driver1.leftBumper().whileTrue(robot.intake.intakeReverse());
+
+
+        //swtich to triggers
+        while (driver1.rightTrigger().getValue() > 0.1) {
+            robot.intake.intake();
+        }
+        while (driver1.leftTrigger().getValue() > 0.1) {
+            robot.intake.intakeReverse();
+        }
+
+        // should make it customizable
+        //if (driver1.rightTrigger().getValue() > 0.1) {
+      //      robot.intake.setIntakePower(driver1.rightTrigger().getValue());
+      //  }
+        //else if (driver1.leftTrigger().getValue() > 0.1) {
+        //    robot.intake.setIntakePower(-driver1.leftTrigger().getValue());
+        //}
+
         // whileTrue -> runs while held, auto-cancels (and your default
         // command, if you add one, resumes) on release.
 
