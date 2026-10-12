@@ -28,63 +28,50 @@ public class BSS2AUTO extends NextOpMode {//TODO: rename
     private final PoseFactory poseFactory = PoseFactory.degrees();
 
     //TODO: anthony - can you rename all of these - have to be like shotPose, moveToShootControlPoint
-    private final Pose start = poseFactory.of(82, 133, 90);
+    private final Pose start_pose = poseFactory.of(82, 133, 90);
     //SHOT here
     //private final Pose point1 = poseFactory.of(82, 133, 90);
-    private final Pose loadingZone = poseFactory.of(133, 133, 90);
-    private final Pose intakeCP = poseFactory.of(128.6392, 103.676, 0);
-    private final Pose outOfLZ = poseFactory.of(132.1382, 130, 90);
-    private final Pose underHive = poseFactory.of(82.2606, 109.5764, -90);
-    private final Pose farSide = poseFactory.of(82, 20, -90);
+    private final Pose garden = poseFactory.of(133, 133, 90);
+    private final Pose intake_ctrl_pt_1 = poseFactory.of(128.6392, 103.676, 0);
+    private final Pose out_of_garden = poseFactory.of(132.1382, 130, 90);
+    private final Pose under_hive_up_side = poseFactory.of(82.2606, 109.5764, -90);
+    private final Pose under_hive_down_side = poseFactory.of(82, 20, -90);
    // private final Pose point6Start = poseFactory.of(82, 20, -90);
-    private final Pose preIntakePos = poseFactory.of(94.5, 13, -90);
-    private final Pose intakePos = poseFactory.of(94.5, 9, -90);
-    private final Pose shootPos = poseFactory.of(82, 23.5, 270);
-    private final Pose avoidOtherRobot = poseFactory.of(106.5, 38.25, 31.0497);
-    private final Pose turn = poseFactory.of(106.5, 38.25, 270);
-    private final Pose park = poseFactory.of(131, 53, 180);
-    private final Pose parkCP = poseFactory.of(111.4737, 55.4883, 0);
-
+    private final Pose lineup_flower_intake = poseFactory.of(94.5, 13, -90);
+    private final Pose flower_intake = poseFactory.of(94.5, 9, -90);
+    private final Pose park_pose = poseFactory.of(9.1057, 93.0516, 0);
+    private final Pose park_path_ctrl_pt_1 = poseFactory.of(31.9919, 68.3327, 0);
    // public Path path1() {
   //      return line(start, point1).constant(point1);
    // }//TODO: anthony - name like moveToShoot
 
-    public Path intakeLZ() {
-        return curve(start, intakeCP, loadingZone).constant(loadingZone);
+    public Path intakeGarden() {
+        return curve(start_pose, intake_ctrl_pt_1, garden).constant(garden);
     }
 
     public Path backOut() {
-        return line(loadingZone, outOfLZ).constant(outOfLZ);
+        return line(garden, out_of_garden).constant(out_of_garden);
     }
 
-    public Path underHive() {
-        return line(outOfLZ, underHive).linear(outOfLZ, underHive);
+    public Path garden_to_hive() {
+        return line(out_of_garden, under_hive_up_side).linear(out_of_garden, under_hive_up_side);
     }
 
-    public Path throughHive() {
-        return line(underHive, farSide).tangent();
+    public Path under_through_hive() {
+        return line(under_hive_up_side, under_hive_down_side).tangent();
     }
 
-    public Path shootAndMoveToIntake() {
-        return line(farSide, preIntakePos).linear(farSide, preIntakePos);
+    public Path line_up_for_flower_intake() {
+        return line(under_hive_down_side, lineup_flower_intake).linear(under_hive_down_side, lineup_flower_intake);
     }
 
-    public Path intakeFlower() {
-        return line(preIntakePos, intakePos).tangent();
+    public Path flower_intake() {
+        return line(lineup_flower_intake, flower_intake).tangent();
     }
 
-    public Path shootFinal() {
-        return line(intakePos, shootPos).constant(shootPos);
+    public Path park_avoid_other_robot() {
+        return curve(flower_intake, park_path_ctrl_pt_1, park_pose).linear(flower_intake, park_pose);
     }
-
-    public Path curveToPark() {
-        return line(shootPos, avoidOtherRobot).tangent();
-    }
-
-    public Path goPark() {
-        return curve(turn, parkCP, park).linear(turn, park);
-    }
-
 
 
 
@@ -99,7 +86,7 @@ public class BSS2AUTO extends NextOpMode {//TODO: rename
 
     @Override
     public void start() {
-        robot.getFollower().setPose(start);
+        robot.getFollower().setPose(start_pose);
         //TODO: schedule(_____);
 
     }
