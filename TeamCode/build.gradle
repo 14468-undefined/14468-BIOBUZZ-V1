@@ -32,6 +32,15 @@ repositories {
     maven {
         url 'https://repo.dairy.foundation/releases'
     }
+
+    //PANEL ADDED 10/12/26
+    maven {
+        url = "https://mymaven.bylazar.com/releases"
+    }
+    maven {
+        url = "https://repo.dairy.foundation/releases"
+    }
+
 }
 
 dependencies {
@@ -44,6 +53,8 @@ dependencies {
     implementation 'dev.nextftc.v2:hardware:0.2.1'//added 9/15/26 //JS
     implementation 'dev.nextftc.v2:robot:0.2.1'//added 9/15/26 //JS
 
+
+    implementation "com.bylazar:fullpanels:1.0.7"//added 10/12/26 //PANELS
 
     /**
      * pedro - added 9/16/26

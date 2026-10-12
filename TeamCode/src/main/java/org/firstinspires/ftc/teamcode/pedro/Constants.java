@@ -14,7 +14,10 @@ import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import com.bylazar.configurables.annotations.Configurable;
+
 public class Constants {
+
     public static MecanumConfig drivetrainConfig = new MecanumConfig(
             c -> {
                 c.frontLeftName.set("left_front");

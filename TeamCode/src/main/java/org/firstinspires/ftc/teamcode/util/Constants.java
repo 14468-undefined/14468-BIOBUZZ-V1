@@ -1,11 +1,15 @@
 package org.firstinspires.ftc.teamcode.util;
 
+import com.bylazar.configurables.annotations.Configurable;
+
 
 public final class Constants{
 
 
 
-    //@Config
+   //TODO: MAKE CONFIGURABLE
+
+    //@Configurable
     public static final class TurretConstants{
        public static final double POLLEN_TURRET_FORWARD_OFFSET = -0.0; // TODO: measure
        public static final double POLLEN_TURRET_LATERAL_OFFSET = 0.0;
@@ -32,6 +36,10 @@ public final class Constants{
 
 
    public static final class ShooterConstants{
+       public static final int POLLEN_TUNING_RPM = 0;
+      public static final int NECTAR_TUNING_RPM = 0;
+
+
       public static final double S_POLLEN_KP = 0.0;
       public static final double S_POLLEN_KI = 0.0;
       public static final double S_POLLEN_KD = 0.0;

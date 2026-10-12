@@ -19,7 +19,8 @@ public class ShootersSubsystem implements Mechanism {
     public enum ShooterState {
         AUTO,
         MANUAL,
-        OFF
+        OFF,
+        TUNING
     }
 
     private void stateSetter(ShooterState shooterState) {
@@ -182,10 +183,15 @@ public class ShootersSubsystem implements Mechanism {
                 nectarTargetRpm = manualNectarRpm;
                 pollenTargetRpm = manualPollenRpm;
                 break;
+            case TUNING:
+                nectarTargetRpm = NECTAR_TUNING_RPM;
+                pollenTargetRpm = POLLEN_TUNING_RPM;
+                break;
             case OFF:
                 nectarTargetRpm = 0;
                 pollenTargetRpm = 0;
                 break;
+
         }
 
         applyRpm(nectarShooter, nectarTargetRpm);
