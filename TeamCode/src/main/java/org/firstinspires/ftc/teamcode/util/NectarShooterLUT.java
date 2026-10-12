@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.util;
 
-public class ShooterLUT {
+public class NectarShooterLUT {
 
     // ===== EDIT HERE: { distance, rpm } =====
     // Distance units must match fieldState.distanceToGoal(...). Keep sorted by distance.
