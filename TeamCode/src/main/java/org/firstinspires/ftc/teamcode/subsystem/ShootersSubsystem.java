@@ -196,4 +196,13 @@ public class ShootersSubsystem implements Mechanism {
         if (rpm == 0) motor.setThrottle(0);
         else motor.setVelocitySetpoint(RotationsPerMinute.of(rpm));
     }
+
+
+
+    public NextMotor getNectarShooter(){
+        return nectarShooter;
+    }
+    public NextMotor getPollenShooter(){
+        return pollenShooter;
+    }
 }

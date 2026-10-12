@@ -21,6 +21,7 @@ import static com.pedropathing.ivy.Scheduler.schedule;
 @NextAutonomous(name = "BSS2AUTO")//rename
 public class BSS2AUTO extends NextOpMode {//TODO: rename
 
+    private final BaseRobot robot;
     private final Follower follower;
     private final PoseFactory p = PoseFactory.degrees();
 
@@ -86,21 +87,25 @@ public class BSS2AUTO extends NextOpMode {//TODO: rename
 
 
     public BSS2AUTO(BaseRobot robot) {
-        super(robot, BulkReadHook.INSTANCE);
-
+        super(robot);
+        this.robot = robot;
         Scheduler.reset(); //resets from previous op mode
-        follower = Constants.create(hardwareMap);
-        //TODO: follower.setPose();//starting pose
+
+        //commands = new AutoCommands(robot.getFollower(), paths);
+        follower = robot.getFollower();
     }
 
     @Override
     public void start() {
+        robot.getFollower().setPose(start);
         //TODO: schedule(_____);
+
     }
 
     @Override
     public void periodic() {
-        follower.update(); //lets path advance
+        robot.getFollower().update(); //lets path advance
+        Scheduler.execute();
 
         telemetry.addData("x: ", follower.pose().x());
         telemetry.addData("y: ", follower.pose().y());
@@ -111,6 +116,6 @@ public class BSS2AUTO extends NextOpMode {//TODO: rename
     public void end() {
 
         //store pose for teleop
-        AutoToTeleopPoseStorage.autonomousEndPose = follower.pose();
+        AutoToTeleopPoseStorage.autonomousEndPose = robot.getFollower().pose();
     }
 }
