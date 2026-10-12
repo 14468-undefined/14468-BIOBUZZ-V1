@@ -51,16 +51,13 @@ public class Meet1Teleop extends NextOpMode {
         robot.getFollower().setPose(AutoToTeleopPoseStorage.getEndPoseOr(new Pose(0, 0, 0)));
 
 
-        g1.rightTrigger().isOver(.1).whileTrue(robot.intake.setSpeed(IntakeSubsystem.IntakeState.FORWARD));
-        g1.leftTrigger().isOver(.1).whileTrue(robot.intake.setSpeed(IntakeSubsystem.IntakeState.REVERSE));
+        g1.rightTrigger().isOver(.1).whileTrue(robot.teleIntake());
+        g1.leftTrigger().isOver(.3).whileTrue(robot.telePurgeIntake());
 
+        g1.b().onTrue(robot.teleSpinUpShooters());
+        g1.a().onTrue(robot.shooters.setState(ShootersSubsystem.ShooterState.OFF));//cancel
+        g1.x().onTrue(robot.launchBoth());
 
-
-        g1.y().onTrue(robot.shooters.spinBoth(3000));//spins both shooters at 3k rpm
-        g1.y().onFalse(robot.shooters.setState(ShootersSubsystem.ShooterState.OFF));//spins both shooters at 3k rpm
-
-        g1.a().onTrue(robot.shooters.spinBoth(6000));//makes the shooters spin using odometry position and LUT
-        g1.a().onFalse(robot.shooters.setState(ShootersSubsystem.ShooterState.OFF));//spins both shooters at 3k rpm
 
 
 

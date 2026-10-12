@@ -9,6 +9,10 @@ public class Config {
 
     public static int nectarHoodServo = 0;
     public static int pollenHoodServo = 2;
+    public static int pollenGateServo = 3;
+    public static int nectarGateServo = 4;
+
+
 
 
 

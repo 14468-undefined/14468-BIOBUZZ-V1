@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystem;
 
+import static com.pedropathing.ivy.commands.Commands.waitUntil;
 import static dev.nextftc.units.Units.RotationsPerMinute;
 import static org.firstinspires.ftc.teamcode.util.Constants.ShooterConstants.*;
 
@@ -164,9 +165,22 @@ public class ShootersSubsystem implements Mechanism {
     public double getManualNectarRpm() { return manualNectarRpm; }
     public double getManualPollenRpm() { return manualPollenRpm; }
 
+    public double getNectarCurrentRPM() {
+        return nectarShooter.getEncoderVelocity().into(RotationsPerMinute);
+    }
+    public double getPollenCurrentRPM() {
+        return pollenShooter.getEncoderVelocity().into(RotationsPerMinute);
+    }
     public boolean isAutoRpm() { return shooterState == ShooterState.AUTO; }
 
     public boolean isSpinning() { return nectarTargetRpm != 0 || pollenTargetRpm != 0; }
+
+    public Command waitTilAtSpeed() {
+        return waitUntil(this::isAtTargetRPM);
+    }
+    public boolean isAtTargetRPM(){
+        return Math.abs(pollenTargetRpm - getPollenCurrentRPM()) < 40 && Math.abs(nectarTargetRpm - getNectarCurrentRPM()) < 40;
+    }
 
     @Override
     public void periodic() {

@@ -16,6 +16,8 @@ import org.firstinspires.ftc.teamcode.util.FieldState;
 
 import java.util.Set;
 
+import static com.pedropathing.ivy.commands.Commands.instant;
+import static com.pedropathing.ivy.commands.Commands.waitMs;
 import static com.pedropathing.ivy.groups.Groups.parallel;
 import static com.pedropathing.ivy.groups.Groups.sequential;
 
@@ -92,7 +94,23 @@ public class BaseRobot implements NextRobot {
 
     public Command launchPollen(){
         return sequential(
-                intake.setSpeed(IntakeSubsystem.IntakeState.OFF)
+                //PREPARE
+                intake.setSpeed(IntakeSubsystem.IntakeState.OFF),//INTAKE OFF
+                gates.setPose(GatesSubsystem.GateState.CLOSED),//GATES CLOSED
+                shooters.setState(ShootersSubsystem.ShooterState.AUTO),//SHOOTERS ON
+                shooters.waitTilAtSpeed(),//WAIT
+
+                //SHOOT
+                gates.setPose(GatesSubsystem.GateState.OPEN),//GATES OPEN
+                intake.setSpeed(IntakeSubsystem.IntakeState.SHOOT),//INTAKE ON
+                transfer.setSpeed(TransferSubsystem.TransferState.SHOOT),//TRANSFER ON
+                waitMs(2000),//WAIT 2 sec
+
+                //EVERYTHING OFF
+                transfer.setSpeed(TransferSubsystem.TransferState.OFF),
+                intake.setSpeed(IntakeSubsystem.IntakeState.OFF),
+                gates.setPose(GatesSubsystem.GateState.CLOSED),
+                shooters.setState(ShootersSubsystem.ShooterState.OFF)
         );
     }
     public Command launchNectar(){
@@ -102,6 +120,42 @@ public class BaseRobot implements NextRobot {
 
 
     }
+
+
+    public Command teleIntake() {
+        return Command.build()
+                .setStart(() -> {
+                    gates.setPose(GatesSubsystem.GateState.CLOSED);
+                    intake.setSpeed(IntakeSubsystem.IntakeState.FORWARD);
+                    transfer.setSpeed(TransferSubsystem.TransferState.FORWARD);
+                })
+                .setDone(() -> false)
+                .setEnd(endCondition -> {
+                    intake.setSpeed(IntakeSubsystem.IntakeState.OFF);
+                    transfer.setSpeed(TransferSubsystem.TransferState.OFF);
+                });
+    }
+
+    public Command telePurgeIntake() {
+        return Command.build()
+                .setStart(() -> {
+                    gates.setPose(GatesSubsystem.GateState.CLOSED);
+                    intake.setSpeed(IntakeSubsystem.IntakeState.REVERSE);
+                    transfer.setSpeed(TransferSubsystem.TransferState.REVERSE);
+                })
+                .setDone(() -> false)
+                .setEnd(endCondition -> {
+                    intake.setSpeed(IntakeSubsystem.IntakeState.OFF);
+                    transfer.setSpeed(TransferSubsystem.TransferState.OFF);
+                });
+    }
+
+    public Command teleSpinUpShooters(){
+        return instant(
+                () -> shooters.setState(ShootersSubsystem.ShooterState.AUTO)
+        );
+    }
+
 
     @NonNull
     @Override

@@ -28,7 +28,7 @@ public class RoutinesDownSide {
 
     public Command preloadAuto() {
         return sequential(
-                robot.launch(),
+                robot.launchPollen(),
                 commands.intakePath(paths.startPos_to_leavePos())
         );
     }
@@ -38,7 +38,7 @@ public class RoutinesDownSide {
         return sequential(
                 preloadAuto(),
                 commands.runPath(paths.leavePos_to_startPos()),
-                robot.launch(),
+                robot.launchPollen(),
                 commands.runPath(paths.startPos_to_leavePos())
         );
     }
