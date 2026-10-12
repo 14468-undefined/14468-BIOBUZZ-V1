@@ -9,15 +9,15 @@ import com.pedropathing.ivy.CommandBuilder;
 import com.pedropathing.paths.Path;
 
 import org.firstinspires.ftc.teamcode.subsystem.IntakeSubsystem;
-import org.firstinspires.ftc.teamcode.opmodes.auto.paths.PathsAndPosesUpSide;
+import org.firstinspires.ftc.teamcode.opmodes.auto.paths.PathsAndPosesUpSide2TipSolo;
 import org.firstinspires.ftc.teamcode.subsystem.BaseRobot;
 
 public class AutoCommands {
     private final Follower follower;
-    private final PathsAndPosesUpSide paths;
+    private final PathsAndPosesUpSide2TipSolo paths;
     private final BaseRobot robot = new BaseRobot();
 
-    public AutoCommands(Follower follower, PathsAndPosesUpSide paths){
+    public AutoCommands(Follower follower, PathsAndPosesUpSide2TipSolo paths){
         this.follower = follower;
         this.paths = paths;
     }

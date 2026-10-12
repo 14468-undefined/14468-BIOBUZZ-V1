@@ -84,7 +84,18 @@ public class BaseRobot implements NextRobot {
         );
     }
 
-    public Command launch(){
+    public Command launchBoth(){
+        return sequential(
+                intake.setSpeed(IntakeSubsystem.IntakeState.OFF)
+        );
+    }
+
+    public Command launchPollen(){
+        return sequential(
+                intake.setSpeed(IntakeSubsystem.IntakeState.OFF)
+        );
+    }
+    public Command launchNectar(){
         return sequential(
                 intake.setSpeed(IntakeSubsystem.IntakeState.OFF)
         );
