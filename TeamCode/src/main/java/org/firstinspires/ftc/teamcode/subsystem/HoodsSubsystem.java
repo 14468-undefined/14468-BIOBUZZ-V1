@@ -1,12 +1,14 @@
 package org.firstinspires.ftc.teamcode.subsystem;
 
+import dev.nextftc.hardware.RobotController;
 import dev.nextftc.hardware.actuators.NextServo;
 import dev.nextftc.robot.Mechanism;
+import org.firstinspires.ftc.teamcode.util.Config;
 
 public class HoodsSubsystem implements Mechanism {
 
-    private final NextServo nectarHood = new NextServo("nectar_hood");
-    private final NextServo pollenHood = new NextServo("pollen_hood");
+    private final NextServo nectarHood = new NextServo(RobotController.controlHub(), Config.nectarHoodServo);
+    private final NextServo pollenHood = new NextServo(RobotController.controlHub(), Config.pollenHoodServo);
 
 
     //TODO:

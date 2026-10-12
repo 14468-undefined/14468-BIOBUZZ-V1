@@ -11,6 +11,8 @@ import dev.nextftc.robot.opmode.NextOpMode;
 import dev.nextftc.robot.triggers.CommandGamepad;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.subsystem.BaseRobot;
+import org.firstinspires.ftc.teamcode.subsystem.IntakeSubsystem;
+import org.firstinspires.ftc.teamcode.subsystem.ShootersSubsystem;
 
 import static com.pedropathing.ivy.commands.Commands.*;
 
@@ -40,10 +42,10 @@ public class FieldCentric extends NextOpMode {
 
         //swtich to triggers
         while (driver1.rightTrigger().getValue() > 0.1) {
-            robot.intake.intake();
+            robot.intake.setSpeed(IntakeSubsystem.IntakeState.FORWARD);
         }
         while (driver1.leftTrigger().getValue() > 0.1) {
-            robot.intake.intakeReverse();
+            robot.intake.setSpeed(IntakeSubsystem.IntakeState.FORWARD);
         }
 
         // should make it customizable
@@ -57,8 +59,9 @@ public class FieldCentric extends NextOpMode {
         // whileTrue -> runs while held, auto-cancels (and your default
         // command, if you add one, resumes) on release.
 
-        driver1.a().onTrue(robot.shooters.toggleSpin(3000));//spins both shooters at 3k rpm
-        driver1.a().onTrue(robot.shooters.toggleAutoSpin());//makes the shooters spin using odometry position and LUT
+        driver1.a().onTrue(robot.shooters.spinBoth(3000));//spins both shooters at 3k rpm
+        driver1.a().onFalse(robot.shooters.setState(ShootersSubsystem.ShooterState.OFF));//spins both shooters at 3k rpm
+
 
         driver1.y().onTrue(resetHeading()); // face robot away from you, press Y (keeps X/Y)
         driver1.start().onTrue(relocalize());

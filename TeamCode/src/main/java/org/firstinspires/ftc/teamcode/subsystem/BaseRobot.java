@@ -23,7 +23,7 @@ public class BaseRobot implements NextRobot {
 
     public final FieldState fieldState = new FieldState();
 
-    public final BrakesSubsystem brakes = new BrakesSubsystem();
+    //public final BrakesSubsystem brakes = new BrakesSubsystem();
     public final FlowerScorerSubsystem flowerScorer = new FlowerScorerSubsystem();
     public final GatesSubsystem gates = new GatesSubsystem();
     public final IntakeSubsystem intake = new IntakeSubsystem();
@@ -65,7 +65,7 @@ public class BaseRobot implements NextRobot {
     @Override
     public Set<Mechanism> getMechanisms() {
         return Set.of(
-               brakes,
+               //brakes,
                 flowerScorer,
                 gates,
                 intake,

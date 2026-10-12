@@ -4,10 +4,12 @@ package org.firstinspires.ftc.teamcode.subsystem;
 import com.pedropathing.ivy.Command;
 import dev.nextftc.control.feedback.PIDCoefficients;
 import dev.nextftc.control.feedback.PIDController;
+import dev.nextftc.hardware.RobotController;
 import dev.nextftc.hardware.actuators.NextCRServo;
 import dev.nextftc.hardware.actuators.NextFeedbackCRServo;
 import dev.nextftc.hardware.sensors.NextAnalogInput;
 import dev.nextftc.robot.Mechanism;
+import org.firstinspires.ftc.teamcode.util.Config;
 import org.firstinspires.ftc.teamcode.util.Constants;
 import org.firstinspires.ftc.teamcode.util.FieldState;
 
@@ -27,10 +29,10 @@ public class TurretsSubsystem implements Mechanism {
 
     private int manualDegrees = 0;
 
-    private final NextFeedbackCRServo pollenTurret1 = new NextFeedbackCRServo("pollen_turret1", new NextAnalogInput("pollenTurret"));
-    private final NextCRServo pollenTurret2 = new NextCRServo("pollen_turret2");
-    private final NextFeedbackCRServo nectarTurret1 = new NextFeedbackCRServo("nectar_turret1", new NextAnalogInput("nectarTurret"));
-    private final NextCRServo nectarTurret2 = new NextCRServo("nectar_turret2");
+    private final NextFeedbackCRServo pollenTurret1 = new NextFeedbackCRServo(RobotController.expansionHub(), Config.pollenTurret1, new NextAnalogInput(RobotController.expansionHub(), Config.pollenAnalogEncoder));
+    private final NextCRServo pollenTurret2 = new NextCRServo(RobotController.expansionHub(), Config.pollenTurret2, 0);
+    private final NextFeedbackCRServo nectarTurret1 = new NextFeedbackCRServo(RobotController.expansionHub(), Config.nectarTurret1, new NextAnalogInput(RobotController.expansionHub(), Config.nectarAnalogEncoder));
+    private final NextCRServo nectarTurret2 = new NextCRServo(RobotController.expansionHub(), Config.nectarTurret2);
 
     private final PIDController pollenPID = new PIDController(new PIDCoefficients(Constants.TurretConstants.T_POLLEN_KP, Constants.TurretConstants.T_POLLEN_KI, Constants.TurretConstants.T_POLLEN_KD));
     private final PIDController nectarPID = new PIDController(new PIDCoefficients(Constants.TurretConstants.T_NECTAR_KP, Constants.TurretConstants.T_NECTAR_KI, Constants.TurretConstants.T_NECTAR_KD));

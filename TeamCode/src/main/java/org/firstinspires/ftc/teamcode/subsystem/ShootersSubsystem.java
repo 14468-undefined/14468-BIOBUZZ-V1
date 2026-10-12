@@ -4,8 +4,10 @@ import static dev.nextftc.units.Units.RotationsPerMinute;
 import static org.firstinspires.ftc.teamcode.util.Constants.ShooterConstants.*;
 
 import com.pedropathing.ivy.Command;
+import dev.nextftc.hardware.RobotController;
 import dev.nextftc.hardware.actuators.NextMotor;
 import dev.nextftc.robot.Mechanism;
+import org.firstinspires.ftc.teamcode.util.Config;
 import org.firstinspires.ftc.teamcode.util.Constants;
 import org.firstinspires.ftc.teamcode.util.FieldState;
 
@@ -29,8 +31,8 @@ public class ShootersSubsystem implements Mechanism {
 
     private static final double RPM_DEADBAND = 25; // ignore setpoint changes smaller than this in auto mode
 
-    private final NextMotor nectarShooter = new NextMotor("nectar_shooter");//TODO: float mode
-    private final NextMotor pollenShooter = new NextMotor("pollen_shooter");//TODO: float mode
+    private final NextMotor nectarShooter = new NextMotor(RobotController.expansionHub(), Config.nectarShooter);//TODO: float mode
+    private final NextMotor pollenShooter = new NextMotor(RobotController.expansionHub(), Config.pollenShooter);//TODO: float mode
 
     private double nectarTargetRpm = 0;
     private double pollenTargetRpm = 0;

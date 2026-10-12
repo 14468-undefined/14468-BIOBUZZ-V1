@@ -1,13 +1,15 @@
 package org.firstinspires.ftc.teamcode.subsystem;
 
 import com.pedropathing.ivy.Command;
+import dev.nextftc.hardware.RobotController;
 import dev.nextftc.hardware.actuators.NextMotor;
 import dev.nextftc.robot.Mechanism;
 import dev.nextftc.units.measuretypes.AngularVelocity;
+import org.firstinspires.ftc.teamcode.util.Config;
 
 
 public class IntakeSubsystem implements Mechanism {
-    private final NextMotor intakeMotor = new NextMotor("intake");
+    private final NextMotor intakeMotor = new NextMotor(RobotController.expansionHub(), Config.intake);
 
     private IntakeState intakeState;
     public enum IntakeState {
