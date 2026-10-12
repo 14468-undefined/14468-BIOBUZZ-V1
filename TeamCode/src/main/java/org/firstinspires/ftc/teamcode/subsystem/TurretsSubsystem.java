@@ -13,6 +13,7 @@ import org.firstinspires.ftc.teamcode.util.Config;
 import org.firstinspires.ftc.teamcode.util.Constants;
 import org.firstinspires.ftc.teamcode.util.FieldState;
 
+import static dev.nextftc.units.Units.Degrees;
 import static org.firstinspires.ftc.teamcode.util.Constants.TurretConstants.NECTAR_TURRET_LATERAL_OFFSET;
 import static org.firstinspires.ftc.teamcode.util.Constants.TurretConstants.T_NECTAR_KF;
 import static org.firstinspires.ftc.teamcode.util.Constants.TurretConstants.T_POLLEN_KF;
@@ -24,7 +25,8 @@ public class TurretsSubsystem implements Mechanism {
     public enum TurretState {
         OFF,
         AUTO,
-        MANUAL
+        MANUAL,
+        TUNING
     }
 
     private int manualDegrees = 0;
@@ -34,8 +36,15 @@ public class TurretsSubsystem implements Mechanism {
     private final NextFeedbackCRServo nectarTurret1 = new NextFeedbackCRServo(RobotController.expansionHub(), Config.nectarTurret1, new NextAnalogInput(RobotController.expansionHub(), Config.nectarAnalogEncoder));
     private final NextCRServo nectarTurret2 = new NextCRServo(RobotController.expansionHub(), Config.nectarTurret2);
 
-    private final PIDController pollenPID = new PIDController(new PIDCoefficients(Constants.TurretConstants.T_POLLEN_KP, Constants.TurretConstants.T_POLLEN_KI, Constants.TurretConstants.T_POLLEN_KD));
-    private final PIDController nectarPID = new PIDController(new PIDCoefficients(Constants.TurretConstants.T_NECTAR_KP, Constants.TurretConstants.T_NECTAR_KI, Constants.TurretConstants.T_NECTAR_KD));
+    private PIDController pollenPID = new PIDController(new PIDCoefficients(Constants.TurretConstants.T_POLLEN_KP, Constants.TurretConstants.T_POLLEN_KI, Constants.TurretConstants.T_POLLEN_KD));
+    private PIDController nectarPID = new PIDController(new PIDCoefficients(Constants.TurretConstants.T_NECTAR_KP, Constants.TurretConstants.T_NECTAR_KI, Constants.TurretConstants.T_NECTAR_KD));
+
+    private double lastPollenKP = Constants.TurretConstants.T_POLLEN_KP;
+    private double lastPollenKI = Constants.TurretConstants.T_POLLEN_KI;
+    private double lastPollenKD = Constants.TurretConstants.T_POLLEN_KD;
+    private double lastNectarKP = Constants.TurretConstants.T_NECTAR_KP;
+    private double lastNectarKI = Constants.TurretConstants.T_NECTAR_KI;
+    private double lastNectarKD = Constants.TurretConstants.T_NECTAR_KD;
 
     private static final double TURRET_LIMIT_DEG = 180;//travel 180 degrees max in each direction
     private static final double LIMIT_MARGIN_DEG = 5;
@@ -84,12 +93,21 @@ public class TurretsSubsystem implements Mechanism {
 
 
     public double getNectarTurretCurrentAngle(){
-        //TODO - make sure it aligns with the unit circle stuff where 0 is straight ahead
-        return 0;
+        return servoToTurretDeg(nectarTurret1.getAngle().into(Degrees), Constants.TurretConstants.NECTAR_ZERO_DEG, Constants.TurretConstants.NECTAR_GEAR_RATIO, Constants.TurretConstants.NECTAR_ANGLE_SIGN);
     }
     public double getPollenTurretCurrentAngle(){
-        //TODO - make sure it aligns with the unit circle stuff where 0 is straight ahead
-        return 0;
+        return servoToTurretDeg(pollenTurret1.getAngle().into(Degrees), Constants.TurretConstants.POLLEN_ZERO_DEG, Constants.TurretConstants.POLLEN_GEAR_RATIO, Constants.TurretConstants.POLLEN_ANGLE_SIGN);
+    }
+
+    public double getNectarServoAngleDeg(){
+        return nectarTurret1.getAngle().into(Degrees);
+    }
+    public double getPollenServoAngleDeg(){
+        return pollenTurret1.getAngle().into(Degrees);
+    }
+
+    private static double servoToTurretDeg(double servoDeg, double zeroDeg, double gearRatio, double sign) {
+        return normalizeDeg(servoDeg - zeroDeg) * gearRatio * sign;
     }
 
     //TODO: idle state or just set to 0 when don't want PID active
@@ -104,6 +122,13 @@ public class TurretsSubsystem implements Mechanism {
     }
     public double nectarTurretTargetPowerMANUAL(int deg){
         return turretPower(nectarPID, nectarSide, deg, getNectarTurretCurrentAngle(), T_NECTAR_KF);
+    }
+
+    public double pollenTurretTargetPowerTUNING(){
+        return turretPower(pollenPID, pollenSide, Constants.TurretConstants.TUNING_POLLEN_ANGLE, getPollenTurretCurrentAngle(), Constants.TurretConstants.T_POLLEN_KF);
+    }
+    public double nectarTurretTargetPowerTUNING(){
+        return turretPower(nectarPID, nectarSide, Constants.TurretConstants.TUNING_NECTAR_ANGLE, getNectarTurretCurrentAngle(), Constants.TurretConstants.T_NECTAR_KF);
     }
 
     public void setCustomDeg(int deg){
@@ -164,6 +189,19 @@ public class TurretsSubsystem implements Mechanism {
 
     @Override
     public void periodic() {
+        if (Constants.TurretConstants.T_POLLEN_KP != lastPollenKP || Constants.TurretConstants.T_POLLEN_KI != lastPollenKI || Constants.TurretConstants.T_POLLEN_KD != lastPollenKD) {
+            lastPollenKP = Constants.TurretConstants.T_POLLEN_KP;
+            lastPollenKI = Constants.TurretConstants.T_POLLEN_KI;
+            lastPollenKD = Constants.TurretConstants.T_POLLEN_KD;
+            pollenPID = new PIDController(new PIDCoefficients(lastPollenKP, lastPollenKI, lastPollenKD));
+        }
+        if (Constants.TurretConstants.T_NECTAR_KP != lastNectarKP || Constants.TurretConstants.T_NECTAR_KI != lastNectarKI || Constants.TurretConstants.T_NECTAR_KD != lastNectarKD) {
+            lastNectarKP = Constants.TurretConstants.T_NECTAR_KP;
+            lastNectarKI = Constants.TurretConstants.T_NECTAR_KI;
+            lastNectarKD = Constants.TurretConstants.T_NECTAR_KD;
+            nectarPID = new PIDController(new PIDCoefficients(lastNectarKP, lastNectarKI, lastNectarKD));
+        }
+
         switch (turretState) {
             case AUTO:
                 double nectarPower = nectarTurretTargetPowerAUTO();
@@ -192,6 +230,16 @@ public class TurretsSubsystem implements Mechanism {
                 pollenTurret1.setPower(pollenManualPower);
                 pollenTurret2.setPower(pollenManualPower);
 
+                break;
+
+            case TUNING:
+                double nectarTunePower = nectarTurretTargetPowerTUNING();
+                nectarTurret1.setPower(nectarTunePower);
+                nectarTurret2.setPower(nectarTunePower);
+
+                double pollenTunePower = pollenTurretTargetPowerTUNING();
+                pollenTurret1.setPower(pollenTunePower);
+                pollenTurret2.setPower(pollenTunePower);
                 break;
         }
 
