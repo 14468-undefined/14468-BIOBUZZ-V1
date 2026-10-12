@@ -6,6 +6,7 @@ import dev.nextftc.hardware.actuators.NextMotor;
 import dev.nextftc.robot.Mechanism;
 import dev.nextftc.units.measuretypes.AngularVelocity;
 import org.firstinspires.ftc.teamcode.util.Config;
+import org.firstinspires.ftc.teamcode.util.Constants;
 
 
 public class TransferSubsystem implements Mechanism {
@@ -17,7 +18,8 @@ public class TransferSubsystem implements Mechanism {
         REVERSE,
         SHOOT,
         OFF,
-        CUSTOM
+        CUSTOM,
+        TUNING
     }
 
     private final double transferNormal = 0.5;
@@ -70,6 +72,9 @@ public class TransferSubsystem implements Mechanism {
                 break;
             case OFF:
                 transferMotor.setThrottle(off);
+                break;
+            case TUNING:
+                transferMotor.setThrottle(Constants.IntakeConstants.TRANSFER_TUNING_POWER);
                 break;
 
 

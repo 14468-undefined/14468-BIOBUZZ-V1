@@ -68,6 +68,14 @@ public final class Constants{
 
    }
 
+   public static final class IntakeConstants{
+
+       public static double INTAKE_TUNING_POWER = 0;
+       public static double TRANSFER_TUNING_POWER = 0;
+
+
+   }
+
 
 
 }

@@ -6,6 +6,7 @@ import dev.nextftc.hardware.actuators.NextMotor;
 import dev.nextftc.robot.Mechanism;
 import dev.nextftc.units.measuretypes.AngularVelocity;
 import org.firstinspires.ftc.teamcode.util.Config;
+import org.firstinspires.ftc.teamcode.util.Constants;
 
 
 public class IntakeSubsystem implements Mechanism {
@@ -17,7 +18,8 @@ public class IntakeSubsystem implements Mechanism {
         REVERSE,
         SHOOT,
         OFF,
-        CUSTOM
+        CUSTOM,
+        TUNING
     }
 
     private final double intakeNormal = 0.5;
@@ -75,6 +77,10 @@ public class IntakeSubsystem implements Mechanism {
 
             case CUSTOM:
                 intakeMotor.setThrottle(custom);
+                break;
+
+            case TUNING:
+                intakeMotor.setThrottle(Constants.IntakeConstants.INTAKE_TUNING_POWER);
                 break;
         }
     }
