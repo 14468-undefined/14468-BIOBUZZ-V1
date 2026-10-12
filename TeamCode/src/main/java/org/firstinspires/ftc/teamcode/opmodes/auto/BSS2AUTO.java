@@ -29,59 +29,60 @@ public class BSS2AUTO extends NextOpMode {//TODO: rename
 
     //TODO: anthony - can you rename all of these - have to be like shotPose, moveToShootControlPoint
     private final Pose start = poseFactory.of(82, 133, 90);
-    private final Pose point1 = poseFactory.of(82, 133, 90);
-    private final Pose path1 = poseFactory.of(133, 133, 90);
-    private final Pose path1Control1 = poseFactory.of(128.6392, 103.676, 0);
-    private final Pose point3 = poseFactory.of(132.1382, 130, 90);
-    private final Pose point4 = poseFactory.of(82.2606, 109.5764, -90);
-    private final Pose point5 = poseFactory.of(82, 20, -90.1667);
-    private final Pose point6Start = poseFactory.of(82, 20, -90);
-    private final Pose point6 = poseFactory.of(94.5, 13, -90);
-    private final Pose point7 = poseFactory.of(94.5, 9, -90);
-    private final Pose point8 = poseFactory.of(82, 23.5, 270);
-    private final Pose point9 = poseFactory.of(106.5, 38.25, 31.0497);
-    private final Pose point10Start = poseFactory.of(106.5, 38.25, 270);
-    private final Pose point10 = poseFactory.of(131, 53, 180);
-    private final Pose point10Control1 = poseFactory.of(111.4737, 55.4883, 0);
+    //SHOT here
+    //private final Pose point1 = poseFactory.of(82, 133, 90);
+    private final Pose loadingZone = poseFactory.of(133, 133, 90);
+    private final Pose intakeCP = poseFactory.of(128.6392, 103.676, 0);
+    private final Pose outOfLZ = poseFactory.of(132.1382, 130, 90);
+    private final Pose underHive = poseFactory.of(82.2606, 109.5764, -90);
+    private final Pose farSide = poseFactory.of(82, 20, -90);
+   // private final Pose point6Start = poseFactory.of(82, 20, -90);
+    private final Pose preIntakePos = poseFactory.of(94.5, 13, -90);
+    private final Pose intakePos = poseFactory.of(94.5, 9, -90);
+    private final Pose shootPos = poseFactory.of(82, 23.5, 270);
+    private final Pose avoidOtherRobot = poseFactory.of(106.5, 38.25, 31.0497);
+    private final Pose turn = poseFactory.of(106.5, 38.25, 270);
+    private final Pose park = poseFactory.of(131, 53, 180);
+    private final Pose parkCP = poseFactory.of(111.4737, 55.4883, 0);
 
-    public Path path1() {
-        return line(start, point1).constant(point1);
-    }//TODO: anthony - name like moveToShoot
+   // public Path path1() {
+  //      return line(start, point1).constant(point1);
+   // }//TODO: anthony - name like moveToShoot
 
-    public Path path1_2() {
-        return curve(point1, path1Control1, path1).constant(path1);
+    public Path intakeLZ() {
+        return curve(start, intakeCP, loadingZone).constant(loadingZone);
     }
 
-    public Path path3() {
-        return line(path1, point3).constant(point3);
+    public Path backOut() {
+        return line(loadingZone, outOfLZ).constant(outOfLZ);
     }
 
-    public Path path4() {
-        return line(point3, point4).linear(point3, point4);
+    public Path underHive() {
+        return line(outOfLZ, underHive).linear(outOfLZ, underHive);
     }
 
-    public Path path5() {
-        return line(point4, point5).tangent();
+    public Path throughHive() {
+        return line(underHive, farSide).tangent();
     }
 
-    public Path path6() {
-        return line(point6Start, point6).linear(point6Start, point6);
+    public Path shootAndMoveToIntake() {
+        return line(farSide, preIntakePos).linear(farSide, preIntakePos);
     }
 
-    public Path path7() {
-        return line(point6, point7).tangent();
+    public Path intakeFlower() {
+        return line(preIntakePos, intakePos).tangent();
     }
 
-    public Path path8() {
-        return line(point7, point8).constant(point8);
+    public Path shootFinal() {
+        return line(intakePos, shootPos).constant(shootPos);
     }
 
-    public Path path9() {
-        return line(point8, point9).tangent();
+    public Path curveToPark() {
+        return line(shootPos, avoidOtherRobot).tangent();
     }
 
-    public Path path10() {
-        return curve(point10Start, point10Control1, point10).linear(point10Start, point10);
+    public Path goPark() {
+        return curve(turn, parkCP, park).linear(turn, park);
     }
 
 
