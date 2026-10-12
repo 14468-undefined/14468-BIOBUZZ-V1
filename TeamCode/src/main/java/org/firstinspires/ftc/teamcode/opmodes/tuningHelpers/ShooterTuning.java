@@ -5,9 +5,12 @@ package org.firstinspires.ftc.teamcode.opmodes.tuningHelpers;
 
 import static dev.nextftc.units.Units.RotationsPerMinute;
 
+import com.bylazar.telemetry.PanelsTelemetry;
+import com.bylazar.telemetry.TelemetryManager;
 import com.pedropathing.ivy.Scheduler;
 
 import org.firstinspires.ftc.teamcode.subsystem.BaseRobot;
+import org.firstinspires.ftc.teamcode.util.Constants;
 
 import dev.nextftc.robot.opmode.NextOpMode;
 import dev.nextftc.robot.opmode.NextTeleop;
@@ -18,6 +21,7 @@ import org.firstinspires.ftc.teamcode.subsystem.ShootersSubsystem;
 @NextTeleop(name = "Shooter Tuning", group = "1")
 public class ShooterTuning extends NextOpMode {
     private final BaseRobot robot;
+    private final TelemetryManager panelsTelemetry = PanelsTelemetry.INSTANCE.getTelemetry();
 
     public ShooterTuning(BaseRobot robot) {
         super(robot);
@@ -38,10 +42,20 @@ public class ShooterTuning extends NextOpMode {
 
     @Override
     public void periodic() {
-        telemetry.addData("Pollen (RPM)", robot.getShooter().getPollenShooter().getEncoderVelocity().into(RotationsPerMinute));
-        telemetry.addData("Nectar (RPM)", robot.getShooter().getNectarShooter().getEncoderVelocity().into(RotationsPerMinute));
+        double pollenRpm = robot.getShooter().getPollenShooter().getEncoderVelocity().into(RotationsPerMinute);
+        double nectarRpm = robot.getShooter().getNectarShooter().getEncoderVelocity().into(RotationsPerMinute);
+        double pollenTarget = Constants.ShooterConstants.POLLEN_TUNING_RPM;
+        double nectarTarget = Constants.ShooterConstants.NECTAR_TUNING_RPM;
 
-        telemetry.update();
+        telemetry.addData("Pollen (RPM)", pollenRpm);
+        telemetry.addData("Nectar (RPM)", nectarRpm);
+
+        panelsTelemetry.addData("pollenTarget", pollenTarget);
+        panelsTelemetry.addData("pollenActual", pollenRpm);
+        panelsTelemetry.addData("nectarTarget", nectarTarget);
+        panelsTelemetry.addData("nectarActual", nectarRpm);
+
+        panelsTelemetry.update(telemetry);
     }
 
     @Override
