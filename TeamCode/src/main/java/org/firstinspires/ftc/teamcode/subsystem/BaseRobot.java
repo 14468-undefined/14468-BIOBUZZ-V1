@@ -4,12 +4,11 @@ package org.firstinspires.ftc.teamcode.subsystem;
 import androidx.annotation.NonNull;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.ivy.Command;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import dev.nextftc.hardware.RobotController;
 import dev.nextftc.robot.NextRobot;
 import dev.nextftc.robot.Mechanism;
-import dev.nextftc.robot.drive.DriveCommands;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
+import org.firstinspires.ftc.teamcode.subsystem.old.FlowerScorerSubsystem;
 import org.firstinspires.ftc.teamcode.util.FieldState;
 
 
@@ -32,6 +31,8 @@ public class BaseRobot implements NextRobot {
 
     public final ShootersSubsystem shooters = new ShootersSubsystem(fieldState);
     public final TurretsSubsystem turrets = new TurretsSubsystem(fieldState);
+    public final TransferSubsystem transfer = new TransferSubsystem();
+
 
     public BaseRobot(){}
 
@@ -72,7 +73,8 @@ public class BaseRobot implements NextRobot {
                 limelight,
                 sensors,
                 shooters,
-                turrets
+                turrets,
+                transfer
 
         );
     }
