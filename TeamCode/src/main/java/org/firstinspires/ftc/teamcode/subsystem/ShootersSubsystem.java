@@ -8,10 +8,7 @@ import com.pedropathing.ivy.Command;
 import dev.nextftc.hardware.RobotController;
 import dev.nextftc.hardware.actuators.NextMotor;
 import dev.nextftc.robot.Mechanism;
-import org.firstinspires.ftc.teamcode.util.Config;
-import org.firstinspires.ftc.teamcode.util.Constants;
-import org.firstinspires.ftc.teamcode.util.FieldState;
-
+import org.firstinspires.ftc.teamcode.util.*;
 
 
 public class ShootersSubsystem implements Mechanism {
@@ -57,7 +54,7 @@ public class ShootersSubsystem implements Mechanism {
         nectarShooter.setZeroPowerBehavior(NextMotor.ZeroPowerBehavior.FLOAT);
 
         // Separate gains per shooter. F = kV
-        setNectarPIDF(S_NECTAR_KP, S_POLLEN_KI, S_POLLEN_KD, S_NECTAR_KF);
+        setNectarPIDF(S_NECTAR_KP, S_NECTAR_KI, S_NECTAR_KD, S_NECTAR_KF);
         setPollenPIDF(S_POLLEN_KP, S_POLLEN_KI, S_POLLEN_KD, S_POLLEN_KF);
     }
 
@@ -109,9 +106,13 @@ public class ShootersSubsystem implements Mechanism {
     }
 
     // TODO: LUT (distance -> RPM) in its own class, ideally one table per goalSide
-    private double rpmForDistance(double distance) {
-        return 0;
+    private double nectarRpmForDistance(double distance) {
+        return NectarShooterLUT.get(distance);
     }
+    private double pollenRpmForDistance(double distance) {
+        return PollenShooterLUT.get(distance);
+    }
+
 
     // ---- Commands (mode switches / one-shots) ----
     public Command enableAutoRpm()  { return instant(() -> shooterState = ShooterState.AUTO); }
@@ -188,8 +189,8 @@ public class ShootersSubsystem implements Mechanism {
     public void periodic() {
         switch (shooterState) {
             case AUTO:
-                double nectarAuto = rpmForDistance(getNectarShooterDistanceToGoal());
-                double pollenAuto = rpmForDistance(getPollenShooterDistanceToGoal());
+                double nectarAuto = nectarRpmForDistance(getNectarShooterDistanceToGoal());
+                double pollenAuto = pollenRpmForDistance(getPollenShooterDistanceToGoal());
 
                 // Deadband so pose jitter doesn't constantly rewrite the setpoint
                 if (Math.abs(nectarAuto - nectarTargetRpm) > RPM_DEADBAND) nectarTargetRpm = nectarAuto;

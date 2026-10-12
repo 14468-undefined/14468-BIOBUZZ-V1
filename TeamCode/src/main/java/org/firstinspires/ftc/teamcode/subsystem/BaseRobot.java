@@ -38,12 +38,14 @@ public class BaseRobot implements NextRobot {
     public final TransferSubsystem transfer = new TransferSubsystem();
     public final DriveSubsystem drive = new DriveSubsystem();
 
-    public BaseRobot(){}
+    public BaseRobot(){
+        fieldState.setPoseSupplier(() -> getFollower().pose());
+    }
 
 
 
 
-    public Follower getFollower() {//TODO: actually integrate this follower into opmod3es
+    public Follower getFollower() {
         if (follower == null) {
             follower = Constants.create(RobotController.hardwareMap());
         }
@@ -51,6 +53,9 @@ public class BaseRobot implements NextRobot {
         return follower;
     }
     public void startDriveRobotCentric(Gamepad gamepad1) {
+        if(follower == null){
+            getFollower();
+        }
         DriveCommands.mecanumDrive(
                 drive.frontLeft,
                 drive.frontRight,
@@ -61,6 +66,7 @@ public class BaseRobot implements NextRobot {
     }
 
     public void startDriveFieldCentric(Gamepad gamepad1) {
+
         DriveCommands.mecanumDriveFieldCentric(
                 drive.frontLeft,
                 drive.frontRight,
@@ -82,7 +88,12 @@ public class BaseRobot implements NextRobot {
 
     public Command init(){
         return parallel(
-                //DO THINGS HERE FOR INITIALIZATION
+                gates.setPose(GatesSubsystem.GateState.CLOSED),
+                shooters.setState(ShootersSubsystem.ShooterState.OFF),
+                intake.setSpeed(IntakeSubsystem.IntakeState.OFF),
+                transfer.setSpeed(TransferSubsystem.TransferState.OFF),
+                turrets.setState(TurretsSubsystem.TurretState.OFF)
+
         );
     }
 
@@ -176,4 +187,5 @@ public class BaseRobot implements NextRobot {
     }
 
     //TODO - put pose and field logic in here so that i can get distance in hood and shooter and turret class without recoding it all
+
 }

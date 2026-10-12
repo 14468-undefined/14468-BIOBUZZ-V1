@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.util;
 
 import com.pedropathing.math.Pose;
 
+import java.util.Objects;
 import java.util.function.Supplier;
 
 /**
@@ -20,17 +21,18 @@ public class FieldState {
     private static final double BLUE_GARDEN_SIDE_GOAL_Y = 86; // top right in Pedro
     private static final double BLUE_LOADING_ZONE_SIDE_GOAL_Y = 55; // bottom right in Pedro
 
+    private Supplier<Pose> robotPose;
     public enum Alliance { RED, BLUE }
     public enum GoalSide { GARDEN, LOADING_ZONE }
 
-    private Supplier<Pose> robotPose = () -> new Pose(0, 0, 0);
+    public void setPoseSupplier(Supplier<Pose> poseSupplier) {
+        this.robotPose = Objects.requireNonNull(poseSupplier);
+    }
+
     private Alliance alliance = Alliance.BLUE;
     private GoalSide goalSide = GoalSide.GARDEN;
 
 
-    public void setPoseSupplier(Supplier<Pose> poseSupplier) {
-        this.robotPose = poseSupplier;
-    }
 
     public void setGoalSide(GoalSide side) {
         this.goalSide = side;
@@ -48,6 +50,9 @@ public class FieldState {
     }
 
     public Pose getRobotPose() {
+        if (robotPose == null) {
+            throw new IllegalStateException("Robot pose supplier has not been configured");
+        }
         return robotPose.get();
     }
 
@@ -81,7 +86,7 @@ public class FieldState {
      * in inches
      */
     public double[] mechanismFieldPosition(double forwardOffset, double lateralOffset) {
-        Pose pose = robotPose.get();
+        Pose pose = getRobotPose();
         double headingRad = pose.heading();
 
         double x = pose.x() + forwardOffset * Math.cos(headingRad) - lateralOffset * Math.sin(headingRad);
@@ -101,7 +106,7 @@ public class FieldState {
     }
 
     public double bearingToGoalDeg(double forwardOffset, double lateralOffset) {
-        Pose pose = robotPose.get();
+        Pose pose = getRobotPose();
         double[] pos = mechanismFieldPosition(forwardOffset, lateralOffset);
 
         double dx = goalX() - pos[0];
