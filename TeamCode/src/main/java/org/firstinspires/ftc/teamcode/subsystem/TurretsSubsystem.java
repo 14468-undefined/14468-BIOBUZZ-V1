@@ -14,9 +14,7 @@ import org.firstinspires.ftc.teamcode.util.Constants;
 import org.firstinspires.ftc.teamcode.util.FieldState;
 
 import static dev.nextftc.units.Units.Degrees;
-import static org.firstinspires.ftc.teamcode.util.Constants.TurretConstants.NECTAR_TURRET_LATERAL_OFFSET;
-import static org.firstinspires.ftc.teamcode.util.Constants.TurretConstants.T_NECTAR_KF;
-import static org.firstinspires.ftc.teamcode.util.Constants.TurretConstants.T_POLLEN_KF;
+import static org.firstinspires.ftc.teamcode.util.Constants.TurretConstants.*;
 
 public class TurretsSubsystem implements Mechanism {
 
@@ -233,13 +231,20 @@ public class TurretsSubsystem implements Mechanism {
                 break;
 
             case TUNING:
-                double nectarTunePower = nectarTurretTargetPowerTUNING();
-                nectarTurret1.setPower(nectarTunePower);
-                nectarTurret2.setPower(nectarTunePower);
+                if(Constants.TurretConstants.TUNING_NECTAR_POWER == 0) {
+                    double nectarTunePower = nectarTurretTargetPowerTUNING();
+                    nectarTurret1.setPower(nectarTunePower);
+                    nectarTurret2.setPower(nectarTunePower);
 
-                double pollenTunePower = pollenTurretTargetPowerTUNING();
-                pollenTurret1.setPower(pollenTunePower);
-                pollenTurret2.setPower(pollenTunePower);
+                    double pollenTunePower = pollenTurretTargetPowerTUNING();
+                    pollenTurret1.setPower(pollenTunePower);
+                    pollenTurret2.setPower(pollenTunePower);
+
+                }
+                else {
+                    nectarTurret1.setPower(TUNING_NECTAR_POWER);
+                    nectarTurret2.setPower(TUNING_NECTAR_POWER);
+                }
                 break;
         }
 

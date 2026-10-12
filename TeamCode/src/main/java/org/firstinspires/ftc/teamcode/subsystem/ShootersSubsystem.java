@@ -33,8 +33,8 @@ public class ShootersSubsystem implements Mechanism {
 
     private static final double RPM_DEADBAND = 25; // ignore setpoint changes smaller than this in auto mode
 
-    private final NextMotor nectarShooter = new NextMotor(RobotController.expansionHub(), Config.nectarShooter);//TODO: float mode
-    private final NextMotor pollenShooter = new NextMotor(RobotController.expansionHub(), Config.pollenShooter);//TODO: float mode
+    private final NextMotor nectarShooter = new NextMotor(RobotController.expansionHub(), Config.nectarShooter);
+    private final NextMotor pollenShooter = new NextMotor(RobotController.expansionHub(), Config.pollenShooter);
 
     private double nectarTargetRpm = 0;
     private double pollenTargetRpm = 0;
@@ -53,6 +53,8 @@ public class ShootersSubsystem implements Mechanism {
     public ShootersSubsystem(FieldState fieldState) {
         this.fieldState = fieldState;
 
+        pollenShooter.setZeroPowerBehavior(NextMotor.ZeroPowerBehavior.FLOAT);
+        nectarShooter.setZeroPowerBehavior(NextMotor.ZeroPowerBehavior.FLOAT);
 
         // Separate gains per shooter. F = kV
         setNectarPIDF(S_NECTAR_KP, S_POLLEN_KI, S_POLLEN_KD, S_NECTAR_KF);

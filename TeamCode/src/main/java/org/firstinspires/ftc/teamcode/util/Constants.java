@@ -14,6 +14,11 @@ public final class Constants{
        public static int TUNING_POLLEN_ANGLE = 0;
        public static int TUNING_NECTAR_ANGLE = 0;
 
+       public static double TUNING_NECTAR_POWER = 0;
+       public static double TUNING_POLLEN_POWER = 0;
+
+
+
 
        public static double POLLEN_TURRET_FORWARD_OFFSET = -0.0; // TODO: measure
        public static double POLLEN_TURRET_LATERAL_OFFSET = 0.0;
