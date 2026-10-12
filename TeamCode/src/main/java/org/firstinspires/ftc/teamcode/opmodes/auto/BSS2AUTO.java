@@ -27,6 +27,7 @@ public class BSS2AUTO extends NextOpMode {//TODO: rename
 
     private final PoseFactory poseFactory = PoseFactory.degrees();
 
+    //TODO: anthony - can you rename all of these - have to be like shotPose, moveToShootControlPoint
     private final Pose start = poseFactory.of(82, 133, 90);
     private final Pose point1 = poseFactory.of(82, 133, 90);
     private final Pose path1 = poseFactory.of(133, 133, 90);
@@ -45,7 +46,7 @@ public class BSS2AUTO extends NextOpMode {//TODO: rename
 
     public Path path1() {
         return line(start, point1).constant(point1);
-    }
+    }//TODO: anthony - name like moveToShoot
 
     public Path path1_2() {
         return curve(point1, path1Control1, path1).constant(path1);
