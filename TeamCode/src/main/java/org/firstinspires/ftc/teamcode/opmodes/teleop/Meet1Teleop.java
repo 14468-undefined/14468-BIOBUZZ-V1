@@ -23,6 +23,8 @@ import static dev.nextftc.units.Units.RotationsPerMinute;
 public class Meet1Teleop extends NextOpMode {
 
     private final BaseRobot robot;
+    private  int velocity =2000;
+    // for manual hardcoding
 
 
 
@@ -31,6 +33,12 @@ public class Meet1Teleop extends NextOpMode {
         this.robot = robot;
 
     }
+    private void increaseVel(int increment) {
+        velocity += increment;
+    }
+    private void decreaseVel(int increment) {
+        velocity -= increment;
+    }
 
     private Command relocalize() {
         return instant(() -> {
@@ -38,6 +46,19 @@ public class Meet1Teleop extends NextOpMode {
             robot.getFollower().setPose(cornerPose);
         });
     }
+    //Field Centric resetting, not needed for robot centric
+    private Command resetHeading() {
+
+        return instant(() -> {
+            Pose robotPose = robot.getFollower().pose();
+            Pose newPose = new Pose(robotPose.x(), robotPose.y(), Math.toRadians(180));
+            //this is intake facing forward can change later
+            robot.getFollower().setPose(newPose);
+            robot.startDriveFieldCentric(gamepad1);
+        });
+
+    }
+
 
     @Override
     public void start() {
@@ -48,17 +69,27 @@ public class Meet1Teleop extends NextOpMode {
 
         robot.init().schedule();
         robot.startDriveRobotCentric(gamepad1);//TODO: anthony swap with field centric if you'd like but wait til we test this first
+
         robot.getFollower().setPose(AutoToTeleopPoseStorage.getEndPoseOr(new Pose(0, 0, 0)));
 
-
+        //intake
         g1.rightTrigger().isOver(.1).whileTrue(robot.teleIntake());
         g1.leftTrigger().isOver(.3).whileTrue(robot.telePurgeIntake());
 
-        g1.b().onTrue(robot.teleSpinUpShooters());
+        //shooters
+        g1.leftBumper().onTrue(robot.teleSpinUpShooters());
         g1.a().onTrue(robot.shooters.setState(ShootersSubsystem.ShooterState.OFF));//cancel
-        g1.x().onTrue(robot.launchBoth());
+        g1.rightBumper().onTrue(robot.launchBoth());
+
+        //manual shooter vel control
+        g1.dpadUp().onTrue(increaseVel(10));
+        g1.dpadDown().onTrue(decreaseVel(10));
 
 
+
+
+        //reset field centric
+        //g1.y().onTrue(resetHeading());
 
 
         g1.start().onTrue(relocalize());
@@ -68,6 +99,7 @@ public class Meet1Teleop extends NextOpMode {
 
     @Override
     public void periodic() {
+
         double forward = -gamepad1.left_stick_y;
         double lateral = -gamepad1.left_stick_x;
         double turn = -gamepad1.right_stick_x;
