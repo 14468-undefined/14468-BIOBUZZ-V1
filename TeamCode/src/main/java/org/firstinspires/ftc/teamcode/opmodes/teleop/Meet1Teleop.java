@@ -33,11 +33,11 @@ public class Meet1Teleop extends NextOpMode {
         this.robot = robot;
 
     }
-    private void increaseVel(int increment) {
-        velocity += increment;
+    private Command increaseVel(int increment) {
+        return instant(() -> velocity += increment);
     }
-    private void decreaseVel(int increment) {
-        velocity -= increment;
+    private Command decreaseVel(int increment) {
+        return instant(() -> velocity -= increment);
     }
 
     private Command relocalize() {
