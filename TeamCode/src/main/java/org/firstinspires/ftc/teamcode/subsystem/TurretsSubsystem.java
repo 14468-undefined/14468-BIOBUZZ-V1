@@ -2,52 +2,49 @@ package org.firstinspires.ftc.teamcode.subsystem;
 
 
 import com.pedropathing.ivy.Command;
-import dev.nextftc.control.feedback.PIDCoefficients;
-import dev.nextftc.control.feedback.PIDController;
 import dev.nextftc.hardware.RobotController;
-import dev.nextftc.hardware.actuators.NextCRServo;
-import dev.nextftc.hardware.actuators.NextFeedbackCRServo;
-import dev.nextftc.hardware.sensors.NextAnalogInput;
+import dev.nextftc.hardware.actuators.NextServo;
 import dev.nextftc.robot.Mechanism;
 import org.firstinspires.ftc.teamcode.util.Config;
-import org.firstinspires.ftc.teamcode.util.Constants;
 import org.firstinspires.ftc.teamcode.util.FieldState;
 
-import static dev.nextftc.units.Units.Degrees;
 import static org.firstinspires.ftc.teamcode.util.Constants.TurretConstants.*;
 
+/**
+ * Turrets driven in POSITION (servo) mode. No encoder / PID: the Axons are set to
+ * servo mode and we just command a 0..1 position.
+ *
+ * Needs these in Constants.TurretConstants (all public static, non-final so Panels can edit):
+ *   SERVO_RANGE_DEG          (double) degrees the servo travels from position 0 to 1 (~355 for Axon)
+ *   POLLEN_CENTER_POS        (double) servo position where the pollen turret points straight ahead (0.5 to start)
+ *   NECTAR_CENTER_POS        (double) same for nectar
+ *   TUNING_POLLEN_POSITION   (double) raw 0..1 position used in TUNING state
+ *   TUNING_NECTAR_POSITION   (double) raw 0..1 position used in TUNING state
+ * Already existing and still used:
+ *   POLLEN_GEAR_RATIO / NECTAR_GEAR_RATIO   (turretDeg = servoDeg * ratio)
+ *   POLLEN_ANGLE_SIGN / NECTAR_ANGLE_SIGN   (+1 or -1)
+ *   POLLEN_TURRET_FORWARD_OFFSET / LATERAL_OFFSET (and NECTAR_*)
+ */
 public class TurretsSubsystem implements Mechanism {
-
 
     private TurretState turretState = TurretState.OFF;
     public enum TurretState {
-        OFF,
-        AUTO,
-        MANUAL,
-        TUNING
+        OFF,     // stop sending position commands (servos hold whatever they were last told)
+        AUTO,    // aim at the goal using fieldState
+        MANUAL,  // aim at manualDegrees (turret degrees)
+        TUNING   // raw 0..1 servo positions from TUNING_*_POSITION
     }
 
     private int manualDegrees = 0;
 
-    private final NextFeedbackCRServo pollenTurret1 = new NextFeedbackCRServo(RobotController.expansionHub(), Config.pollenTurret1, new NextAnalogInput("pollen"));
-    private final NextCRServo pollenTurret2 = new NextCRServo(RobotController.expansionHub(), Config.pollenTurret2, 0);
-    private final NextFeedbackCRServo nectarTurret1 = new NextFeedbackCRServo(RobotController.expansionHub(), Config.nectarTurret1, new NextAnalogInput(RobotController.expansionHub(), Config.nectarAnalogEncoder));
-    private final NextCRServo nectarTurret2 = new NextCRServo(RobotController.expansionHub(), Config.nectarTurret2);
+    private final NextServo pollenTurret1 = new NextServo(RobotController.expansionHub(), Config.pollenTurret1);
+    private final NextServo pollenTurret2 = new NextServo(RobotController.expansionHub(), Config.pollenTurret2);
+    private final NextServo nectarTurret1 = new NextServo(RobotController.expansionHub(), Config.nectarTurret1);
+    private final NextServo nectarTurret2 = new NextServo(RobotController.expansionHub(), Config.nectarTurret2);
 
-    private PIDController pollenPID = new PIDController(new PIDCoefficients(Constants.TurretConstants.T_POLLEN_KP, Constants.TurretConstants.T_POLLEN_KI, Constants.TurretConstants.T_POLLEN_KD));
-    private PIDController nectarPID = new PIDController(new PIDCoefficients(Constants.TurretConstants.T_NECTAR_KP, Constants.TurretConstants.T_NECTAR_KI, Constants.TurretConstants.T_NECTAR_KD));
-
-    private double lastPollenKP = Constants.TurretConstants.T_POLLEN_KP;
-    private double lastPollenKI = Constants.TurretConstants.T_POLLEN_KI;
-    private double lastPollenKD = Constants.TurretConstants.T_POLLEN_KD;
-    private double lastNectarKP = Constants.TurretConstants.T_NECTAR_KP;
-    private double lastNectarKI = Constants.TurretConstants.T_NECTAR_KI;
-    private double lastNectarKD = Constants.TurretConstants.T_NECTAR_KD;
-
-    private static final double TURRET_LIMIT_DEG = 180;//travel 180 degrees max in each direction
+    private static final double TURRET_LIMIT_DEG = 180; // travel 180 degrees max in each direction
     private static final double LIMIT_MARGIN_DEG = 5;
     private static final double SOFT_LIMIT_DEG = TURRET_LIMIT_DEG - LIMIT_MARGIN_DEG;
-    private static final double ANGLE_TOLERANCE_DEG = 1;
 
     // Bearing has to get this far past +-180 before the turret is allowed to swap sides
     private static final double SIDE_HYSTERESIS_DEG = 10;
@@ -60,6 +57,14 @@ public class TurretsSubsystem implements Mechanism {
     private final SideTracker pollenSide = new SideTracker();
     private final SideTracker nectarSide = new SideTracker();
 
+    // Last turret angle (deg) we commanded. Used as the "where are we" reference for side picking
+    // and for telemetry, since there's no encoder feedback in position mode.
+    private double pollenCommandedDeg = 0;
+    private double nectarCommandedDeg = 0;
+
+    // Last raw servo position commanded, for telemetry
+    private double pollenPosition = 0.5;
+    private double nectarPosition = 0.5;
 
     private final FieldState fieldState;
 
@@ -79,63 +84,34 @@ public class TurretsSubsystem implements Mechanism {
         return instant(() -> setTurretState(s));
     }
 
-
-    public double getPollenTurretTargetAngle() {
-        return fieldState.bearingToGoalDeg(Constants.TurretConstants.POLLEN_TURRET_FORWARD_OFFSET, Constants.TurretConstants.POLLEN_TURRET_LATERAL_OFFSET);
-    }
-
-    public double getNectarTurretTargetAngle() {
-        return fieldState.bearingToGoalDeg(Constants.TurretConstants.NECTAR_TURRET_FORWARD_OFFSET, Constants.TurretConstants.NECTAR_TURRET_LATERAL_OFFSET);
-    }
-
-
-
-    public double getNectarTurretCurrentAngle(){
-        return servoToTurretDeg(nectarTurret1.getAngle().into(Degrees), Constants.TurretConstants.NECTAR_ZERO_DEG, Constants.TurretConstants.NECTAR_GEAR_RATIO, Constants.TurretConstants.NECTAR_ANGLE_SIGN);
-    }
-    public double getPollenTurretCurrentAngle(){
-        return servoToTurretDeg(pollenTurret1.getAngle().into(Degrees), Constants.TurretConstants.POLLEN_ZERO_DEG, Constants.TurretConstants.POLLEN_GEAR_RATIO, Constants.TurretConstants.POLLEN_ANGLE_SIGN);
-    }
-
-    public double getNectarServoAngleDeg(){
-        return nectarTurret1.getAngle().into(Degrees);
-    }
-    public double getPollenServoAngleDeg(){
-        return pollenTurret1.getAngle().into(Degrees);
-    }
-
-    private static double servoToTurretDeg(double servoDeg, double zeroDeg, double gearRatio, double sign) {
-        return normalizeDeg(servoDeg - zeroDeg) * gearRatio * sign;
-    }
-
-    //TODO: idle state or just set to 0 when don't want PID active
-    public double pollenTurretTargetPowerAUTO(){
-        return turretPower(pollenPID, pollenSide, getPollenTurretTargetAngle(), getPollenTurretCurrentAngle(), T_POLLEN_KF);
-    }
-    public double pollenTurretTargetPowerMANUAL(int deg){
-        return turretPower(pollenPID, pollenSide, deg,  getPollenTurretCurrentAngle(), T_POLLEN_KF);
-    }
-    public double nectarTurretTargetPowerAUTO(){
-        return turretPower(nectarPID, nectarSide, getNectarTurretTargetAngle(), getNectarTurretCurrentAngle(), T_NECTAR_KF);
-    }
-    public double nectarTurretTargetPowerMANUAL(int deg){
-        return turretPower(nectarPID, nectarSide, deg, getNectarTurretCurrentAngle(), T_NECTAR_KF);
-    }
-
-    public double pollenTurretTargetPowerTUNING(){
-        return turretPower(pollenPID, pollenSide, Constants.TurretConstants.TUNING_POLLEN_ANGLE, getPollenTurretCurrentAngle(), Constants.TurretConstants.T_POLLEN_KF);
-    }
-    public double nectarTurretTargetPowerTUNING(){
-        return turretPower(nectarPID, nectarSide, Constants.TurretConstants.TUNING_NECTAR_ANGLE, getNectarTurretCurrentAngle(), Constants.TurretConstants.T_NECTAR_KF);
-    }
-
-    public void setCustomDeg(int deg){
+    public void setCustomDeg(int deg) {
         manualDegrees = deg;
     }
     public Command custom(int deg) {
         return instant(() -> this.setCustomDeg(deg));
     }
 
+
+    // ---- Targets / telemetry getters ----
+
+    public double getPollenTurretTargetAngle() {
+        return fieldState.bearingToGoalDeg(POLLEN_TURRET_FORWARD_OFFSET, POLLEN_TURRET_LATERAL_OFFSET);
+    }
+
+    public double getNectarTurretTargetAngle() {
+        return fieldState.bearingToGoalDeg(NECTAR_TURRET_FORWARD_OFFSET, NECTAR_TURRET_LATERAL_OFFSET);
+    }
+
+    /** Turret angle we last told the pollen turret to go to (not a measured value). */
+    public double getPollenCommandedAngle() { return pollenCommandedDeg; }
+    public double getNectarCommandedAngle() { return nectarCommandedDeg; }
+
+    /** Last raw 0..1 servo position sent. */
+    public double getPollenPosition() { return pollenPosition; }
+    public double getNectarPosition() { return nectarPosition; }
+
+
+    // ---- Math ----
 
     // Wraps any angle into [-180, 180)
     private static double normalizeDeg(double deg) {
@@ -146,10 +122,14 @@ public class TurretsSubsystem implements Mechanism {
         return Math.max(-SOFT_LIMIT_DEG, Math.min(SOFT_LIMIT_DEG, deg));
     }
 
+    private static double clamp01(double v) {
+        return Math.max(0.0, Math.min(1.0, v));
+    }
+
     // Turns a bearing into a target inside the travel range. Near +-180 the bearing is
     // ambiguous (it can be reached from either side), so stay on the current side until
     // the bearing has moved well clear of the boundary.
-    private double resolveTarget(double bearingDeg, double currentDeg, SideTracker tracker) {
+    private double resolveTarget(double bearingDeg, double referenceDeg, SideTracker tracker) {
         double b = normalizeDeg(bearingDeg);
 
         if (Math.abs(b) <= 180 - SIDE_HYSTERESIS_DEG) {
@@ -157,7 +137,7 @@ public class TurretsSubsystem implements Mechanism {
             return clampToTravel(b);
         }
 
-        if (tracker.side == 0) tracker.side = currentDeg >= 0 ? 1 : -1;
+        if (tracker.side == 0) tracker.side = referenceDeg >= 0 ? 1 : -1;
 
         double onSide;
         if (tracker.side > 0) onSide = b > 0 ? b : b + 360;
@@ -165,89 +145,65 @@ public class TurretsSubsystem implements Mechanism {
         return clampToTravel(onSide);
     }
 
-    private double turretPower(PIDController pid, SideTracker tracker, double bearingDeg, double currentDeg, double kF) {
+    // turret degrees -> servo position (0..1)
+    // turretDeg = servoDeg * gearRatio * sign  =>  servoDeg = turretDeg / (gearRatio * sign)
+    private static double degToPosition(double turretDeg, double centerPos, double gearRatio, double sign) {
+        if (gearRatio == 0 || SERVO_RANGE_DEG == 0) return clamp01(centerPos);
+        double servoDeg = turretDeg / gearRatio * sign;
+        return clamp01(centerPos + servoDeg / SERVO_RANGE_DEG);
+    }
 
-        double target = resolveTarget(bearingDeg, currentDeg, tracker);
-        double error = target - currentDeg;
 
-        double output = pid.calculate(error);
+    // ---- Output ----
 
-        // Static friction
-        if (Math.abs(error) > ANGLE_TOLERANCE_DEG) {
-            output += kF * Math.signum(error);
-        }
+    private void commandPollenAngle(double bearingDeg) {
+        double target = resolveTarget(bearingDeg, pollenCommandedDeg, pollenSide);
+        pollenCommandedDeg = target;
+        setPollenPosition(degToPosition(target, POLLEN_CENTER_POS, POLLEN_GEAR_RATIO, POLLEN_ANGLE_SIGN));
+    }
 
-        // Hard cutoff
-        if (currentDeg >= SOFT_LIMIT_DEG && output > 0) output = 0;
-        if (currentDeg <= -SOFT_LIMIT_DEG && output < 0) output = 0;
+    private void commandNectarAngle(double bearingDeg) {
+        double target = resolveTarget(bearingDeg, nectarCommandedDeg, nectarSide);
+        nectarCommandedDeg = target;
+        setNectarPosition(degToPosition(target, NECTAR_CENTER_POS, NECTAR_GEAR_RATIO, NECTAR_ANGLE_SIGN));
+    }
 
-        return Math.max(-1.0, Math.min(1.0, output));
+    private void setPollenPosition(double pos) {
+        pollenPosition = clamp01(pos);
+        pollenTurret1.setPosition(pollenPosition);
+        pollenTurret2.setPosition(pollenPosition);
+    }
+
+    private void setNectarPosition(double pos) {
+        nectarPosition = clamp01(pos);
+        nectarTurret1.setPosition(nectarPosition);
+        nectarTurret2.setPosition(nectarPosition);
     }
 
 
     @Override
     public void periodic() {
-        if (Constants.TurretConstants.T_POLLEN_KP != lastPollenKP || Constants.TurretConstants.T_POLLEN_KI != lastPollenKI || Constants.TurretConstants.T_POLLEN_KD != lastPollenKD) {
-            lastPollenKP = Constants.TurretConstants.T_POLLEN_KP;
-            lastPollenKI = Constants.TurretConstants.T_POLLEN_KI;
-            lastPollenKD = Constants.TurretConstants.T_POLLEN_KD;
-            pollenPID = new PIDController(new PIDCoefficients(lastPollenKP, lastPollenKI, lastPollenKD));
-        }
-        if (Constants.TurretConstants.T_NECTAR_KP != lastNectarKP || Constants.TurretConstants.T_NECTAR_KI != lastNectarKI || Constants.TurretConstants.T_NECTAR_KD != lastNectarKD) {
-            lastNectarKP = Constants.TurretConstants.T_NECTAR_KP;
-            lastNectarKI = Constants.TurretConstants.T_NECTAR_KI;
-            lastNectarKD = Constants.TurretConstants.T_NECTAR_KD;
-            nectarPID = new PIDController(new PIDCoefficients(lastNectarKP, lastNectarKI, lastNectarKD));
-        }
-
         switch (turretState) {
             case AUTO:
-                double nectarPower = nectarTurretTargetPowerAUTO();
-                nectarTurret1.setPower(nectarPower);
-                nectarTurret2.setPower(nectarPower);
-
-                double pollenPower = pollenTurretTargetPowerAUTO();
-                pollenTurret1.setPower(pollenPower);
-                pollenTurret2.setPower(pollenPower);
+                commandNectarAngle(getNectarTurretTargetAngle());
+                commandPollenAngle(getPollenTurretTargetAngle());
                 break;
-
-            case OFF:
-                pollenTurret1.setPower(0);
-                pollenTurret2.setPower(0);
-                nectarTurret1.setPower(0);
-                nectarTurret2.setPower(0);
-                break;
-
 
             case MANUAL:
-                double nectarManualPower = nectarTurretTargetPowerMANUAL(manualDegrees);
-                nectarTurret1.setPower(nectarManualPower);
-                nectarTurret2.setPower(nectarManualPower);
-
-                double pollenManualPower = pollenTurretTargetPowerMANUAL(manualDegrees);
-                pollenTurret1.setPower(pollenManualPower);
-                pollenTurret2.setPower(pollenManualPower);
-
+                commandNectarAngle(manualDegrees);
+                commandPollenAngle(manualDegrees);
                 break;
 
             case TUNING:
-                if(Constants.TurretConstants.TUNING_NECTAR_POWER == 0) {
-                    double nectarTunePower = nectarTurretTargetPowerTUNING();
-                    nectarTurret1.setPower(nectarTunePower);
-                    nectarTurret2.setPower(nectarTunePower);
+                // Raw positions straight from Panels, no gear ratio / limits applied.
+                setPollenPosition(TUNING_POLLEN_POSITION);
+                setNectarPosition(TUNING_NECTAR_POSITION);
+                break;
 
-                    double pollenTunePower = pollenTurretTargetPowerTUNING();
-                    pollenTurret1.setPower(pollenTunePower);
-                    pollenTurret2.setPower(pollenTunePower);
-
-                }
-                else {
-                    nectarTurret1.setPower(TUNING_NECTAR_POWER);
-                    nectarTurret2.setPower(TUNING_NECTAR_POWER);
-                }
+            case OFF:
+            default:
+                // Position servos have no "off". Just stop updating them.
                 break;
         }
-
-
     }
 }

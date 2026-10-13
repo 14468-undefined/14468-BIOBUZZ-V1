@@ -35,7 +35,8 @@ public class ShooterTuning extends NextOpMode {
         CommandGamepad g1 = new CommandGamepad(gamepad1);
 
 
-        robot.shooters.setState(ShootersSubsystem.ShooterState.TUNING);
+        robot.shooters.stateSetter(ShootersSubsystem.ShooterState.TUNING);
+        //robot.shooters.getNectarShooter().setThrottle(1);
 
     }
 
@@ -56,6 +57,8 @@ public class ShooterTuning extends NextOpMode {
         panelsTelemetry.addData("nectarActual", nectarRpm);
 
         panelsTelemetry.update(telemetry);
+
+
     }
 
     @Override

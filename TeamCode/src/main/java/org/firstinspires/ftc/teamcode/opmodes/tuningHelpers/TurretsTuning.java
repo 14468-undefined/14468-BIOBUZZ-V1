@@ -17,7 +17,7 @@ import dev.nextftc.robot.triggers.Trigger;
 @NextTeleop(name = "Turret Tuning", group = "1")
 public class TurretsTuning extends NextOpMode {
     private final BaseRobot robot;
-    private AnalogInput pollenRaw;
+    //private AnalogInput pollenRaw;
 
     public TurretsTuning(BaseRobot robot) {
         super(robot);
@@ -34,12 +34,13 @@ public class TurretsTuning extends NextOpMode {
 
         robot.turrets.setTurretState(TurretsSubsystem.TurretState.TUNING);
         // Quick kill switch / re-enable
-        pollenRaw = hardwareMap.get(AnalogInput.class, "pollen");
+        //pollenRaw = hardwareMap.get(AnalogInput.class, "pollen");
     }
 
     @Override
     public void periodic() {
-        double pollenTarget = Constants.TurretConstants.TUNING_POLLEN_ANGLE;
+
+        /*double pollenTarget = Constants.TurretConstants.TUNING_POLLEN_ANGLE;
         double nectarTarget = Constants.TurretConstants.TUNING_NECTAR_ANGLE;
         double pollenCurrent = robot.turrets.getPollenTurretCurrentAngle();
         double nectarCurrent = robot.turrets.getNectarTurretCurrentAngle();
@@ -62,6 +63,8 @@ public class TurretsTuning extends NextOpMode {
         double v = pollenRaw.getVoltage();
         telemetry.addData("Pollen voltage (V)", v);
         telemetry.addData("Pollen angle from voltage (deg)", v / 3.3 * 360);
+
+         */
     }
 
     @Override

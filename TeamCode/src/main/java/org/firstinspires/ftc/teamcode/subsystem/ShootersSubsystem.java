@@ -21,7 +21,7 @@ public class ShootersSubsystem implements Mechanism {
         TUNING
     }
 
-    private void stateSetter(ShooterState shooterState) {
+    public void stateSetter(ShooterState shooterState) {
         this.shooterState = shooterState;
     }
     public Command setState(ShooterState s) {
@@ -203,6 +203,8 @@ public class ShootersSubsystem implements Mechanism {
             case TUNING:
                 nectarTargetRpm = NECTAR_TUNING_RPM;
                 pollenTargetRpm = POLLEN_TUNING_RPM;
+
+                //new
                 break;
             case OFF:
                 nectarTargetRpm = 0;
@@ -210,6 +212,7 @@ public class ShootersSubsystem implements Mechanism {
                 break;
 
         }
+        //nectarShooter.setThrottle(1);
 
         applyRpm(nectarShooter, nectarTargetRpm);
         applyRpm(pollenShooter, pollenTargetRpm);

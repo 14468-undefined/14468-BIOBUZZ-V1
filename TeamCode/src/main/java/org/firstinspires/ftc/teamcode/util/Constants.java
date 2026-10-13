@@ -48,6 +48,12 @@ public final class Constants{
        public static double NECTAR_ANGLE_SIGN = 1;
        public static double POLLEN_ANGLE_SIGN = 1;
 
+       public static double TUNING_POLLEN_POSITION = 0.5;
+       public static double TUNING_NECTAR_POSITION = 0.5;
+       public static double NECTAR_CENTER_POS = 0.5;
+       public static double POLLEN_CENTER_POS = 0.5;
+       public static double SERVO_RANGE_DEG = 255.0;
+
    }
 
    @Configurable
