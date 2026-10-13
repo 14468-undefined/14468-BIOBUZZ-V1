@@ -73,6 +73,7 @@ public final class Constants{
 
    }
 
+   @Configurable
    public static final class IntakeConstants{
 
        public static double INTAKE_TUNING_POWER = 0;

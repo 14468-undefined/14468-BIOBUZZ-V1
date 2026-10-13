@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.opmodes.tuningHelpers;
 
 import com.pedropathing.ivy.Scheduler;
 
+import com.qualcomm.robotcore.hardware.AnalogInput;
 import org.firstinspires.ftc.teamcode.subsystem.BaseRobot;
 import org.firstinspires.ftc.teamcode.subsystem.TurretsSubsystem;
 import org.firstinspires.ftc.teamcode.util.Constants;
@@ -11,9 +12,12 @@ import dev.nextftc.robot.opmode.NextTeleop;
 import dev.nextftc.robot.triggers.CommandGamepad;
 import dev.nextftc.robot.triggers.Trigger;
 
+
+
 @NextTeleop(name = "Turret Tuning", group = "1")
 public class TurretsTuning extends NextOpMode {
     private final BaseRobot robot;
+    private AnalogInput pollenRaw;
 
     public TurretsTuning(BaseRobot robot) {
         super(robot);
@@ -27,10 +31,10 @@ public class TurretsTuning extends NextOpMode {
 
         // TUNING state reads TUNING_POLLEN_ANGLE / TUNING_NECTAR_ANGLE every loop,
         // so edit them live in Panels and watch the turret chase them.
-        robot.turrets.setState(TurretsSubsystem.TurretState.TUNING);
 
+        robot.turrets.setTurretState(TurretsSubsystem.TurretState.TUNING);
         // Quick kill switch / re-enable
-
+        pollenRaw = hardwareMap.get(AnalogInput.class, "pollen");
     }
 
     @Override
@@ -53,6 +57,11 @@ public class TurretsTuning extends NextOpMode {
 
         telemetry.addLine("A = OFF, B = TUNING");
         telemetry.update();
+
+
+        double v = pollenRaw.getVoltage();
+        telemetry.addData("Pollen voltage (V)", v);
+        telemetry.addData("Pollen angle from voltage (deg)", v / 3.3 * 360);
     }
 
     @Override

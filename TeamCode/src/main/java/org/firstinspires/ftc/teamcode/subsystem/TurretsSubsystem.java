@@ -29,7 +29,7 @@ public class TurretsSubsystem implements Mechanism {
 
     private int manualDegrees = 0;
 
-    private final NextFeedbackCRServo pollenTurret1 = new NextFeedbackCRServo(RobotController.expansionHub(), Config.pollenTurret1, new NextAnalogInput(RobotController.expansionHub(), Config.pollenAnalogEncoder));
+    private final NextFeedbackCRServo pollenTurret1 = new NextFeedbackCRServo(RobotController.expansionHub(), Config.pollenTurret1, new NextAnalogInput("pollen"));
     private final NextCRServo pollenTurret2 = new NextCRServo(RobotController.expansionHub(), Config.pollenTurret2, 0);
     private final NextFeedbackCRServo nectarTurret1 = new NextFeedbackCRServo(RobotController.expansionHub(), Config.nectarTurret1, new NextAnalogInput(RobotController.expansionHub(), Config.nectarAnalogEncoder));
     private final NextCRServo nectarTurret2 = new NextCRServo(RobotController.expansionHub(), Config.nectarTurret2);
@@ -72,7 +72,7 @@ public class TurretsSubsystem implements Mechanism {
     }
 
 
-    private void setTurretState(TurretState turretState) {
+    public void setTurretState(TurretState turretState) {
         this.turretState = turretState;
     }
     public Command setState(TurretState s) {

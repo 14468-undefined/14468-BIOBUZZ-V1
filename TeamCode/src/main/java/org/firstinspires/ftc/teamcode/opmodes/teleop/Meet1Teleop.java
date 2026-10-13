@@ -86,8 +86,6 @@ public class Meet1Teleop extends NextOpMode {
         g1.dpadDown().onTrue(decreaseVel(10));
 
 
-
-
         //reset field centric
         //g1.y().onTrue(resetHeading());
 
