@@ -103,13 +103,21 @@ public class BaseRobot implements NextRobot {
         );
     }
 
+    public Command teleSpinUpShooters() {
+        return sequential(
+                transfer.setSpeed(TransferSubsystem.TransferState.OFF),
+                intake.setSpeed(IntakeSubsystem.IntakeState.OFF),
+                gates.setPose(GatesSubsystem.GateState.CLOSED),
+                shooters.setState(ShootersSubsystem.ShooterState.AUTO)
+        );
+    }
     public Command launchPollen(){
         return sequential(
                 //PREPARE
                 intake.setSpeed(IntakeSubsystem.IntakeState.OFF),//INTAKE OFF
                 gates.setPose(GatesSubsystem.GateState.CLOSED),//GATES CLOSED
                 shooters.setState(ShootersSubsystem.ShooterState.AUTO),//SHOOTERS ON //TODO: make a second state setter for each individual shooter
-                //TODO: if periodic is too fast, add a wait here to let the shooter set the speed before checking if at speed
+                //waitMs(100),//TODO: if periodic is too fast, add a wait here to let the shooter set the speed before checking if at speed
                 shooters.waitTilAtSpeed(),//WAIT
 
                 //SHOOT
@@ -162,11 +170,6 @@ public class BaseRobot implements NextRobot {
                 });
     }
 
-    public Command teleSpinUpShooters(){
-        return instant(
-                () -> shooters.setState(ShootersSubsystem.ShooterState.AUTO)
-        );
-    }
 
 
     @NonNull
