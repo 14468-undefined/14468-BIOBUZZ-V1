@@ -39,6 +39,15 @@ public class ShootersSubsystem implements Mechanism {
     private double manualNectarRpm = 0;
     private double manualPollenRpm = 0;
 
+    private double lastNectarKP = S_NECTAR_KP;
+    private double lastNectarKI = S_NECTAR_KI;
+    private double lastNectarKD = S_NECTAR_KD;
+    private double lastNectarKF = S_NECTAR_KF;
+    private double lastPollenKP = S_POLLEN_KP;
+    private double lastPollenKI = S_POLLEN_KI;
+    private double lastPollenKD = S_POLLEN_KD;
+    private double lastPollenKF = S_POLLEN_KF;
+
 
     private final FieldState fieldState;
 
@@ -49,6 +58,8 @@ public class ShootersSubsystem implements Mechanism {
 
     public ShootersSubsystem(FieldState fieldState) {
         this.fieldState = fieldState;
+
+        nectarShooter.setDirection(NextMotor.Direction.REVERSE);
 
         pollenShooter.setZeroPowerBehavior(NextMotor.ZeroPowerBehavior.FLOAT);
         nectarShooter.setZeroPowerBehavior(NextMotor.ZeroPowerBehavior.FLOAT);
@@ -185,8 +196,27 @@ public class ShootersSubsystem implements Mechanism {
         return Math.abs(pollenTargetRpm - getPollenCurrentRPM()) < 40 && Math.abs(nectarTargetRpm - getNectarCurrentRPM()) < 40;
     }
 
+    private void updateGains() {
+        if (S_NECTAR_KP != lastNectarKP || S_NECTAR_KI != lastNectarKI || S_NECTAR_KD != lastNectarKD || S_NECTAR_KF != lastNectarKF) {
+            lastNectarKP = S_NECTAR_KP;
+            lastNectarKI = S_NECTAR_KI;
+            lastNectarKD = S_NECTAR_KD;
+            lastNectarKF = S_NECTAR_KF;
+            setNectarPIDF(lastNectarKP, lastNectarKI, lastNectarKD, lastNectarKF);
+        }
+        if (S_POLLEN_KP != lastPollenKP || S_POLLEN_KI != lastPollenKI || S_POLLEN_KD != lastPollenKD || S_POLLEN_KF != lastPollenKF) {
+            lastPollenKP = S_POLLEN_KP;
+            lastPollenKI = S_POLLEN_KI;
+            lastPollenKD = S_POLLEN_KD;
+            lastPollenKF = S_POLLEN_KF;
+            setPollenPIDF(lastPollenKP, lastPollenKI, lastPollenKD, lastPollenKF);
+        }
+    }
+
     @Override
     public void periodic() {
+        updateGains();
+
         switch (shooterState) {
             case AUTO:
                 double nectarAuto = nectarRpmForDistance(getNectarShooterDistanceToGoal());

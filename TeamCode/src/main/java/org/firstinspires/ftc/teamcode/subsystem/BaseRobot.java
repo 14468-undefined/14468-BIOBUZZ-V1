@@ -136,28 +136,28 @@ public class BaseRobot implements NextRobot {
     public Command teleIntake() {
         return Command.build()
                 .setStart(() -> {
-                    gates.setPose(GatesSubsystem.GateState.CLOSED);
-                    intake.setSpeed(IntakeSubsystem.IntakeState.FORWARD);
-                    transfer.setSpeed(TransferSubsystem.TransferState.FORWARD);
+                    gates.setPose(GatesSubsystem.GateState.CLOSED).schedule();
+                    intake.setSpeed(IntakeSubsystem.IntakeState.FORWARD).schedule();
+                    transfer.setSpeed(TransferSubsystem.TransferState.FORWARD).schedule();
                 })
                 .setDone(() -> false)
                 .setEnd(endCondition -> {
-                    intake.setSpeed(IntakeSubsystem.IntakeState.OFF);
-                    transfer.setSpeed(TransferSubsystem.TransferState.OFF);
+                    intake.setSpeed(IntakeSubsystem.IntakeState.OFF).schedule();
+                    transfer.setSpeed(TransferSubsystem.TransferState.OFF).schedule();
                 });
     }
 
     public Command telePurgeIntake() {
         return Command.build()
                 .setStart(() -> {
-                    gates.setPose(GatesSubsystem.GateState.CLOSED);
-                    intake.setSpeed(IntakeSubsystem.IntakeState.REVERSE);
-                    transfer.setSpeed(TransferSubsystem.TransferState.REVERSE);
+                    gates.setPose(GatesSubsystem.GateState.CLOSED).schedule();
+                    intake.setSpeed(IntakeSubsystem.IntakeState.REVERSE).schedule();
+                    transfer.setSpeed(TransferSubsystem.TransferState.REVERSE).schedule();
                 })
                 .setDone(() -> false)
                 .setEnd(endCondition -> {
-                    intake.setSpeed(IntakeSubsystem.IntakeState.OFF);
-                    transfer.setSpeed(TransferSubsystem.TransferState.OFF);
+                    intake.setSpeed(IntakeSubsystem.IntakeState.OFF).schedule();
+                    transfer.setSpeed(TransferSubsystem.TransferState.OFF).schedule();
                 });
     }
 

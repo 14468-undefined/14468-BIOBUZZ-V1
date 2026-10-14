@@ -74,6 +74,8 @@ public class Meet1Teleop extends NextOpMode {
 
         //intake
         g1.rightTrigger().isOver(.1).whileTrue(robot.teleIntake());
+        //g1.rightTrigger().isOver(.1).whileTrue(robot.intake.setSpeed(IntakeSubsystem.IntakeState.FORWARD));
+
         g1.leftTrigger().isOver(.3).whileTrue(robot.telePurgeIntake());
 
         //shooters

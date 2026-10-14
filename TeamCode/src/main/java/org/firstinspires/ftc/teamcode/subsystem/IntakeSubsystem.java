@@ -31,7 +31,7 @@ public class IntakeSubsystem implements Mechanism {
     public IntakeSubsystem(){
         intakeState = IntakeState.OFF;//initialize off
 
-        intakeMotor.setDirection(NextMotor.Direction.FORWARD);//TODO:check
+        intakeMotor.setDirection(NextMotor.Direction.REVERSE);//TODO:check
     }
 
 
