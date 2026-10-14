@@ -23,7 +23,7 @@ import static dev.nextftc.units.Units.RotationsPerMinute;
 public class Meet1Teleop extends NextOpMode {
 
     private final BaseRobot robot;
-    private  int velocity =2000;
+    private  int velocity = 2000;
     // for manual hardcoding
 
 

@@ -73,7 +73,7 @@ public class BaseRobot implements NextRobot {
                 drive.backLeft,
                 drive.backRight,
                 gamepad1,
-                () -> follower.pose().heading()
+                () -> getFollower().pose().heading()
         ).schedule();
     }
 
@@ -108,7 +108,8 @@ public class BaseRobot implements NextRobot {
                 //PREPARE
                 intake.setSpeed(IntakeSubsystem.IntakeState.OFF),//INTAKE OFF
                 gates.setPose(GatesSubsystem.GateState.CLOSED),//GATES CLOSED
-                shooters.setState(ShootersSubsystem.ShooterState.AUTO),//SHOOTERS ON
+                shooters.setState(ShootersSubsystem.ShooterState.AUTO),//SHOOTERS ON //TODO: make a second state setter for each individual shooter
+                //TODO: if periodic is too fast, add a wait here to let the shooter set the speed before checking if at speed
                 shooters.waitTilAtSpeed(),//WAIT
 
                 //SHOOT
