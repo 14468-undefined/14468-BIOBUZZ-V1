@@ -36,7 +36,7 @@ public class IntakeSubsystem implements Mechanism {
 
 
 
-    private void setState(IntakeState intakeState) {
+    public void setState(IntakeState intakeState) {
         this.intakeState = intakeState;
     }
     public Command setSpeed(IntakeState s) {

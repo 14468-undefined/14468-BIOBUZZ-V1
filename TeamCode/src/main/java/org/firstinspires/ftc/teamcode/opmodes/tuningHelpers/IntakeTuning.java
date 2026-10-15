@@ -30,7 +30,7 @@ public class IntakeTuning extends NextOpMode {
 
         // TUNING state reads TUNING_POLLEN_ANGLE / TUNING_NECTAR_ANGLE every loop,
         // so edit them live in Panels and watch the turret chase them.
-        g1.rightTrigger().isOver(.1).onTrue(robot.intake.setSpeed(IntakeSubsystem.IntakeState.FORWARD));
+        /*g1.rightTrigger().isOver(.1).onTrue(robot.intake.setSpeed(IntakeSubsystem.IntakeState.FORWARD));
         g1.rightTrigger().isOver(.1).onFalse(robot.intake.setSpeed(IntakeSubsystem.IntakeState.TUNING));
         g1.rightBumper().onTrue(robot.intake.setSpeed(IntakeSubsystem.IntakeState.FORWARD));
         g1.rightBumper().onFalse(robot.intake.setSpeed(IntakeSubsystem.IntakeState.TUNING));
@@ -42,6 +42,11 @@ public class IntakeTuning extends NextOpMode {
 
 
 
+         */
+
+
+        robot.intake.setState(IntakeSubsystem.IntakeState.TUNING);
+        robot.transfer.setState(TransferSubsystem.TransferState.TUNING);
     }
 
     @Override

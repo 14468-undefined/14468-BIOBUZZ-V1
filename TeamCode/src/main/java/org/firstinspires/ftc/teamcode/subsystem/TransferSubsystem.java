@@ -36,7 +36,7 @@ public class TransferSubsystem implements Mechanism {
 
 
 
-    private void setState(TransferState transferState) {
+    public void setState(TransferState transferState) {
         this.transferState = transferState;
     }
     public Command setSpeed(TransferState s) {

@@ -58,12 +58,14 @@ public class ShooterTest extends NextOpMode {
 
         telemetry.addData("Test RPM", testRpm);
         telemetry.addData("Spinning", robot.shooters.isSpinning());
-        telemetry.addData("Nectar target", robot.shooters.getNectarTargetRpm());
-        telemetry.addData("Pollen target", robot.shooters.getPollenTargetRpm());
+        //telemetry.addData("Nectar target", robot.shooters.getNectarTargetRpm());
+        //telemetry.addData("Pollen target", robot.shooters.getPollenTargetRpm());
         telemetry.addData("Nectar dist", robot.shooters.getNectarShooterDistanceToGoal());
         telemetry.addData("Pollen dist", robot.shooters.getPollenShooterDistanceToGoal());
         telemetry.update();
     }
 
 
+    //0.0002 KF
+    //RPM 3500
 }

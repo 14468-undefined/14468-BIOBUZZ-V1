@@ -68,7 +68,7 @@ public class Meet1Teleop extends NextOpMode {
         CommandGamepad g2 = new CommandGamepad(gamepad2);
 
         robot.init().schedule();
-        robot.startDriveRobotCentric(gamepad1);//TODO: anthony swap with field centric if you'd like but wait til we test this first
+        robot.startDriveRobotCentric(gamepad1);//TODO: Anthony swap with field centric if you'd like but wait til we test this first
 
         robot.getFollower().setPose(AutoToTeleopPoseStorage.getEndPoseOr(new Pose(0, 0, 0)));
 
