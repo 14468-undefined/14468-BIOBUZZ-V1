@@ -54,9 +54,9 @@ dependencies {
     /**
      * NEXT FTC
      */
-    implementation 'dev.nextftc.v2:control:0.2.1'//added 9/15/26 //JS
-    implementation 'dev.nextftc.v2:hardware:0.2.1'//added 9/15/26 //JS
-    implementation 'dev.nextftc.v2:robot:0.2.1'//added 9/15/26 //JS
+    implementation 'dev.nextftc.v2:control:0.3.2'//added 9/15/26 //JS
+    implementation 'dev.nextftc.v2:hardware:0.3.0'//added 9/15/26 //JS
+    implementation 'dev.nextftc.v2:robot:0.3.0'//added 9/15/26 //JS
 
 
     //implementation "com.bylazar:fullpanels:1.0.18"//added 10/12/26 //PANELS
