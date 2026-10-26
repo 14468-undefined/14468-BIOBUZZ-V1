@@ -17,6 +17,7 @@ public class AutoCommands {
     private final PathsAndPosesUpSide2TipSolo paths;
     private final BaseRobot robot = new BaseRobot();
 
+
     public AutoCommands(Follower follower, PathsAndPosesUpSide2TipSolo paths){
         this.follower = follower;
         this.paths = paths;

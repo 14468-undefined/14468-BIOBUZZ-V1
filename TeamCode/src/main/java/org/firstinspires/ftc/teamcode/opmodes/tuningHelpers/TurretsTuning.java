@@ -27,20 +27,20 @@ public class TurretsTuning extends NextOpMode {
 
     @Override
     public void start() {
-        startNanos = System.nanoTime();
+        //startNanos = System.nanoTime();
         robot.turrets.setTurretState(TurretsSubsystem.TurretState.TUNING);
     }
 
     @Override
     public void periodic() {
-        double t = (System.nanoTime() - startNanos) / 1e9;
-        double phase = (t % (2 * SWEEP_SECONDS)) / SWEEP_SECONDS;
-        double position = phase <= 1 ? phase : 2 - phase;
+        //double t = (System.nanoTime() - startNanos) / 1e9;
+        //double phase = (t % (2 * SWEEP_SECONDS)) / SWEEP_SECONDS;
+        //double position = phase <= 1 ? phase : 2 - phase;
 
-        Constants.TurretConstants.TUNING_POLLEN_POSITION = position;
-        Constants.TurretConstants.TUNING_NECTAR_POSITION = position;
+        //Constants.TurretConstants.TUNING_POLLEN_POSITION = position;
+        //Constants.TurretConstants.TUNING_NECTAR_POSITION = position;
 
-        telemetry.addData("Sweep position", position);
+        //telemetry.addData("Sweep position", position);
         telemetry.addData("Pollen commanded", robot.turrets.getPollenPosition());
         telemetry.addData("Nectar commanded", robot.turrets.getNectarPosition());
         telemetry.update();

@@ -59,14 +59,14 @@ public final class Constants{
    @Configurable
 
    public static final class ShooterConstants{
-       public static int POLLEN_TUNING_RPM = 0;
+       public static int POLLEN_TUNING_RPM = 3000;
       public static int NECTAR_TUNING_RPM = 0;
 
 
-      public static double S_POLLEN_KP = 0.0;
+      public static double S_POLLEN_KP = 0.0025;
       public static double S_POLLEN_KI = 0.0;
       public static double S_POLLEN_KD = 0.0;
-      public static double S_POLLEN_KF = 0.0;
+      public static double S_POLLEN_KF = 0.00016;
 
 
 

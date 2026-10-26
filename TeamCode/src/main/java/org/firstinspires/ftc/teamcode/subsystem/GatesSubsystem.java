@@ -38,8 +38,11 @@ public class GatesSubsystem implements Mechanism {
 
 
 
-    private final NextServo nectarGate = new NextServo(RobotController.expansionHub(), Config.nectarGateServo);
-    private final NextServo pollenGate = new NextServo(RobotController.controlHub(), Config.pollenGateServo);
+    //private final NextServo nectarGate = new NextServo(RobotController.controlHub(), Config.nectarGateServo);
+    private final NextServo nectarGate = new NextServo("testtesttest");
+
+    //private final NextServo pollenGate = new NextServo(RobotController.controlHub(), Config.pollenGateServo);
+    private final NextServo pollenGate = new NextServo("testtesttest2");
 
 
     public GatesSubsystem(){
