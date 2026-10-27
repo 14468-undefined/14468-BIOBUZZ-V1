@@ -49,4 +49,20 @@ public class RoutinesUpSide2TipSolo {
     }
 
 
+    public Command justPaths() {
+        return sequential(
+                preloadAuto(),
+                commands.runPath(paths.startPose_to_garden()),
+                commands.runPath(paths.out_of_garden()),
+                commands.runPath(paths.garden_to_hive()),
+                commands.runPath(paths.under_through_hive()),
+                commands.runPath(paths.line_up_for_flower_intake()),
+                commands.runPath(paths.flower_intake()).raceWith(),//TODO - add time here so it acc runs intake for long enough
+                commands.runPath(paths.park_avoid_other_robot())
+
+
+        );
+    }
+
+
 }

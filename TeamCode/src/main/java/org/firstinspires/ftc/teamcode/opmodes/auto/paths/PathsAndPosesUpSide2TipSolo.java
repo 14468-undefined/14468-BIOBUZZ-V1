@@ -16,7 +16,7 @@ public class PathsAndPosesUpSide2TipSolo {
     }
 
 
-    private final Pose start_pose = poseFactory.of(82, 133, 90);
+    public final Pose start_pose = poseFactory.of(82, 133, 90);
     private final Pose garden = poseFactory.of(133, 133, 90);
     private final Pose intake_ctrl_pt_1 = poseFactory.of(128.6392, 103.676, 0);
     private final Pose out_of_garden = poseFactory.of(132.1382, 130, 90);
