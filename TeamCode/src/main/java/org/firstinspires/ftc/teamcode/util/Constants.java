@@ -11,6 +11,7 @@ public final class Constants{
 
     @Configurable
     public static final class TurretConstants{
+       public static double TUNING_FLOWER_MECH = 0;
        public static int TUNING_POLLEN_ANGLE = 0;
        public static int TUNING_NECTAR_ANGLE = 0;
 

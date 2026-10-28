@@ -33,6 +33,7 @@ public class BaseRobot implements NextRobot {
     public final IntakeSubsystem intake = new IntakeSubsystem();
     public final LimelightSubsystem limelight = new LimelightSubsystem();
     public final SensorsSubsystem sensors = new SensorsSubsystem();
+    public final FlowerSubsystem flower = new FlowerSubsystem();
 
     public final ShootersSubsystem shooters = new ShootersSubsystem(fieldState);
     public final TurretsSubsystem turrets = new TurretsSubsystem(fieldState);
@@ -189,7 +190,8 @@ public class BaseRobot implements NextRobot {
                 shooters,
                 turrets,
                 transfer,
-                drive
+                drive,
+                flower
 
         );
     }
