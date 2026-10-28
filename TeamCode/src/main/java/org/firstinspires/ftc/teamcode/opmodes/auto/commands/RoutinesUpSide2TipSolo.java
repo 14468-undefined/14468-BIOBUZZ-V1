@@ -51,7 +51,6 @@ public class RoutinesUpSide2TipSolo {
 
     public Command justPaths() {
         return sequential(
-                preloadAuto(),
                 commands.runPath(paths.startPose_to_garden()),
                 commands.runPath(paths.out_of_garden()),
                 commands.runPath(paths.garden_to_hive()),

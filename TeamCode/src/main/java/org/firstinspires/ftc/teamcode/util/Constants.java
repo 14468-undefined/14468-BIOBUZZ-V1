@@ -66,7 +66,10 @@ public final class Constants{
       public static double S_POLLEN_KP = 0.0025;
       public static double S_POLLEN_KI = 0.0;
       public static double S_POLLEN_KD = 0.0;
-      public static double S_POLLEN_KF = 0.00016;
+      public static double S_POLLEN_KF = 0.00020;
+      //3750 close red
+      //.39 = close corner red
+      //.63 far corner red
 
 
 

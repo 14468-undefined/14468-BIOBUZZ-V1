@@ -32,7 +32,8 @@ public class TurretsSubsystem implements Mechanism {
         OFF,     // stop sending position commands (servos hold whatever they were last told)
         AUTO,    // aim at the goal using fieldState
         MANUAL,  // aim at manualDegrees (turret degrees)
-        TUNING   // raw 0..1 servo positions from TUNING_*_POSITION
+        TUNING,   // raw 0..1 servo positions from TUNING_*_POSITION
+        MANUAL2
     }
 
     private int manualDegrees = 0;
@@ -66,6 +67,8 @@ public class TurretsSubsystem implements Mechanism {
     private double pollenPosition = 0.5;
     private double nectarPosition = 0.5;
 
+    private double pollenPoseCustom = 0.5;
+
     private final FieldState fieldState;
 
     private FieldState.GoalSide goalSide = FieldState.GoalSide.GARDEN;
@@ -89,6 +92,13 @@ public class TurretsSubsystem implements Mechanism {
     }
     public Command custom(int deg) {
         return instant(() -> this.setCustomDeg(deg));
+    }
+
+    public void setCustomPollen(double pose){
+        pollenPoseCustom = pose;
+    }
+    public Command pollenCustom(double pose){
+        return instant(() -> this.setCustomPollen(pose));
     }
 
 
@@ -154,6 +164,7 @@ public class TurretsSubsystem implements Mechanism {
     }
 
 
+
     // ---- Output ----
 
     private void commandPollenAngle(double bearingDeg) {
@@ -192,6 +203,9 @@ public class TurretsSubsystem implements Mechanism {
             case MANUAL:
                 commandNectarAngle(manualDegrees);
                 commandPollenAngle(manualDegrees);
+                break;
+            case MANUAL2:
+                setPollenPosition(pollenPoseCustom);
                 break;
 
             case TUNING:

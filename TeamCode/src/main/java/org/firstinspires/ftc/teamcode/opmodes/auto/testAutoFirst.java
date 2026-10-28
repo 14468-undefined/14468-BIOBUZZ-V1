@@ -28,7 +28,7 @@ public class testAutoFirst extends NextOpMode {
         Scheduler.reset();
 
         paths = new PathsAndPosesUpSide2TipSolo();
-        commands = new AutoCommands(robot.getFollower(), paths);
+        commands = new AutoCommands(robot, robot.getFollower(), paths);
         routines = new RoutinesUpSide2TipSolo(robot, paths, commands);
 
     }

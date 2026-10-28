@@ -24,7 +24,7 @@ public class TransferSubsystem implements Mechanism {
 
     private final double transferNormal = 0.5;
     private final double transferShoot = 1.0;
-    private final double reverse = -1.0;
+    private final double reverse = -.3;
     private final double off = 0.0;
     private double custom = 0.5;
 

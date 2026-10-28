@@ -15,10 +15,11 @@ import org.firstinspires.ftc.teamcode.subsystem.BaseRobot;
 public class AutoCommands {
     private final Follower follower;
     private final PathsAndPosesUpSide2TipSolo paths;
-    private final BaseRobot robot = new BaseRobot();
 
+    private final BaseRobot robot;
 
-    public AutoCommands(Follower follower, PathsAndPosesUpSide2TipSolo paths){
+    public AutoCommands(BaseRobot robot, Follower follower, PathsAndPosesUpSide2TipSolo paths){
+        this.robot = robot;
         this.follower = follower;
         this.paths = paths;
     }

@@ -22,7 +22,7 @@ public class IntakeSubsystem implements Mechanism {
         TUNING
     }
 
-    private final double intakeNormal = 0.5;
+    private final double intakeNormal = 0.7;
     private final double intakeShoot = 1.0;
     private final double reverse = -1.0;
     private final double off = 0.0;

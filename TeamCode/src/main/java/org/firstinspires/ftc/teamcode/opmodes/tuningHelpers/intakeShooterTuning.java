@@ -9,16 +9,13 @@ import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
 import com.pedropathing.ivy.Scheduler;
 
-import org.firstinspires.ftc.teamcode.subsystem.BaseRobot;
-import org.firstinspires.ftc.teamcode.subsystem.IntakeSubsystem;
-import org.firstinspires.ftc.teamcode.subsystem.TransferSubsystem;
+import org.firstinspires.ftc.teamcode.subsystem.*;
 import org.firstinspires.ftc.teamcode.util.Constants;
 
 import dev.nextftc.robot.opmode.NextOpMode;
 import dev.nextftc.robot.opmode.NextTeleop;
 import dev.nextftc.robot.triggers.CommandGamepad;
 import dev.nextftc.robot.triggers.Trigger;
-import org.firstinspires.ftc.teamcode.subsystem.ShootersSubsystem;
 
 @NextTeleop(name = "Intake Shooter Tuning", group = "1")
 public class intakeShooterTuning extends NextOpMode {
@@ -40,6 +37,8 @@ public class intakeShooterTuning extends NextOpMode {
         robot.intake.setState(IntakeSubsystem.IntakeState.TUNING);
         robot.transfer.setState(TransferSubsystem.TransferState.TUNING);
         robot.shooters.stateSetter(ShootersSubsystem.ShooterState.TUNING);
+        robot.turrets.setTurretState(TurretsSubsystem.TurretState.TUNING);
+
         //robot.shooters.getNectarShooter().setThrottle(1);
 
     }
