@@ -12,11 +12,12 @@ import org.firstinspires.ftc.teamcode.util.AutoToTeleopPoseStorage;
 import static com.pedropathing.ivy.commands.Commands.instant;
 import static dev.nextftc.units.Units.RotationsPerMinute;
 
-@NextTeleop(name = "MEET 1 TELEOP")
+@NextTeleop(name = "MEET 1 TELEOP anthony")
 public class Meet1TeleopAnthony extends NextOpMode {
 
     private final BaseRobot robot;
-    private  int velocity = 2000;
+    private  int velocity = 3750;
+    private double pollenTurretPos = .39;
     // for manual hardcoding
 
 
@@ -32,6 +33,9 @@ public class Meet1TeleopAnthony extends NextOpMode {
     private Command decreaseVel(int increment) {
         return instant(() -> velocity -= increment);
     }
+
+    private Command rotateTurretRight(double increment) {return instant(() -> velocity += increment); }
+    private Command rotateTurretLeft(double increment) {return instant(() -> velocity -= increment); }
 
     private Command relocalize() {
         return instant(() -> {
@@ -69,28 +73,40 @@ public class Meet1TeleopAnthony extends NextOpMode {
 
         robot.turrets.setState(TurretsSubsystem.TurretState.MANUAL2).schedule();
         //intake
-        g1.rightBumper().onTrue(robot.intake.setSpeed(IntakeSubsystem.IntakeState.FORWARD));
-        g1.rightBumper().onTrue(robot.transfer.setSpeed(TransferSubsystem.TransferState.REVERSE));
-
-        g1.rightBumper().onFalse(robot.intake.setSpeed(IntakeSubsystem.IntakeState.OFF));
-        g1.rightBumper().onTrue(robot.transfer.setSpeed(TransferSubsystem.TransferState.OFF));
-
-
-
-        g1.leftTrigger().isOver(.1).onTrue(robot.shooters.spinBoth(3750));
-        g1.leftTrigger().isOver(.1).onFalse(robot.shooters.spinBoth(0));
-
-        g1.leftTrigger().isOver(.1).onTrue(robot.turrets.pollenCustom(.39));
-
-
-        g1.rightTrigger().isOver(.1).onTrue(robot.intake.setSpeed(IntakeSubsystem.IntakeState.SHOOT));
-        g1.rightTrigger().isOver(.1).onTrue(robot.transfer.setSpeed(TransferSubsystem.TransferState.SHOOT));
+        g1.rightTrigger().isOver(.1).onTrue(robot.intake.setSpeed(IntakeSubsystem.IntakeState.FORWARD));
+        g1.rightTrigger().isOver(.1).onTrue(robot.transfer.setSpeed(TransferSubsystem.TransferState.REVERSE));
 
         g1.rightTrigger().isOver(.1).onFalse(robot.intake.setSpeed(IntakeSubsystem.IntakeState.OFF));
         g1.rightTrigger().isOver(.1).onFalse(robot.transfer.setSpeed(TransferSubsystem.TransferState.OFF));
 
+        //purge intake
+        g1.leftTrigger().isOver(.1).onTrue(robot.intake.setSpeed(IntakeSubsystem.IntakeState.REVERSE));
+        g1.leftTrigger().isOver(.1).onTrue(robot.transfer.setSpeed(TransferSubsystem.TransferState.REVERSE));
+        g1.leftTrigger().isOver(.1).onFalse(robot.intake.setSpeed(IntakeSubsystem.IntakeState.OFF));
+        g1.leftTrigger().isOver(.1).onFalse(robot.transfer.setSpeed(TransferSubsystem.TransferState.OFF));
+
+        g1.leftBumper().onTrue(robot.shooters.spinBoth(velocity));
+        g1.leftBumper().onFalse(robot.shooters.spinBoth(0));
+
+        g1.leftBumper().onTrue(robot.turrets.pollenCustom(pollenTurretPos));
+
+        //shoot
+        g1.b().onTrue(robot.intake.setSpeed(IntakeSubsystem.IntakeState.SHOOT));
+        g1.b().onTrue(robot.transfer.setSpeed(TransferSubsystem.TransferState.SHOOT));
+
+        g1.b().onFalse(robot.intake.setSpeed(IntakeSubsystem.IntakeState.OFF));
+        g1.b().onFalse(robot.transfer.setSpeed(TransferSubsystem.TransferState.OFF));
+
 
         g1.y().onTrue(resetHeading());
+
+        //manual changing shooter power
+        g1.dpadUp().onTrue(increaseVel(10));
+        g1.dpadDown().onTrue(decreaseVel(10));
+
+        g1.dpadLeft().onTrue(rotateTurretRight(.1));
+        g1.dpadRight().onTrue(rotateTurretLeft(.1));
+
     }
 
     @Override
