@@ -17,7 +17,7 @@ import java.text.Normalizer;
 import static com.pedropathing.ivy.commands.Commands.*;
 import static dev.nextftc.units.Units.RotationsPerMinute;
 
-@NextTeleop(name = "MEET 1 TELEOP")
+@NextTeleop(name = "Grayson Teleop")
 public class Meet1Teleop extends NextOpMode {
 
     private final BaseRobot robot;
