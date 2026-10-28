@@ -34,8 +34,6 @@ public class Meet1TeleopAnthony extends NextOpMode {
         return instant(() -> velocity -= increment);
     }
 
-    private Command rotateTurretRight(double increment) {return instant(() -> velocity += increment); }
-    private Command rotateTurretLeft(double increment) {return instant(() -> velocity -= increment); }
 
     private Command relocalize() {
         return instant(() -> {
@@ -104,8 +102,7 @@ public class Meet1TeleopAnthony extends NextOpMode {
         g1.dpadUp().onTrue(increaseVel(10));
         g1.dpadDown().onTrue(decreaseVel(10));
 
-        g1.dpadLeft().onTrue(rotateTurretRight(.1));
-        g1.dpadRight().onTrue(rotateTurretLeft(.1));
+
 
     }
 
