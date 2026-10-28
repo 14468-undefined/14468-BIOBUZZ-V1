@@ -73,7 +73,7 @@ public class Meet1TeleopAnthony extends NextOpMode {
         g1.rightBumper().onTrue(robot.transfer.setSpeed(TransferSubsystem.TransferState.REVERSE));
 
         g1.rightBumper().onFalse(robot.intake.setSpeed(IntakeSubsystem.IntakeState.OFF));
-        g1.rightBumper().onTrue(robot.transfer.setSpeed(TransferSubsystem.TransferState.OFF));
+        g1.rightBumper().onFalse(robot.transfer.setSpeed(TransferSubsystem.TransferState.OFF));
 
 
 
