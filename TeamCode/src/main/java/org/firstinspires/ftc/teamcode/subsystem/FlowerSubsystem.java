@@ -8,7 +8,7 @@ import dev.nextftc.robot.Mechanism;
 import org.firstinspires.ftc.teamcode.util.Config;
 import org.firstinspires.ftc.teamcode.util.Constants;
 
-import static org.firstinspires.ftc.teamcode.util.Constants.TurretConstants.TUNING_FLOWER_MECH;
+import static org.firstinspires.ftc.teamcode.util.Constants.FlowerConstants.TUNING_FLOWER_MECH;
 
 public class FlowerSubsystem implements Mechanism {
 
@@ -31,8 +31,8 @@ public class FlowerSubsystem implements Mechanism {
         return flowerState;
     }
     private final double tuning_manual = 0;
-    private final double DOWN = 0;//TODO: Tune
-    private final double UP = 0;//TODO: Tune
+    private final double DOWN = 0.12;//TODO: Tune
+    private final double UP = 0.9;//TODO: Tune
 
 
 

@@ -64,8 +64,8 @@ public class Meet1TeleopAnthony extends NextOpMode {
         CommandGamepad g2 = new CommandGamepad(gamepad2);
 
         robot.init().schedule();
-        robot.startDriveFieldCentric(gamepad1);//TODO: Anthony swap with field centric if you'd like but wait til we test this first
-
+        //robot.startDriveFieldCentric(gamepad1);//TODO: Anthony swap with field centric if you'd like but wait til we test this first
+        robot.startDriveFieldCentric(gamepad1);
         robot.shooters.setState(ShootersSubsystem.ShooterState.MANUAL).schedule();
         robot.getFollower().setPose(AutoToTeleopPoseStorage.getEndPoseOr(new Pose(0, 0, 0)));
 
@@ -86,7 +86,11 @@ public class Meet1TeleopAnthony extends NextOpMode {
         g1.leftBumper().onTrue(robot.shooters.spinBoth(velocity));
         g1.leftBumper().onFalse(robot.shooters.spinBoth(0));
 
-        g1.leftBumper().onTrue(robot.turrets.pollenCustom(pollenTurretPos));
+        g1.dpadRight().onTrue(robot.turrets.pollenCustom(.4));
+        g1.dpadLeft().onTrue(robot.turrets.pollenCustom(.42));
+        g1.dpadUp().onTrue(robot.turrets.pollenCustom(.5));
+
+
 
         //shoot
         g1.b().onTrue(robot.intake.setSpeed(IntakeSubsystem.IntakeState.SHOOT));
@@ -94,6 +98,10 @@ public class Meet1TeleopAnthony extends NextOpMode {
 
         g1.b().onFalse(robot.intake.setSpeed(IntakeSubsystem.IntakeState.OFF));
         g1.b().onFalse(robot.transfer.setSpeed(TransferSubsystem.TransferState.OFF));
+
+        //flower
+        g1.rightBumper().onTrue(robot.flower.setPose(FlowerSubsystem.FlowerState.DOWN));
+        g1.x().onTrue(robot.flower.setPose(FlowerSubsystem.FlowerState.UP));
 
 
         g1.y().onTrue(resetHeading());

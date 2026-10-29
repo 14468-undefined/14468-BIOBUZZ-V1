@@ -117,6 +117,10 @@ public class ShootersSubsystem implements Mechanism {
     public void setBothRpm(double rpm) {
         setManualRpm(rpm, rpm);
     }
+    public Command setRpm(double r) {
+        return instant(() -> this.setBothRpm(r));
+    }
+
 
     // TODO: LUT (distance -> RPM) in its own class, ideally one table per goalSide
     private double nectarRpmForDistance(double distance) {

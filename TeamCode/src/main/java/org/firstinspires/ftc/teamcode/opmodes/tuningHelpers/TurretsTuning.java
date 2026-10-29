@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.opmodes.tuningHelpers;
 import com.pedropathing.ivy.Scheduler;
 
 import org.firstinspires.ftc.teamcode.subsystem.BaseRobot;
+import org.firstinspires.ftc.teamcode.subsystem.FlowerSubsystem;
 import org.firstinspires.ftc.teamcode.subsystem.TurretsSubsystem;
 import org.firstinspires.ftc.teamcode.util.Constants;
 
@@ -29,6 +30,7 @@ public class TurretsTuning extends NextOpMode {
     public void start() {
         //startNanos = System.nanoTime();
         robot.turrets.setTurretState(TurretsSubsystem.TurretState.TUNING);
+        robot.flower.setPose(FlowerSubsystem.FlowerState.TUNING).schedule();
     }
 
     @Override
