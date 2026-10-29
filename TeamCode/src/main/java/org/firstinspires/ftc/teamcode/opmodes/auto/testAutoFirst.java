@@ -17,8 +17,8 @@ import dev.nextftc.robot.opmode.NextOpMode;
 @NextAutonomous(name = "Test Auto First")
 public class testAutoFirst extends NextOpMode {
     private final BaseRobot robot;
-    private final RoutinesUpSide2TipSolo routines;
-    private final AutoCommands commands;
+    //private final RoutinesUpSide2TipSolo routines;
+    //private final AutoCommands commands;
     private final PathsAndPosesUpSide2TipSolo paths;
     private Command selectedRoutine;
 
@@ -28,15 +28,15 @@ public class testAutoFirst extends NextOpMode {
         Scheduler.reset();
 
         paths = new PathsAndPosesUpSide2TipSolo();
-        commands = new AutoCommands(robot, robot.getFollower(), paths);
-        routines = new RoutinesUpSide2TipSolo(robot, paths, commands);
+        //commands = new AutoCommands(robot, robot.getFollower(), paths);
+        //routines = new RoutinesUpSide2TipSolo(robot, paths, commands);
 
     }
 
     @Override
     public void start() {
         robot.getFollower().setPose(paths.start_pose);
-        schedule(routines.justPaths());
+        //schedule(routines.justPaths());
     }
 
     @Override

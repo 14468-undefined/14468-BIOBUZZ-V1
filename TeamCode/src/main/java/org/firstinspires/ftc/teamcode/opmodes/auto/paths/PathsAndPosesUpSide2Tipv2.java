@@ -17,7 +17,7 @@ public class PathsAndPosesUpSide2Tipv2 {
     }
 
 
-        private final Pose start = poseFactory.of(9.2406, 13.7755, 0);
+        public final Pose start = poseFactory.of(9.2406, 13.7755, 0);
         private final Pose path1 = poseFactory.of(21.458, 11.5651, 200);
         private final Pose path1Control1 = poseFactory.of(36.9834, 25.2765, 0);
         private final Pose point2Start = poseFactory.of(21.458, 11.5651, 200);
