@@ -6,6 +6,7 @@ import static com.pedropathing.ivy.Scheduler.schedule;
 import com.pedropathing.ivy.Command;
 import com.pedropathing.ivy.Scheduler;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import org.firstinspires.ftc.teamcode.opmodes.auto.commands.AutoCommands;
 import org.firstinspires.ftc.teamcode.opmodes.auto.commands.RoutinesUpSide2TipSolo;
 import org.firstinspires.ftc.teamcode.opmodes.auto.paths.PathsAndPosesUpSide2TipSolo;
@@ -15,6 +16,7 @@ import dev.nextftc.robot.opmode.NextAutonomous;
 import dev.nextftc.robot.opmode.NextOpMode;
 
 @NextAutonomous(name = "Test Auto First")
+@Disabled
 public class testAutoFirst extends NextOpMode {
     private final BaseRobot robot;
     //private final RoutinesUpSide2TipSolo routines;
