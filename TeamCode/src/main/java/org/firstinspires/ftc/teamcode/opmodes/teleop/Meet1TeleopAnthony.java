@@ -86,9 +86,9 @@ public class Meet1TeleopAnthony extends NextOpMode {
         g1.leftBumper().onTrue(robot.shooters.spinBoth(velocity));
         g1.leftBumper().onFalse(robot.shooters.spinBoth(0));
 
-        g1.dpadRight().onTrue(robot.turrets.pollenCustom(.4));
-        g1.dpadLeft().onTrue(robot.turrets.pollenCustom(.42));
-        g1.dpadUp().onTrue(robot.turrets.pollenCustom(.5));
+        g1.dpadRight().onTrue(robot.turrets.pollenCustom(.38));
+        g1.dpadLeft().onTrue(robot.turrets.pollenCustom(.4));
+        g1.a().onTrue(robot.turrets.pollenCustom(.5));
 
 
 
@@ -107,8 +107,8 @@ public class Meet1TeleopAnthony extends NextOpMode {
         g1.y().onTrue(resetHeading());
 
         //manual changing shooter power
-        g1.dpadUp().onTrue(increaseVel(10));
-        g1.dpadDown().onTrue(decreaseVel(10));
+        g1.dpadUp().onTrue(increaseVel(30));
+        g1.dpadDown().onTrue(decreaseVel(30));
 
 
 
