@@ -36,7 +36,7 @@ public class testAutoFirstv2 extends NextOpMode {
     @Override
     public void start() {
         robot.getFollower().setPose(paths.start);
-        schedule(routines.fullCycleAuto());
+        schedule(routines.justPaths());
     }
 
     @Override

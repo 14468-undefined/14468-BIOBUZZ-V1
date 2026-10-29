@@ -47,10 +47,11 @@ public class RoutinesUpSide2TipSoloVersion2 {
                 robot.transfer.setSpeed(TransferSubsystem.TransferState.OFF),
                 robot.shooters.setRpm(0),
                 commands.intakePath(paths.path1()),
-                commands.intakePath(paths.path2()),
                 commands.intakePath(paths.path3()),
                 commands.runPath(paths.path4()),
                 commands.runPath(paths.path5()),
+
+                commands.runPath(paths.path6()),
                 robot.shooters.setRpm(3750),
                 waitMs(2000),
                 robot.intake.setSpeed(IntakeSubsystem.IntakeState.SHOOT),
@@ -59,22 +60,22 @@ public class RoutinesUpSide2TipSoloVersion2 {
                 robot.intake.setSpeed(IntakeSubsystem.IntakeState.OFF),
                 robot.transfer.setSpeed(TransferSubsystem.TransferState.OFF),
                 robot.shooters.setRpm(0),
-                commands.runPath(paths.path6())
+                commands.runPath(paths.path7())
+
 
         );
     }
 
-
     public Command justPaths() {
         return sequential(
-                // Autonomous routine
-                    commands.runPath(paths.path1()),
-                    commands.runPath(paths.path2()),
-                    commands.runPath(paths.path3()),
-                    commands.runPath(paths.path4()),
-                    commands.runPath(paths.path5()),
-                    commands.runPath(paths.path6())
-                );
+                commands.runPath(paths.path1()),
+                commands.runPath(paths.path2()),
+                commands.runPath(paths.path3()),
+                commands.runPath(paths.path4()),
+                commands.runPath(paths.path5()),
+                commands.runPath(paths.path6()),
+                commands.runPath(paths.path7())
+        );
     }
 
 

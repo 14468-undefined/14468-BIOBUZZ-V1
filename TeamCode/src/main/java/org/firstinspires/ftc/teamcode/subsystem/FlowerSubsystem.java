@@ -31,8 +31,8 @@ public class FlowerSubsystem implements Mechanism {
         return flowerState;
     }
     private final double tuning_manual = 0;
-    private final double DOWN = 0.12;//TODO: Tune
-    private final double UP = 0.9;//TODO: Tune
+    private final double DOWN = 0.475;//TODO: Tune
+    private final double UP = 1;//TODO: Tune
 
 
 
