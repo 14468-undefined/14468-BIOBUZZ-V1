@@ -22,5 +22,11 @@ public class DriveSubsystem implements Mechanism {
     public final NextMotor backRight = new NextMotor("right_back");
 
 
+    public void setPower(double power) {
+        frontLeft.setThrottle(power);
+        frontRight.setThrottle(power);
+        backLeft.setThrottle(power);
+        backRight.setThrottle(power);
+    }
 
 }

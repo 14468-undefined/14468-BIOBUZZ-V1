@@ -97,7 +97,8 @@ public class BaseRobot implements NextRobot {
                 shooters.setState(ShootersSubsystem.ShooterState.OFF),
                 intake.setSpeed(IntakeSubsystem.IntakeState.OFF),
                 transfer.setSpeed(TransferSubsystem.TransferState.OFF),
-                turrets.setState(TurretsSubsystem.TurretState.OFF)
+                turrets.setState(TurretsSubsystem.TurretState.OFF),
+                flower.setState(FlowerSubsystem.FlowerState.UP)
 
         );
     }

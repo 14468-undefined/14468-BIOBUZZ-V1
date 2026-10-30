@@ -12,12 +12,12 @@ import org.firstinspires.ftc.teamcode.util.AutoToTeleopPoseStorage;
 import static com.pedropathing.ivy.commands.Commands.instant;
 import static dev.nextftc.units.Units.RotationsPerMinute;
 
-@NextTeleop(name = "MEET 1 TELEOP anthony")
+@NextTeleop(name = "MEET 1 TELEOP")
 public class Meet1TeleopAnthony extends NextOpMode {
 
     private final BaseRobot robot;
     private  int velocity = 3750;
-    private double pollenTurretPos = .39;
+    private double pollenTurretPos = .42;
     // for manual hardcoding
 
 
@@ -35,6 +35,19 @@ public class Meet1TeleopAnthony extends NextOpMode {
     }
 
 
+    private Command rotateTurretRight(double increment) {
+        return instant(() -> {
+            pollenTurretPos += increment;
+            robot.turrets.pollenCustom(pollenTurretPos).schedule();
+        });
+    }
+
+    private Command rotateTurretLeft(double increment) {
+        return instant(() -> {
+            pollenTurretPos -= increment;
+            robot.turrets.pollenCustom(pollenTurretPos).schedule();
+        });
+    }
     private Command relocalize() {
         return instant(() -> {
             Pose cornerPose = new Pose(10.5, 10.5, Math.toRadians(90));
@@ -86,9 +99,19 @@ public class Meet1TeleopAnthony extends NextOpMode {
         g1.leftBumper().onTrue(robot.shooters.spinBoth(velocity));
         g1.leftBumper().onFalse(robot.shooters.spinBoth(0));
 
-        g1.dpadRight().onTrue(robot.turrets.pollenCustom(.38));
-        g1.dpadLeft().onTrue(robot.turrets.pollenCustom(.4));
-        g1.a().onTrue(robot.turrets.pollenCustom(.5));
+        //g1.dpadRight().onTrue(robot.turrets.pollenCustom(.42));
+        g1.dpadRight().onTrue(rotateTurretRight(.01));
+
+
+        //g1.dpadLeft().onTrue(robot.turrets.pollenCustom(.44));
+        g1.dpadLeft().onTrue(rotateTurretLeft(.01));
+
+
+        g1.a().onTrue(instant(() -> {
+            pollenTurretPos = .42;
+            robot.turrets.pollenCustom(pollenTurretPos).schedule();
+        })); //center it
+
 
 
 
@@ -131,6 +154,8 @@ public class Meet1TeleopAnthony extends NextOpMode {
 
 
         telemetry.addData("Nectar Motor Velocity", robot.getShooter().getNectarShooter().getEncoderVelocity().into(RotationsPerMinute));
+        telemetry.addData("Target Velocity", velocity);
+       // telemetry.addData("Turret position", robot.get)
         telemetry.addData("Pollen Motor Velocity", robot.getShooter().getPollenShooter().getEncoderVelocity().into(RotationsPerMinute));
 
     }
