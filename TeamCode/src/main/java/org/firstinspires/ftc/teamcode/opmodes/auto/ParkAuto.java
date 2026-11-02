@@ -21,8 +21,8 @@ import static com.pedropathing.ivy.Scheduler.schedule;
 
 public class ParkAuto extends NextOpMode {
     private final BaseRobot robot;
-    private final RoutinesPark routines;
-    private final AutoCommands commands;
+    //private final RoutinesPark routines;
+    //private final AutoCommands commands;
     private final PathsAndPosesPark paths;
     private Command selectedRoutine;
 
@@ -32,15 +32,15 @@ public class ParkAuto extends NextOpMode {
         Scheduler.reset();
 
         paths = new PathsAndPosesPark();
-        commands = new AutoCommands(robot, robot.getFollower(), paths);
-        routines = new RoutinesPark(robot, paths, commands);
+        //commands = new AutoCommands(robot, robot.getFollower(), paths);
+        //routines = new RoutinesPark(robot, paths, commands);
 
     }
 
     @Override
     public void start() {
         robot.getFollower().setPose(paths.start);
-        schedule(routines.park());
+        //schedule(routines.park());
     }
 
     @Override

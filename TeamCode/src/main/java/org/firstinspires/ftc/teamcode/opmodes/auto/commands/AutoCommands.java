@@ -9,6 +9,7 @@ import com.pedropathing.ivy.CommandBuilder;
 import com.pedropathing.paths.Path;
 
 import org.firstinspires.ftc.teamcode.opmodes.auto.paths.PathsAndPosesPark;
+import org.firstinspires.ftc.teamcode.opmodes.auto.paths.PathsAndPosesUpSide2TipSolo;
 import org.firstinspires.ftc.teamcode.subsystem.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystem.BaseRobot;
 
@@ -21,7 +22,7 @@ public class AutoCommands {
 
     private final BaseRobot robot;
 
-    public AutoCommands(BaseRobot robot, Follower follower, PathsAndPosesPark paths){
+    public AutoCommands(BaseRobot robot, Follower follower, PathsAndPosesUpSide2TipSolo paths){
         this.robot = robot;
         this.follower = follower;
         this.paths = paths;

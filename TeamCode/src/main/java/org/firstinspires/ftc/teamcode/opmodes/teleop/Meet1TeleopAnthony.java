@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes.teleop;
 
 import com.pedropathing.ivy.Command;
+import com.pedropathing.ivy.Scheduler;
 import com.pedropathing.math.Pose;
 import dev.nextftc.robot.opmode.NextOpMode;
 import dev.nextftc.robot.opmode.NextTeleop;
@@ -70,6 +71,8 @@ public class Meet1TeleopAnthony extends NextOpMode {
 
     @Override
     public void start() {
+        Scheduler.reset();//ADDED 11/1
+        Trigger.Companion.getDefaultEventLoop().clear();//ADDED 11/1
 
         Trigger.Companion.getDefaultEventLoop().clear();
 
