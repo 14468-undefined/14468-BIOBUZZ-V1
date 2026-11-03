@@ -5,6 +5,8 @@ import androidx.annotation.NonNull;
 import com.pedropathing.drivetrain.DrivePowers;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.ivy.Command;
+import com.pedropathing.math.Pose;
+import com.pedropathing.paths.Path;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import dev.nextftc.hardware.RobotController;
 import dev.nextftc.robot.NextRobot;
@@ -21,6 +23,7 @@ import static com.pedropathing.ivy.commands.Commands.instant;
 import static com.pedropathing.ivy.commands.Commands.waitMs;
 import static com.pedropathing.ivy.groups.Groups.parallel;
 import static com.pedropathing.ivy.groups.Groups.sequential;
+import static com.pedropathing.ivy.pedro.PedroCommands.follow;
 
 public class BaseRobot implements NextRobot {
     private Follower follower;
@@ -178,6 +181,21 @@ public class BaseRobot implements NextRobot {
 
 
 
+
+    public Pose getCurrentPose() {
+        return getFollower().pose();
+    }
+
+    public double getHeading() {
+        return getFollower().pose().heading();
+    }
+
+
+
+    public Command moveToPoint(Path path) {
+        return follow(getFollower(), path);
+    }
+
     @NonNull
     @Override
     public Set<Mechanism> getMechanisms() {
@@ -200,3 +218,6 @@ public class BaseRobot implements NextRobot {
     //TODO - put pose and field logic in here so that i can get distance in hood and shooter and turret class without recoding it all
 
 }
+
+
+

@@ -19,9 +19,9 @@ public class Config {
 
 
     //Expansion hub
-    public static int transfer = 0;
+    public static int transfer = 2;
     public static int intake = 1;
-    public static int nectarShooter = 2;
+    public static int nectarShooter = 0;
     public static int pollenShooter = 3;
 
 

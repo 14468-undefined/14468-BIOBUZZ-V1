@@ -60,11 +60,14 @@ public class ShootersSubsystem implements Mechanism {
     public ShootersSubsystem(FieldState fieldState) {
         this.fieldState = fieldState;
 
-        nectarShooter.setDirection(NextMotor.Direction.REVERSE);
+        //nectarShooter.setDirection(NextMotor.Direction.REVERSE);
         pollenShooter.setAnglePerCount(Degrees.of(360.0 / 28.0));
+        nectarShooter.setAnglePerCount(Degrees.of(360.0 / 28.0));
+
 
         pollenShooter.setZeroPowerBehavior(NextMotor.ZeroPowerBehavior.FLOAT);
         nectarShooter.setZeroPowerBehavior(NextMotor.ZeroPowerBehavior.FLOAT);
+
 
         // Separate gains per shooter. F = kV
         setNectarPIDF(S_NECTAR_KP, S_NECTAR_KI, S_NECTAR_KD, S_NECTAR_KF);

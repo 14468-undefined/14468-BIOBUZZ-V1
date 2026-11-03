@@ -30,17 +30,17 @@ public final class Constants{
 
 
 
-       public static double T_POLLEN_KP = 0.01;
+       public static double T_POLLEN_KP = 0.0005;
        public static double T_POLLEN_KI = 0;
-       public static double T_POLLEN_KD = 0.001;
-       public static double T_POLLEN_KF = 0.0;
+       public static double T_POLLEN_KD = 0.00;
+       public static double T_POLLEN_KF = 0.00019;
 
 
 
-       public static double T_NECTAR_KP = 0.01;
+       public static double T_NECTAR_KP = 0.0005;
        public static double T_NECTAR_KI = 0;
-       public static double T_NECTAR_KD = 0.001;
-       public static double T_NECTAR_KF = 0.0;
+       public static double T_NECTAR_KD = 0;
+       public static double T_NECTAR_KF = 0.000185;
 
 
 
@@ -62,24 +62,24 @@ public final class Constants{
    @Configurable
 
    public static final class ShooterConstants{
-       public static int POLLEN_TUNING_RPM = 3000;
-      public static int NECTAR_TUNING_RPM = 0;
+       public static int POLLEN_TUNING_RPM = 1350;
+      public static int NECTAR_TUNING_RPM = 800;
 
 
-      public static double S_POLLEN_KP = 0.0025;
+      public static double S_POLLEN_KP = 0.0005;
       public static double S_POLLEN_KI = 0.0;
       public static double S_POLLEN_KD = 0.0;
-      public static double S_POLLEN_KF = 0.00020;
+      public static double S_POLLEN_KF = 0.00019;
       //3750 close red
       //.39 = close corner red
       //.63 far corner red
 
 
 
-      public static double S_NECTAR_KP = 0.0;
+      public static double S_NECTAR_KP = 0.0005;
       public static double S_NECTAR_KI = 0.0;
       public static double S_NECTAR_KD = 0.0;
-      public static double S_NECTAR_KF = 0.0;
+      public static double S_NECTAR_KF = 0.000185;
 
 
 
