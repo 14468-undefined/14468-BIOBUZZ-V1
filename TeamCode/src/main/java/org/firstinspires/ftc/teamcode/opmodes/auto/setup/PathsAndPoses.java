@@ -13,6 +13,7 @@ public class PathsAndPoses {
 	public final LeavePoses leavePoses;
 	public final SquarePoses squarePoses;
 	public final OneTipPoses oneTipPoses;
+
 	public PathsAndPoses() {
 		factory = new PoseFactory(PoseFactory.Operation.IDENTITY, true);
 
@@ -45,28 +46,63 @@ public class PathsAndPoses {
 
 	public class OneTipPoses {
 
-		public final Pose start = factory.of(56.2221, 9.1107, 90);
-		public final Pose point1 = factory.of(14.6609, 46.7946, -179.9842);
-		public final Pose point1Control1 = factory.of(56.2106, 24.9549, 0);
-		public final Pose point1Control2 = factory.of(47.892, 46.8038, 0);
-		public final Pose point2 = factory.of(56.6374, 9.3461, 89.7477);
-		public final Pose point2Control1 = factory.of(48.3487, 47.5487, 0);
-		public final Pose point2Control2 = factory.of(56.7023, 24.0776, 0);
-		public final Pose point3 = factory.of(15.3276, 93.648, 90);
-		public final Pose point3Control1 = factory.of(25.7373, 19.6649, 0);
+		public final Pose start = factory.of(56, 9.1107, 90);
+		private final Pose path1 = factory.of(55.75, 15.75, 90);
+		private final Pose point2Start = factory.of(55.75, 15.75, 90);
+		private final Pose point2 = factory.of(33.5, 48, 180);
+		private final Pose point3Start = factory.of(33.5, 48, 180);
+		private final Pose point3 = factory.of(55.75, 15.75, 90);
+		private final Pose point4 = factory.of(55.75, 8.75, 90);
+		private final Pose point5 = factory.of(10.75, 97.75, 90);
+		private final Pose point5Control1 = factory.of(22.75, 25.75, 0);
 
+		private final Pose flowerPoint1 = factory.of(56.1111, 22.4517, 90);
+		private final Pose flowerPoint1mid = factory.of(10, 22.4517, 270);
+
+		private final Pose flowerPoint2 = factory.of(9.885, 14.883, 270);
+		private final Pose flowerPoint3 = factory.of(9.9961, 8.9965, 270);
+		private final Pose flowerPoint4 = factory.of(9.3297, 10.3293, 275);
+
+		public Path path1flower() {
+			return Paths.line(start, flowerPoint1).constant(flowerPoint1);
+		}
+
+		public Path path12flower() {
+			return Paths.line(flowerPoint1, flowerPoint1mid).constant(flowerPoint1mid);
+		}
+
+		public Path path2Flower() {
+			return Paths.line(flowerPoint1, flowerPoint2).constant(flowerPoint2);
+		}
+
+		public Path path3Flower() {
+			return Paths.line(flowerPoint2, flowerPoint3).constant(flowerPoint3);
+		}
+
+		public Path path4Flower() {
+			return Paths.line(flowerPoint3, flowerPoint4).constant(flowerPoint4);
+		}
 		public Path path1() {
-			return Paths.curve(start, point1Control1, point1Control2, point1).tangent();
+			return Paths.line(start, path1).constant(path1);
 		}
 
 		public Path path2() {
-			return Paths.curve(point1, point2Control1, point2Control2, point2).reverseTangent();
+			return Paths.line(point2Start, point2).linear(point2, point2Start);
 		}
 
 		public Path path3() {
-			return Paths.curve(point2, point3Control1, point3).constant(point3);
+			return Paths.line(point3Start, point3).linear(point3, point3Start);
+		}
+
+		public Path path4() {
+			return Paths.line(point3, point4).constant(point4);
+		}
+
+		public Path path5() {
+			return Paths.curve(point4, point5Control1, point5).constant(point5);
 		}
 	}
+
 
 
 	public class LeavePoses {

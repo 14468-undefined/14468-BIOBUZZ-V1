@@ -7,6 +7,8 @@ import static com.pedropathing.ivy.groups.Groups.sequential;
 import com.pedropathing.ivy.Command;
 import com.pedropathing.paths.Path;
 import org.firstinspires.ftc.teamcode.subsystem.BaseRobot;
+import org.firstinspires.ftc.teamcode.subsystem.FlowerSubsystem;
+import org.firstinspires.ftc.teamcode.subsystem.IntakeSubsystem;
 
 
 public class Runnables {
@@ -42,6 +44,7 @@ public class Runnables {
 		return sequential(
 				robot.moveToPoint(paths.squarePoses.path1),
 				robot.moveToPoint(paths.squarePoses.path2),
+
 				robot.moveToPoint(paths.squarePoses.path3),
 				robot.moveToPoint(paths.squarePoses.path4)
 		);
@@ -49,10 +52,30 @@ public class Runnables {
 
 	public Command OneTipAuto(){
 		return sequential(
+				/*robot.moveToPoint(paths.oneTipPoses.path1flower()),
+				robot.moveToPoint(paths.oneTipPoses.path12flower()),
+
+
+				robot.moveToPoint(paths.oneTipPoses.path2Flower()),
+				robot.intake.setSpeed(IntakeSubsystem.IntakeState.FORWARD),
+				robot.moveToPoint(paths.oneTipPoses.path3Flower()),
+				robot.moveToPoint(paths.oneTipPoses.path4Flower()),
+				robot.intake.setSpeed(IntakeSubsystem.IntakeState.OFF),
+
+				 */
+
 				robot.moveToPoint(paths.oneTipPoses.path1()),
+				robot.flower.setPose(FlowerSubsystem.FlowerState.DOWN),
 				robot.moveToPoint(paths.oneTipPoses.path2()),
-				robot.moveToPoint(paths.oneTipPoses.path3())
-		);
+				robot.intake.setSpeed(IntakeSubsystem.IntakeState.FORWARD),
+				waitMs(4000),
+				robot.intake.setSpeed(IntakeSubsystem.IntakeState.OFF),
+				robot.moveToPoint(paths.oneTipPoses.path3()),
+				robot.moveToPoint(paths.oneTipPoses.path4()),
+				robot.moveToPoint(paths.oneTipPoses.path5())
+
+
+				);
 	}
 
 

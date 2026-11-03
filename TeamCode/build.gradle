@@ -59,7 +59,7 @@ dependencies {
 
     //implementation "com.bylazar:fullpanels:1.0.18"//added 10/12/26 //PANELS
     implementation "com.bylazar:fullpanels:1.0.19"
-    //implementation 'dev.frozenmilk.sinister:Sloth:0.3.2'//commented out on 11/2
+    implementation 'dev.frozenmilk.sinister:Sloth:0.3.2'//commented out on 11/2
 
     /**
      * pedro - added 9/16/26
