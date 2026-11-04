@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.subsystem;
 
 
 import androidx.annotation.NonNull;
-import com.pedropathing.drivetrain.DrivePowers;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.ivy.Command;
 import com.pedropathing.math.Pose;
@@ -14,12 +13,14 @@ import dev.nextftc.robot.Mechanism;
 import dev.nextftc.robot.drive.DriveCommands;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.subsystem.old.FlowerScorerSubsystem;
+import org.firstinspires.ftc.teamcode.subsystem.old.GatesSubsystem;
+import org.firstinspires.ftc.teamcode.subsystem.old.LimelightSubsystem;
+import org.firstinspires.ftc.teamcode.subsystem.old.SensorsSubsystem;
 import org.firstinspires.ftc.teamcode.util.FieldState;
 
 
 import java.util.Set;
 
-import static com.pedropathing.ivy.commands.Commands.instant;
 import static com.pedropathing.ivy.commands.Commands.waitMs;
 import static com.pedropathing.ivy.groups.Groups.parallel;
 import static com.pedropathing.ivy.groups.Groups.sequential;

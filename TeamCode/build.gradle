@@ -1,5 +1,23 @@
 apply plugin: 'com.android.application'
 
+/**
+ * 11/3/26 - sloth
+ */
+buildscript {
+    repositories {
+        mavenCentral()
+        google()
+        maven {
+            url "https://repo.dairy.foundation/releases"
+        }
+    }
+    dependencies {
+        classpath "dev.frozenmilk:Load:0.3.2"
+    }
+}
+apply plugin: 'dev.frozenmilk.sinister.sloth.load'
+
+
 //
 // build.gradle in TeamCode
 //
@@ -9,6 +27,8 @@ apply plugin: 'com.android.application'
 // the build definitions, you can place those customizations in this file, but
 // please think carefully as to whether such customizations are really necessary
 // before doing so.
+
+
 
 // Custom definitions may go here
 

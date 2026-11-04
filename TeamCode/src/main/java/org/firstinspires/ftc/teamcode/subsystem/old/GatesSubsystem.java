@@ -1,12 +1,8 @@
-package org.firstinspires.ftc.teamcode.subsystem;
+package org.firstinspires.ftc.teamcode.subsystem.old;
 
 import com.pedropathing.ivy.Command;
-import dev.nextftc.hardware.RobotController;
-import dev.nextftc.hardware.actuators.NextMotor;
 import dev.nextftc.hardware.actuators.NextServo;
 import dev.nextftc.robot.Mechanism;
-import org.firstinspires.ftc.teamcode.util.Config;
-import org.firstinspires.ftc.teamcode.util.Constants;
 
 public class GatesSubsystem implements Mechanism {
 
