@@ -19,7 +19,8 @@ public class ShootersSubsystem implements Mechanism {
         AUTO,
         MANUAL,
         OFF,
-        TUNING
+        TUNING,
+        CLOSE
     }
 
     public void stateSetter(ShooterState shooterState) {
@@ -123,6 +124,9 @@ public class ShootersSubsystem implements Mechanism {
     public Command setRpm(double r) {
         return instant(() -> this.setBothRpm(r));
     }
+
+
+
 
 
     // TODO: LUT (distance -> RPM) in its own class, ideally one table per goalSide
@@ -249,6 +253,12 @@ public class ShootersSubsystem implements Mechanism {
                 nectarTar = 0;
                 pollenTar = 0;
                 break;
+            case CLOSE:
+                nectarTar = 1500;
+                pollenTar = 2350;
+                break;
+
+
 
         }
         //nectarShooter.setThrottle(1);

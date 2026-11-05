@@ -6,9 +6,7 @@ import static com.pedropathing.ivy.groups.Groups.sequential;
 
 import com.pedropathing.ivy.Command;
 import com.pedropathing.paths.Path;
-import org.firstinspires.ftc.teamcode.subsystem.BaseRobot;
-import org.firstinspires.ftc.teamcode.subsystem.FlowerSubsystem;
-import org.firstinspires.ftc.teamcode.subsystem.IntakeSubsystem;
+import org.firstinspires.ftc.teamcode.subsystem.*;
 
 
 public class Runnables {
@@ -63,16 +61,55 @@ public class Runnables {
 				robot.intake.setSpeed(IntakeSubsystem.IntakeState.OFF),
 
 				 */
+                //SPIN UP SHOOTERS
+				robot.shooters.setState(ShootersSubsystem.ShooterState.CLOSE),
 
+                //DRIVE FORWARD AND SHOOT
 				robot.moveToPoint(paths.oneTipPoses.path1()),
+
+				robot.transfer.setSpeed(TransferSubsystem.TransferState.SHOOT),
+				robot.intake.setSpeed(IntakeSubsystem.IntakeState.SHOOT),
+				waitMs(3000),
+				robot.transfer.setSpeed(TransferSubsystem.TransferState.OFF),
+				robot.intake.setSpeed(IntakeSubsystem.IntakeState.OFF),
+
+                //GO TO FLOWER AND INTAKE
 				robot.flower.setPose(FlowerSubsystem.FlowerState.DOWN),
 				robot.moveToPoint(paths.oneTipPoses.path2()),
 				robot.intake.setSpeed(IntakeSubsystem.IntakeState.FORWARD),
 				waitMs(4000),
 				robot.intake.setSpeed(IntakeSubsystem.IntakeState.OFF),
-				robot.moveToPoint(paths.oneTipPoses.path3()),
-				robot.moveToPoint(paths.oneTipPoses.path4()),
-				robot.moveToPoint(paths.oneTipPoses.path5())
+
+                //GO TO FAR SIDE AND SHOOT
+				robot.moveToPoint(paths.oneTipPoses.flowerToMid()),
+				robot.moveToPoint(paths.oneTipPoses.toFarShot()),
+
+                robot.transfer.setSpeed(TransferSubsystem.TransferState.SHOOT),
+                robot.intake.setSpeed(IntakeSubsystem.IntakeState.SHOOT),
+                waitMs(3000),
+                robot.transfer.setSpeed(TransferSubsystem.TransferState.OFF),
+                robot.intake.setSpeed(IntakeSubsystem.IntakeState.OFF),
+
+                //GO TO FAR FLOWER AND INTAKE
+                robot.flower.setPose(FlowerSubsystem.FlowerState.DOWN),
+                robot.moveToPoint(paths.oneTipPoses.toFarFlower()),
+                robot.intake.setSpeed(IntakeSubsystem.IntakeState.FORWARD),
+                waitMs(4000),
+                robot.intake.setSpeed(IntakeSubsystem.IntakeState.OFF),
+
+                //SHOOT AGAIN
+                robot.moveToPoint(paths.oneTipPoses.farFlowerToShot()),
+                robot.flower.setPose(FlowerSubsystem.FlowerState.UP),
+                robot.moveToPoint(paths.oneTipPoses.farFlowerToShot()),
+
+                robot.transfer.setSpeed(TransferSubsystem.TransferState.SHOOT),
+                robot.intake.setSpeed(IntakeSubsystem.IntakeState.SHOOT),
+                waitMs(3000),
+                robot.transfer.setSpeed(TransferSubsystem.TransferState.OFF),
+                robot.intake.setSpeed(IntakeSubsystem.IntakeState.OFF),
+
+                //PARK
+                robot.moveToPoint(paths.oneTipPoses.park())
 
 
 				);

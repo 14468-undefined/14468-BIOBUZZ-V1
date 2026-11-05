@@ -46,24 +46,60 @@ public class PathsAndPoses {
 
 	public class OneTipPoses {
 
-		public final Pose start = factory.of(56, 9.1107, 90);
-		private final Pose path1 = factory.of(55.75, 15.75, 90);
-		private final Pose point2Start = factory.of(55.75, 15.75, 90);
-		private final Pose point2 = factory.of(33.5, 48, 180);
-		private final Pose point3Start = factory.of(33.5, 48, 180);
-		private final Pose point3 = factory.of(55.75, 15.75, 90);
+		public final Pose start = factory.of(56, 9.1107, 90);//start
+		private final Pose path1 = factory.of(55.75, 15.75, 90);//move forward slightly
+		private final Pose point2 = factory.of(33.5, 48, 180);//flower intake
+
+		//34, 107
+		//57, 122
+		///remove this
+		public final Pose MidPointToFarSide = factory.of(34,107,180);//control point
+		public final Pose farSideShot = factory.of(57,122,270);//shot on down side
+		public final Pose farFlower = factory.of(47.9,122,90);//shot on down side
+		public final Pose park = factory.of(15.5, 90.8, 270);//fark
+
+
+		private final Pose point3 = factory.of(55.75, 15.75, 90);//shoot
 		private final Pose point4 = factory.of(55.75, 8.75, 90);
 		private final Pose point5 = factory.of(10.75, 97.75, 90);
 		private final Pose point5Control1 = factory.of(22.75, 25.75, 0);
 
-		private final Pose flowerPoint1 = factory.of(56.1111, 22.4517, 90);
+		//private final Pose flowerPoint1 = factory.of(56.1111, 22.4517, 90);
 		private final Pose flowerPoint1mid = factory.of(10, 22.4517, 270);
 
 		private final Pose flowerPoint2 = factory.of(9.885, 14.883, 270);
 		private final Pose flowerPoint3 = factory.of(9.9961, 8.9965, 270);
 		private final Pose flowerPoint4 = factory.of(9.3297, 10.3293, 275);
 
-		public Path path1flower() {
+		public final Pose flowerMid = factory.of(194, -16.8893,90);
+		public final Pose shootFar = factory.of(194, -16.8893,270);
+		public Path flowerToMid(){
+			return Paths.line(point2, MidPointToFarSide);
+		}
+		public Path toFarShot(){
+			return Paths.line(MidPointToFarSide, farSideShot).linear(MidPointToFarSide, farSideShot);
+		}
+		public Path toFarFlower(){
+			return Paths.line(farSideShot, farFlower).linear(farSideShot, farFlower);
+		}
+		public Path farFlowerToShot(){
+			return Paths.line(farFlower, shootFar).linear(farFlower, shootFar);
+		}
+
+		public Path park(){
+			return Paths.line(shootFar, park);
+		}
+
+
+
+
+		//0,0,0 start
+		//138, -26 (shoot)
+		//115, 5(line up for flower)
+		//120, 5 (flower)
+		//96, 21 (mid point to head to shot)
+
+		/*public Path path1flower() {
 			return Paths.line(start, flowerPoint1).constant(flowerPoint1);
 		}
 
@@ -82,16 +118,18 @@ public class PathsAndPoses {
 		public Path path4Flower() {
 			return Paths.line(flowerPoint3, flowerPoint4).constant(flowerPoint4);
 		}
+
+		 */
 		public Path path1() {
 			return Paths.line(start, path1).constant(path1);
 		}
 
 		public Path path2() {
-			return Paths.line(point2Start, point2).linear(point2, point2Start);
+			return Paths.line(path1, point2).linear(path1, point2);
 		}
 
 		public Path path3() {
-			return Paths.line(point3Start, point3).linear(point3, point3Start);
+			return Paths.line(point2, point3).linear(point2, point3);
 		}
 
 		public Path path4() {
