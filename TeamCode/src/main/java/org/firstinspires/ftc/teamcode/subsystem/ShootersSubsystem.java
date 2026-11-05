@@ -254,8 +254,8 @@ public class ShootersSubsystem implements Mechanism {
                 pollenTar = 0;
                 break;
             case CLOSE:
-                nectarTar = 1500;
-                pollenTar = 2350;
+                nectarTar = 1600;
+                pollenTar = 2400;
                 break;
 
 

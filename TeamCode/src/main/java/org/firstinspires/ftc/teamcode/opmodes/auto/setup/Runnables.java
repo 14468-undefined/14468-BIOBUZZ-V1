@@ -67,6 +67,7 @@ public class Runnables {
                 //DRIVE FORWARD AND SHOOT
 				robot.moveToPoint(paths.oneTipPoses.path1()),
 
+				waitMs(1000),
 				robot.transfer.setSpeed(TransferSubsystem.TransferState.SHOOT),
 				robot.intake.setSpeed(IntakeSubsystem.IntakeState.SHOOT),
 				waitMs(3000),

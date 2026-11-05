@@ -54,7 +54,7 @@ public class PathsAndPoses {
 		//57, 122
 		///remove this
 		public final Pose MidPointToFarSide = factory.of(34,107,180);//control point
-		public final Pose farSideShot = factory.of(57,122,270);//shot on down side
+		public final Pose farSideShot = factory.of(80,140,270);//shot on down side
 		public final Pose farFlower = factory.of(47.9,122,90);//shot on down side
 		public final Pose park = factory.of(15.5, 90.8, 270);//fark
 
@@ -74,7 +74,7 @@ public class PathsAndPoses {
 		public final Pose flowerMid = factory.of(194, -16.8893,90);
 		public final Pose shootFar = factory.of(194, -16.8893,270);
 		public Path flowerToMid(){
-			return Paths.line(point2, MidPointToFarSide);
+			return Paths.line(point2, MidPointToFarSide).constant(point2);
 		}
 		public Path toFarShot(){
 			return Paths.line(MidPointToFarSide, farSideShot).linear(MidPointToFarSide, farSideShot);
@@ -87,7 +87,7 @@ public class PathsAndPoses {
 		}
 
 		public Path park(){
-			return Paths.line(shootFar, park);
+			return Paths.line(farSideShot, park);
 		}
 
 
