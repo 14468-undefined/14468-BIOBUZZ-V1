@@ -28,7 +28,7 @@ public class Constants {
         c.frontRightDirection.set(DcMotorSimple.Direction.FORWARD);
         c.backLeftDirection.set(DcMotorSimple.Direction.REVERSE);
         c.backRightDirection.set(DcMotorSimple.Direction.FORWARD);
-        c.manualBrakeMode.set(true);
+        c.manualBrakeMode.set(false);
     });
 
     public static PinpointConfig localizerConfig = new PinpointConfig(c -> {

@@ -128,6 +128,17 @@ public class Runnables {
 				robot.moveToPoint(paths.oneTipPoses.toFarShot()),
 
 
+				/// /SHOOOT
+				waitMs(1000),
+				robot.transfer.setSpeed(TransferSubsystem.TransferState.SHOOT),
+				robot.intake.setSpeed(IntakeSubsystem.IntakeState.SHOOT),
+				waitMs(3000),
+				robot.transfer.setSpeed(TransferSubsystem.TransferState.OFF),
+				robot.intake.setSpeed(IntakeSubsystem.IntakeState.OFF),
+				robot.shooters.setState(ShootersSubsystem.ShooterState.OFF),
+
+				/// END SHOOT
+
 
 				//waitMs(10000),
 
