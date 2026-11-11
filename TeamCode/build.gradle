@@ -53,6 +53,13 @@ repositories {
         url 'https://repo.dairy.foundation/releases'
     }
 
+    ///added 11/9/26 for snaphots
+    maven {
+        name = 'Central Portal Snapshots'
+        url = 'https://central.sonatype.com/repository/maven-snapshots/'
+    }
+
+
     /*//PANELS ADDED 10/12/26
     maven {
         url = "https://mymaven.bylazar.com/releases"
@@ -72,9 +79,9 @@ dependencies {
     /**
      * NEXT FTC
      */
-    implementation 'dev.nextftc.v2:control:0.3.0'//added 9/15/26 //JS
-    implementation 'dev.nextftc.v2:hardware:0.3.0'//added 9/15/26 //JS
-    implementation 'dev.nextftc.v2:robot:0.3.0'//added 9/15/26 //JS
+    implementation 'dev.nextftc.v2:control:0.3.1-SNAPSHOT'//added 9/15/26 //JS
+    implementation 'dev.nextftc.v2:hardware:0.3.1-SNAPSHOT'//added 9/15/26 //JS
+    implementation 'dev.nextftc.v2:robot:0.3.1-SNAPSHOT'//added 9/15/26 //JS
 
 
     //implementation "com.bylazar:fullpanels:1.0.18"//added 10/12/26 //PANELS

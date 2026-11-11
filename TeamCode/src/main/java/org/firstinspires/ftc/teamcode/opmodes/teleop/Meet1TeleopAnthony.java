@@ -17,7 +17,7 @@ import static dev.nextftc.units.Units.RotationsPerMinute;
 public class Meet1TeleopAnthony extends NextOpMode {
 
     private final BaseRobot robot;
-    private  int velocity = 3750;
+    private  int velocity = 2075;
     private double pollenTurretPos = .42;
     // for manual hardcoding
 
@@ -82,7 +82,7 @@ public class Meet1TeleopAnthony extends NextOpMode {
         robot.init().schedule();
         //robot.startDriveFieldCentric(gamepad1);//TODO: Anthony swap with field centric if you'd like but wait til we test this first
         robot.startDriveFieldCentric(gamepad1);
-        robot.shooters.setState(ShootersSubsystem.ShooterState.MANUAL).schedule();
+        //robot.shooters.setState(ShootersSubsystem.ShooterState.MANUAL).schedule();
         robot.getFollower().setPose(AutoToTeleopPoseStorage.getEndPoseOr(new Pose(0, 0, 0)));
 
         robot.turrets.setState(TurretsSubsystem.TurretState.MANUAL2).schedule();
@@ -133,8 +133,8 @@ public class Meet1TeleopAnthony extends NextOpMode {
         g1.y().onTrue(resetHeading());
 
         //manual changing shooter power
-        g1.dpadUp().onTrue(increaseVel(30));
-        g1.dpadDown().onTrue(decreaseVel(30));
+        g1.dpadUp().onTrue(increaseVel(25));
+        g1.dpadDown().onTrue(decreaseVel(25));
 
 
 

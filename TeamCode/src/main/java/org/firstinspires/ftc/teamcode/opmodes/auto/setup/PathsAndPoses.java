@@ -49,14 +49,33 @@ public class PathsAndPoses {
 		public final Pose start = factory.of(56, 9.1107, 90);//start
 		private final Pose path1 = factory.of(55.75, 15.75, 90);//move forward slightly
 		private final Pose point2 = factory.of(33.5, 48, 180);//flower intake
+		private final Pose point2Modified = factory.of(50, 48, 180);//flower intake
+		private final Pose point3Modified = factory.of(28, 36, 270);//flower intake
+
+
+		private final Pose lineUpCornerIntake = factory.of(28, 28, 270);
+		private final Pose cornerIntake = factory.of(20, 17.5, 270);
+		private final Pose cornerIntakeTurn = factory.of(18.09, 15.23, 285);
+		private final Pose backUpFromCorner = factory.of(40, 40, 285);
+		private final Pose point2ButTurned = factory.of(40, 25, 270);
+
+
+		/*
+		flower intake stuff
+		line up behind corner intake - 15.97, 23.05
+		corner intake - 21.44, 13.33, 5.1464 radians
+		turn away - 18.09, 15.23, 5.4237 rad
+		 */
 
 		//34, 107
 		//57, 122
 		///remove this
-		public final Pose MidPointToFarSide = factory.of(34,107,180);//control point
-		public final Pose farSideShot = factory.of(80,140,270);//shot on down side
-		public final Pose farFlower = factory.of(47.9,122,90);//shot on down side
-		public final Pose park = factory.of(15.5, 90.8, 270);//fark
+		public final Pose MidPointToFarSide = factory.of(38,107,180);//control point
+		public final Pose farSideShot = factory.of(80,147,270);//shot on down side
+		public final Pose farFlowerLineUp = factory.of(50,110,90);//shot on down side
+
+		public final Pose farFlower = factory.of(50,130,90);//
+		public final Pose park = factory.of(30, 100, 270);//park
 
 
 		private final Pose point3 = factory.of(55.75, 15.75, 90);//shoot
@@ -73,21 +92,53 @@ public class PathsAndPoses {
 
 		public final Pose flowerMid = factory.of(194, -16.8893,90);
 		public final Pose shootFar = factory.of(194, -16.8893,270);
+
+		public Path point2Turn(){
+			return Paths.line(path1, point2ButTurned).linear(path1, point2ButTurned);
+		}
+
+		public Path toCornerLineUp(){
+			return Paths.line(point2ButTurned, lineUpCornerIntake).linear(point2ButTurned, lineUpCornerIntake);
+		}
+		public Path toCornerActual(){
+			return Paths.line(lineUpCornerIntake, cornerIntake).linear(lineUpCornerIntake, cornerIntake);
+		}
+
+		public Path cornerTurn(){
+			return Paths.line(cornerIntake, cornerIntakeTurn).linear(cornerIntake, cornerIntakeTurn);
+		}
+
+		public Path backUpFromCorner(){
+			return Paths.line(lineUpCornerIntake, backUpFromCorner).linear(lineUpCornerIntake, backUpFromCorner);
+		}
 		public Path flowerToMid(){
 			return Paths.line(point2, MidPointToFarSide).constant(point2);
 		}
 		public Path toFarShot(){
 			return Paths.line(MidPointToFarSide, farSideShot).linear(MidPointToFarSide, farSideShot);
 		}
+		public Path toFarFlowerLineUp(){
+			return Paths.line(farSideShot, farFlowerLineUp).linear(farSideShot, farFlowerLineUp);
+		}
+
 		public Path toFarFlower(){
-			return Paths.line(farSideShot, farFlower).linear(farSideShot, farFlower);
+			return Paths.line(farFlowerLineUp, farFlower).linear(farFlowerLineUp, farFlower);
 		}
 		public Path farFlowerToShot(){
 			return Paths.line(farFlower, shootFar).linear(farFlower, shootFar);
 		}
 
 		public Path park(){
-			return Paths.line(farSideShot, park);
+			return Paths.line(farSideShot, park).constant(farSideShot);
+		}
+
+
+		public Path cornerToMid(){
+			return Paths.line(backUpFromCorner, MidPointToFarSide).constant(backUpFromCorner);
+		}
+
+		public Path cornerToShot() {
+			return Paths.line(backUpFromCorner, path1).linear(backUpFromCorner, path1);
 		}
 
 
@@ -126,6 +177,17 @@ public class PathsAndPoses {
 
 		public Path path2() {
 			return Paths.line(path1, point2).linear(path1, point2);
+		}
+
+		public Path path2Modified() {
+			return Paths.line(path1, point2Modified).linear(path1, point2Modified);
+		}
+		public Path path3Modified1() {
+			return Paths.line(point2Modified, point3Modified).linear(point2Modified, point3Modified);
+		}
+
+		public Path path3Modified() {
+			return Paths.line(point3Modified, lineUpCornerIntake).linear(point3Modified, lineUpCornerIntake);
 		}
 
 		public Path path3() {
