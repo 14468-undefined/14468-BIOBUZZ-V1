@@ -26,7 +26,7 @@ public class Meet1TeleopAnthony extends NextOpMode {
     public Meet1TeleopAnthony(BaseRobot robot) {
         super(robot);//        super(robot, BulkReadHook.INSTANCE);
         this.robot = robot;
-
+        Scheduler.reset();
     }
     private Command increaseVel(int increment) {
         return instant(() -> velocity += increment);
@@ -71,10 +71,8 @@ public class Meet1TeleopAnthony extends NextOpMode {
 
     @Override
     public void start() {
-        Scheduler.reset();//ADDED 11/1
         Trigger.Companion.getDefaultEventLoop().clear();//ADDED 11/1
 
-        Trigger.Companion.getDefaultEventLoop().clear();
 
         CommandGamepad g1 = new CommandGamepad(gamepad1);
         CommandGamepad g2 = new CommandGamepad(gamepad2);
@@ -83,7 +81,7 @@ public class Meet1TeleopAnthony extends NextOpMode {
         //robot.startDriveFieldCentric(gamepad1);//TODO: Anthony swap with field centric if you'd like but wait til we test this first
         robot.startDriveFieldCentric(gamepad1);
         //robot.shooters.setState(ShootersSubsystem.ShooterState.MANUAL).schedule();
-        robot.getFollower().setPose(AutoToTeleopPoseStorage.getEndPoseOr(new Pose(0, 0, 0)));
+        //robot.getFollower().setPose(AutoToTeleopPoseStorage.getEndPoseOr(new Pose(0, 0, 0)));
 
         robot.turrets.setState(TurretsSubsystem.TurretState.MANUAL2).schedule();
         //intake

@@ -69,9 +69,12 @@ public class Runnables {
 				robot.intake.setSpeed(IntakeSubsystem.IntakeState.OFF),
 				robot.transfer.setSpeed(TransferSubsystem.TransferState.OFF),
 
+
 				robot.shooters.setState(ShootersSubsystem.ShooterState.CLOSE),
                 //DRIVE FORWARD AND SHOOT
 				robot.moveToPoint(paths.oneTipPoses.path1()),
+				robot.flower.setPose(FlowerSubsystem.FlowerState.UP),
+
 /// SHOOT
 				waitMs(2000),
 				robot.transfer.setSpeed(TransferSubsystem.TransferState.SHOOT),
@@ -100,12 +103,47 @@ public class Runnables {
 				robot.moveToPoint(paths.oneTipPoses.path3Modified()),
 				waitMs(1500),
 				robot.moveToPoint(paths.oneTipPoses.backUpFromCorner()),
+
+
+
+
+
+
+
 				robot.intake.setSpeed(IntakeSubsystem.IntakeState.OFF),
 				robot.transfer.setSpeed(TransferSubsystem.TransferState.OFF),
 
 
-				robot.shooters.setState(ShootersSubsystem.ShooterState.CLOSE),
+
 				robot.moveToPoint(paths.oneTipPoses.cornerToShot()),
+
+				waitMs(2000),
+				robot.transfer.setSpeed(TransferSubsystem.TransferState.SHOOT),
+				robot.intake.setSpeed(IntakeSubsystem.IntakeState.SHOOT),
+				waitMs(3000),
+				robot.transfer.setSpeed(TransferSubsystem.TransferState.OFF),
+				robot.intake.setSpeed(IntakeSubsystem.IntakeState.OFF),
+				robot.shooters.setState(ShootersSubsystem.ShooterState.OFF),
+
+//my discord kittens name is olivia
+				robot.moveToPoint(paths.oneTipPoses.path2()),
+				robot.moveToPoint(paths.oneTipPoses.park2()),
+
+				waitMs(100000),
+
+
+
+
+
+
+
+
+				robot.moveToPoint(paths.oneTipPoses.cornerToMid()),
+				robot.shooters.setState(ShootersSubsystem.ShooterState.CLOSE),
+
+				robot.moveToPoint(paths.oneTipPoses.toFarShot()),
+
+
 /// SHOOT
 				robot.flower.setPose(FlowerSubsystem.FlowerState.DOWN),
 				waitMs(1500),
@@ -120,6 +158,43 @@ public class Runnables {
 
 				///
 				waitMs(1000),
+
+				robot.moveToPoint(paths.oneTipPoses.toFarFlowerLineUp()),
+				robot.moveToPoint(paths.oneTipPoses.toFarFlower()),
+				waitMs(500),
+				robot.shooters.setState(ShootersSubsystem.ShooterState.CLOSE),
+
+				/*robot.moveToPoint(paths.oneTipPoses.toFarShot()),
+
+
+				waitMs(1500),
+				robot.transfer.setSpeed(TransferSubsystem.TransferState.SHOOT),
+				robot.intake.setSpeed(IntakeSubsystem.IntakeState.SHOOT),
+				waitMs(3000),
+				robot.transfer.setSpeed(TransferSubsystem.TransferState.OFF),
+				robot.intake.setSpeed(IntakeSubsystem.IntakeState.OFF),
+				robot.shooters.setState(ShootersSubsystem.ShooterState.OFF),
+				//robot.moveToPoint(paths.oneTipPoses.toFarFlowerLineUp()),
+
+				//robot.moveToPoint(paths.oneTipPoses.toFarFlower()),
+				//robot.moveToPoint(paths.oneTipPoses.farFlowerToShot()),
+
+				 */
+				robot.moveToPoint(paths.oneTipPoses.park()),
+
+
+
+				waitMs(10000),
+
+
+
+
+
+
+
+
+
+
 				robot.moveToPoint(paths.oneTipPoses.path2()),
 				robot.intake.setSpeed(IntakeSubsystem.IntakeState.FORWARD),
 				waitMs(2000),
@@ -225,3 +300,5 @@ public class Runnables {
 
 
 }
+
+//my discord kittens name is olivia

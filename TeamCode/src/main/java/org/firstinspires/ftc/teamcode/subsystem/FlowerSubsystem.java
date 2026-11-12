@@ -28,11 +28,12 @@ public class FlowerSubsystem implements Mechanism {
     }
 
     public FlowerState getFlowerState(){
+        flowerServo.setPosition(UP);
         return flowerState;
     }
     private final double tuning_manual = 0;
-    private final double DOWN = 0.49;//TODO: Tune
-    private final double UP = .92;//TODO: Tune
+    private final double DOWN = 0.32;//TODO: Tune
+    private final double UP = .77;//TODO: Tune
 
 
 

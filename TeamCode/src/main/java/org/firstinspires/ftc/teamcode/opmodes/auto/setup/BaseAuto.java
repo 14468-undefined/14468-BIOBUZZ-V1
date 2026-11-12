@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes.auto.setup;
 
 import com.pedropathing.ivy.Command;
+import com.pedropathing.ivy.Scheduler;
 import com.pedropathing.math.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
@@ -23,6 +24,7 @@ public class BaseAuto extends NextOpMode {
 
 		this.runnables = new Runnables(robot);
 		this.startingPose = runnables.paths.oneTipPoses.start;
+		Scheduler.reset();
 	}
 
 	public void setAutoCommand(Command command) {
@@ -41,5 +43,7 @@ public class BaseAuto extends NextOpMode {
 	public void periodic() {
 		robot.getFollower().update();
 		telemetry.addData("POSE", robot.getFollower().pose());
+		Scheduler.execute();//11/12/26
+
 	}
 }

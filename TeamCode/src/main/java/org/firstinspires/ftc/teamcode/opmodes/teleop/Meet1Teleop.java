@@ -61,6 +61,7 @@ public class Meet1Teleop extends NextOpMode {
     @Override
     public void start() {
 
+        //robot.getFollower().update();
         Trigger.Companion.getDefaultEventLoop().clear();
 
         CommandGamepad g1 = new CommandGamepad(gamepad1);
@@ -106,7 +107,7 @@ public class Meet1Teleop extends NextOpMode {
         double turn = -gamepad1.right_stick_x;
 
 
-        robot.getFollower().update();
+        //robot.getFollower().update();
 
         Pose robotPose = robot.getFollower().pose();
         telemetry.addData("Robot X", robotPose.x());

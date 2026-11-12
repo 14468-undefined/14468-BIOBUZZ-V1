@@ -47,7 +47,7 @@ public class PathsAndPoses {
 	public class OneTipPoses {
 
 		public final Pose start = factory.of(56, 9.1107, 90);//start
-		private final Pose path1 = factory.of(55.75, 15.75, 90);//move forward slightly
+		private final Pose path1 = factory.of(58, 15.75, 90);//move forward slightly
 		private final Pose point2 = factory.of(33.5, 48, 180);//flower intake
 		private final Pose point2Modified = factory.of(50, 48, 180);//flower intake
 		private final Pose point3Modified = factory.of(28, 36, 270);//flower intake
@@ -70,12 +70,12 @@ public class PathsAndPoses {
 		//34, 107
 		//57, 122
 		///remove this
-		public final Pose MidPointToFarSide = factory.of(38,107,180);//control point
-		public final Pose farSideShot = factory.of(80,147,270);//shot on down side
+		public final Pose MidPointToFarSide = factory.of(48,107,180);//control point
+		public final Pose farSideShot = factory.of(80,145,270);//shot on down side
 		public final Pose farFlowerLineUp = factory.of(50,110,90);//shot on down side
 
-		public final Pose farFlower = factory.of(50,130,90);//
-		public final Pose park = factory.of(30, 100, 270);//park
+		public final Pose farFlower = factory.of(47,128,90);//
+		public final Pose park = factory.of(30, 110, 270);//park
 
 
 		private final Pose point3 = factory.of(55.75, 15.75, 90);//shoot
@@ -131,10 +131,13 @@ public class PathsAndPoses {
 		public Path park(){
 			return Paths.line(farSideShot, park).constant(farSideShot);
 		}
+		public Path park2(){
+			return Paths.line(point2, park).constant(point2);
+		}
 
 
 		public Path cornerToMid(){
-			return Paths.line(backUpFromCorner, MidPointToFarSide).constant(backUpFromCorner);
+			return Paths.line(backUpFromCorner, MidPointToFarSide).linear(backUpFromCorner, MidPointToFarSide);
 		}
 
 		public Path cornerToShot() {
