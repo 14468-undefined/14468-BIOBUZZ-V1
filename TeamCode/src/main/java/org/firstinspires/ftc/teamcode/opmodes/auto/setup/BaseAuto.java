@@ -48,4 +48,13 @@ public class BaseAuto extends NextOpMode {
 		//Scheduler.execute();//11/12/26
 
 	}
+
+	/**
+	 * new 11/12 to try and fix issue
+	 */
+	@Override
+	public void end(){
+		robot.getFollower().stop();//ADDED THIS BC OF TELEOP ISSUES ON 11/12 - if anythings not working comment this out first
+	}
+
 }
