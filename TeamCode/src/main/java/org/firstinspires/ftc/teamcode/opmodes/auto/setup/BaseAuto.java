@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import dev.nextftc.robot.opmode.NextAutonomous;
 import dev.nextftc.robot.opmode.NextOpMode;
 import org.firstinspires.ftc.teamcode.subsystem.BaseRobot;
+import org.firstinspires.ftc.teamcode.subsystem.FlowerSubsystem;
 
 @NextAutonomous(name = "Base Auto")
 @Disabled
@@ -33,6 +34,7 @@ public class BaseAuto extends NextOpMode {
 
 	@Override
 	public void start() {
+		robot.flower.setPose(FlowerSubsystem.FlowerState.UP).schedule();
 		robot.getFollower().setPose(startingPose);
 		if (autoCommand != null) {
 			autoCommand.schedule();
@@ -43,7 +45,7 @@ public class BaseAuto extends NextOpMode {
 	public void periodic() {
 		robot.getFollower().update();
 		telemetry.addData("POSE", robot.getFollower().pose());
-		Scheduler.execute();//11/12/26
+		//Scheduler.execute();//11/12/26
 
 	}
 }

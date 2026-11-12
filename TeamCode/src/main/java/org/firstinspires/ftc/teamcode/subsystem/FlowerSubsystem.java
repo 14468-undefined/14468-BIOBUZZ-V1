@@ -28,7 +28,6 @@ public class FlowerSubsystem implements Mechanism {
     }
 
     public FlowerState getFlowerState(){
-        flowerServo.setPosition(UP);
         return flowerState;
     }
     private final double tuning_manual = 0;
@@ -44,9 +43,11 @@ public class FlowerSubsystem implements Mechanism {
 
 
     public FlowerSubsystem(){
-        flowerState = FlowerState.UP;//initialize off
+        flowerState = FlowerState.UP;//initialize up
+       // flowerServo.setPosition(UP);
 
     }
+
     @Override
     public void periodic() {
 

@@ -101,7 +101,9 @@ public class Runnables {
 				 */
 				//waitMs(1000),
 				robot.moveToPoint(paths.oneTipPoses.path3Modified()),
-				waitMs(1500),
+				waitMs(500),
+				robot.intake.setSpeed(IntakeSubsystem.IntakeState.OFF),
+				robot.transfer.setSpeed(TransferSubsystem.TransferState.OFF),
 				robot.moveToPoint(paths.oneTipPoses.backUpFromCorner()),
 
 
@@ -110,11 +112,10 @@ public class Runnables {
 
 
 
-				robot.intake.setSpeed(IntakeSubsystem.IntakeState.OFF),
-				robot.transfer.setSpeed(TransferSubsystem.TransferState.OFF),
 
 
 
+				robot.shooters.setState(ShootersSubsystem.ShooterState.CLOSE),
 				robot.moveToPoint(paths.oneTipPoses.cornerToShot()),
 
 				waitMs(2000),
@@ -300,5 +301,3 @@ public class Runnables {
 
 
 }
-
-//my discord kittens name is olivia

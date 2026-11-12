@@ -75,7 +75,7 @@ public class PathsAndPoses {
 		public final Pose farFlowerLineUp = factory.of(50,110,90);//shot on down side
 
 		public final Pose farFlower = factory.of(47,128,90);//
-		public final Pose park = factory.of(30, 110, 270);//park
+		public final Pose park = factory.of(30, 95, 270);//park
 
 
 		private final Pose point3 = factory.of(55.75, 15.75, 90);//shoot
