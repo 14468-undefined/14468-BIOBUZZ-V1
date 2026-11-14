@@ -50,7 +50,7 @@ public class Runnables {
 		);
 	}
 
-    public Command ShootParkAuto(){
+    public Command ShooqtParkAuto(){
         return sequential(
                 waitMs(18000),
                 robot.flower.setPose(FlowerSubsystem.FlowerState.UP),

@@ -226,11 +226,11 @@ public class PathsAndPoses {
 	}
 
     public class ShootParkAutoPoses {
-        private final PoseFactory poseFactory = PoseFactory.degrees();
 
-        private final Pose start = poseFactory.of(61.402, 133.2173, 270);
-        private final Pose path1 = poseFactory.of(61.402, 127.3995, 270);
-        private final Pose park = poseFactory.of(15.7403, 123.7152, 270);
+
+        private final Pose start = factory.of(61.402, 133.2173, 270);
+        private final Pose path1 = factory.of(61.402, 127.3995, 270);
+        private final Pose park = factory.of(15.7403, 123.7152, 270);
 
         public Path path1() {
             return Paths.line(start, path1).constant(path1);
