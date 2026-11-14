@@ -24,7 +24,7 @@ public class IntakeSubsystem implements Mechanism {
 
     private final double intakeNormal = 1;
     private final double intakeShoot = 1.0;
-    private final double reverse = -1.0;
+    private final double reverse = -.5;
     private final double off = 0.0;
     private double custom = 0.5;
 

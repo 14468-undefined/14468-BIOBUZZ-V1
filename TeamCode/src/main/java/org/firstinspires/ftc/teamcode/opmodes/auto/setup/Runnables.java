@@ -50,7 +50,7 @@ public class Runnables {
 		);
 	}
 
-    public Command ShooqtParkAuto(){
+    public Command ShootParkAuto(){
         return sequential(
                 waitMs(18000),
                 robot.flower.setPose(FlowerSubsystem.FlowerState.UP),
@@ -61,7 +61,7 @@ public class Runnables {
                 robot.shooters.setState(ShootersSubsystem.ShooterState.CLOSE),
                 //DRIVE FORWARD AND SHOOT
                 robot.moveToPoint(paths.shootParkAutoPoses.path1()),
-                robot.flower.setPose(FlowerSubsystem.FlowerState.UP),
+                robot.flower.setPose(FlowerSubsystem.FlowerState.DOWN),
                 waitMs(2000),
                 robot.transfer.setSpeed(TransferSubsystem.TransferState.SHOOT),
                 robot.intake.setSpeed(IntakeSubsystem.IntakeState.SHOOT),
@@ -100,13 +100,14 @@ public class Runnables {
 				robot.shooters.setState(ShootersSubsystem.ShooterState.CLOSE),
                 //DRIVE FORWARD AND SHOOT
 				robot.moveToPoint(paths.oneTipPoses.path1()),
-				robot.flower.setPose(FlowerSubsystem.FlowerState.UP),
+				robot.flower.setPose(FlowerSubsystem.FlowerState.DOWN),
 
 /// SHOOT
 				waitMs(2000),
 				robot.transfer.setSpeed(TransferSubsystem.TransferState.SHOOT),
 				robot.intake.setSpeed(IntakeSubsystem.IntakeState.SHOOT),
 				waitMs(3000),
+                robot.flower.setPose(FlowerSubsystem.FlowerState.UP),
 				robot.transfer.setSpeed(TransferSubsystem.TransferState.OFF),
 				robot.intake.setSpeed(IntakeSubsystem.IntakeState.OFF),
 				robot.shooters.setState(ShootersSubsystem.ShooterState.OFF),

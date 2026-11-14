@@ -20,7 +20,8 @@ public class ShootersSubsystem implements Mechanism {
         MANUAL,
         OFF,
         TUNING,
-        CLOSE
+        CLOSE,
+        LOWER
     }
 
     public void stateSetter(ShooterState shooterState) {
@@ -256,6 +257,11 @@ public class ShootersSubsystem implements Mechanism {
             case CLOSE:
                 nectarTar = 1350;//2125 was old old of both
                 pollenTar = 3000;//2700 with tubing on
+                //
+                //
+            case LOWER:
+                nectarTar = 1283;
+                pollenTar = 2850;
                 break;
 
 

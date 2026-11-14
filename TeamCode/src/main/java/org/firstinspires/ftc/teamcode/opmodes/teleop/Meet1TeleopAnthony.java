@@ -101,19 +101,17 @@ public class Meet1TeleopAnthony extends NextOpMode {
         //g1.leftBumper().onFalse(robot.shooters.spinBoth(0));
         g1.leftBumper().onTrue(robot.shooters.setState(ShootersSubsystem.ShooterState.CLOSE));
         g1.leftBumper().onFalse(robot.shooters.setState(ShootersSubsystem.ShooterState.OFF));
+        g1.dpadLeft().onTrue(robot.shooters.setState(ShootersSubsystem.ShooterState.LOWER));
 
         //g1.dpadRight().onTrue(robot.turrets.pollenCustom(.42));
         g1.dpadRight().onTrue(rotateTurretRight(.01));
 
 
         //g1.dpadLeft().onTrue(robot.turrets.pollenCustom(.44));
-        g1.dpadLeft().onTrue(rotateTurretLeft(.01));
+       // g1.dpadLeft().onTrue(rotateTurretLeft(.01));
 
 
-        g1.a().onTrue(instant(() -> {
-            pollenTurretPos = .52;
-            robot.turrets.pollenCustom(pollenTurretPos).schedule();
-        })); //center it
+
 
 
 
