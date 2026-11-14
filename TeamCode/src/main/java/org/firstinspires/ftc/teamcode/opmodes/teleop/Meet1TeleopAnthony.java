@@ -18,7 +18,7 @@ public class Meet1TeleopAnthony extends NextOpMode {
 
     private final BaseRobot robot;
     private  int velocity = 2075;
-    private double pollenTurretPos = .42;
+    private double pollenTurretPos = .57;
     // for manual hardcoding
 
 
@@ -111,7 +111,7 @@ public class Meet1TeleopAnthony extends NextOpMode {
 
 
         g1.a().onTrue(instant(() -> {
-            pollenTurretPos = .42;
+            pollenTurretPos = .52;
             robot.turrets.pollenCustom(pollenTurretPos).schedule();
         })); //center it
 

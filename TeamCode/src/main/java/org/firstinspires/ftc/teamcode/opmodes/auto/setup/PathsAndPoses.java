@@ -10,6 +10,7 @@ public class PathsAndPoses {
 
 	private final PoseFactory factory;
 
+    public final ShootParkAutoPoses shootParkAutoPoses;
 	public final LeavePoses leavePoses;
 	public final SquarePoses squarePoses;
 	public final OneTipPoses oneTipPoses;
@@ -20,6 +21,8 @@ public class PathsAndPoses {
 		squarePoses = new SquarePoses();
 		oneTipPoses = new OneTipPoses();
 		leavePoses = new LeavePoses();
+        shootParkAutoPoses = new ShootParkAutoPoses();
+
 
 	}
 
@@ -221,4 +224,21 @@ public class PathsAndPoses {
 		public final Path path4FrontLeavePose = createCurvyPath(midPose, control, frontLeavePose);
 		public final Path path4BackLeavePose = createCurvyPath(midPose, control, backLeavePose);
 	}
+
+    public class ShootParkAutoPoses {
+        private final PoseFactory poseFactory = PoseFactory.degrees();
+
+        private final Pose start = poseFactory.of(61.402, 133.2173, 270);
+        private final Pose path1 = poseFactory.of(61.402, 127.3995, 270);
+        private final Pose park = poseFactory.of(15.7403, 123.7152, 270);
+
+        public Path path1() {
+            return Paths.line(start, path1).constant(path1);
+        }
+
+        public Path park() {
+            return Paths.line(path1, park).constant(park);
+        }
+    }
+
 }

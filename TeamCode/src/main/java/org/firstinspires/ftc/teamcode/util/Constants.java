@@ -10,7 +10,7 @@ public final class Constants{
 
    @Configurable
    public static final class FlowerConstants{
-      public static double TUNING_FLOWER_MECH = 0;
+      public static double TUNING_FLOWER_MECH = .77;
    }
     @Configurable
     public static final class TurretConstants{

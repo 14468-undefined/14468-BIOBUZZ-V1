@@ -92,6 +92,7 @@ dependencies {
      * pedro - added 9/16/26
      */
     implementation 'com.pedropathing.ivy:pedro:1.1.1'
+    implementation 'com.google.firebase:firebase-crashlytics-buildtools:3.0.8'
 
 
 }
