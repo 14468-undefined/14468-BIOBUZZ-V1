@@ -14,6 +14,8 @@ public class PathsAndPoses {
 	public final LeavePoses leavePoses;
 	public final SquarePoses squarePoses;
 	public final OneTipPoses oneTipPoses;
+	public final FarSidePoses farSidePoses;
+
 
 	public PathsAndPoses() {
 		factory = new PoseFactory(PoseFactory.Operation.IDENTITY, true);
@@ -21,6 +23,7 @@ public class PathsAndPoses {
 		squarePoses = new SquarePoses();
 		oneTipPoses = new OneTipPoses();
 		leavePoses = new LeavePoses();
+		farSidePoses = new FarSidePoses();
         shootParkAutoPoses = new ShootParkAutoPoses();
 
 
@@ -47,6 +50,19 @@ public class PathsAndPoses {
 
 	}
 
+	public class FarSidePoses {
+		public final Pose start = factory.of(56, 9.1107, 90);//start
+		private final Pose path1 = factory.of(58, 15.75, 90);//move forward slightly
+
+		public final Pose park = factory.of(85, 95, 90);
+
+		public Path path1(){
+			return Paths.line(start, path1).constant(start);
+		}
+		public Path toPark(){
+			return Paths.line(path1, park).constant(park);
+		}
+	}
 	public class OneTipPoses {
 
 		public final Pose start = factory.of(56, 9.1107, 90);//start

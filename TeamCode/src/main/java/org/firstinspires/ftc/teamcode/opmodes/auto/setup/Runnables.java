@@ -77,6 +77,32 @@ public class Runnables {
         );
     }
 
+	public Command farSideAuto(){
+		return sequential(
+		robot.flower.setPose(FlowerSubsystem.FlowerState.UP),
+				robot.intake.setSpeed(IntakeSubsystem.IntakeState.OFF),
+				robot.transfer.setSpeed(TransferSubsystem.TransferState.OFF),
+
+
+				robot.shooters.setState(ShootersSubsystem.ShooterState.CLOSE),
+				//DRIVE FORWARD AND SHOOT
+				robot.moveToPoint(paths.farSidePoses.path1()),
+				robot.flower.setPose(FlowerSubsystem.FlowerState.DOWN),
+
+/// SHOOT
+				waitMs(2000),
+				robot.transfer.setSpeed(TransferSubsystem.TransferState.SHOOT),
+				robot.intake.setSpeed(IntakeSubsystem.IntakeState.SHOOT),
+				waitMs(3000),
+				robot.flower.setPose(FlowerSubsystem.FlowerState.UP),
+				robot.transfer.setSpeed(TransferSubsystem.TransferState.OFF),
+				robot.intake.setSpeed(IntakeSubsystem.IntakeState.OFF),
+				robot.shooters.setState(ShootersSubsystem.ShooterState.OFF),
+				robot.flower.setPose(FlowerSubsystem.FlowerState.UP),
+				robot.moveToPoint(paths.farSidePoses.toPark())
+		);
+	}
+
 	public Command OneTipAuto(){
 		return sequential(
 				/*robot.moveToPoint(paths.oneTipPoses.path1flower()),
@@ -155,7 +181,6 @@ public class Runnables {
 				robot.intake.setSpeed(IntakeSubsystem.IntakeState.OFF),
 				robot.shooters.setState(ShootersSubsystem.ShooterState.OFF),
 
-//my discord kittens name is olivia
 				robot.moveToPoint(paths.oneTipPoses.path2()),
 				robot.moveToPoint(paths.oneTipPoses.park2()),
 

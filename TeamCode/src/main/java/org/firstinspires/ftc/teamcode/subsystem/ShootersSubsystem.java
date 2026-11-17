@@ -21,7 +21,8 @@ public class ShootersSubsystem implements Mechanism {
         OFF,
         TUNING,
         CLOSE,
-        LOWER
+        LOWER,
+        TELE
     }
 
     public void stateSetter(ShooterState shooterState) {
@@ -29,6 +30,15 @@ public class ShootersSubsystem implements Mechanism {
     }
     public Command setState(ShooterState s) {
         return instant(() -> this.stateSetter(s));
+    }
+
+    double teleMultiplier = 1;
+    public void multiply(double m){
+        teleMultiplier = m;
+    }
+
+    public Command setMultiplier(double m) {
+        return instant(() -> this.multiply(m));
     }
 
     private static final double RPM_DEADBAND = 25; // ignore setpoint changes smaller than this in auto mode
@@ -262,6 +272,10 @@ public class ShootersSubsystem implements Mechanism {
             case LOWER:
                 nectarTar = 1283;
                 pollenTar = 2850;
+                break;
+            case TELE:
+                nectarTar = 1350 * teleMultiplier;
+                pollenTar = 2850 * teleMultiplier;
                 break;
 
 

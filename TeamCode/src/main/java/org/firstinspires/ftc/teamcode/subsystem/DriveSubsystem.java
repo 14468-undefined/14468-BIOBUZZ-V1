@@ -11,6 +11,14 @@ public class DriveSubsystem implements Mechanism {
     public DriveSubsystem(){
         frontLeft.setDirection(NextMotor.Direction.REVERSE);
         backLeft.setDirection(NextMotor.Direction.REVERSE);
+
+        frontRight.setZeroPowerBehavior(NextMotor.ZeroPowerBehavior.BRAKE);
+        backRight.setZeroPowerBehavior(NextMotor.ZeroPowerBehavior.BRAKE);
+        frontLeft.setZeroPowerBehavior(NextMotor.ZeroPowerBehavior.BRAKE);
+        backLeft.setZeroPowerBehavior(NextMotor.ZeroPowerBehavior.BRAKE);
+
+
+
     }
     //public final NextMotor frontLeft = new NextMotor(RobotController.controlHub(), Config.leftFrontMotor);
     //public final NextMotor frontRight = new NextMotor(RobotController.controlHub(), Config.rightFrontMotor);
@@ -27,6 +35,7 @@ public class DriveSubsystem implements Mechanism {
         frontRight.setThrottle(power);
         backLeft.setThrottle(power);
         backRight.setThrottle(power);
+
     }
 
 }

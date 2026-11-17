@@ -34,7 +34,8 @@ public class BaseAuto extends NextOpMode {
 
 	@Override
 	public void start() {
-		robot.flower.setPose(FlowerSubsystem.FlowerState.UP).schedule();
+		robot.flower.setPose(FlowerSubsystem.FlowerState.UP);
+
 		robot.getFollower().setPose(startingPose);
 		if (autoCommand != null) {
 			autoCommand.schedule();
