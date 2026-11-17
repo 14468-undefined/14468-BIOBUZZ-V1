@@ -79,6 +79,8 @@ public class Runnables {
 
 	public Command farSideAuto(){
 		return sequential(
+		waitMs(19000),
+
 		robot.flower.setPose(FlowerSubsystem.FlowerState.UP),
 				robot.intake.setSpeed(IntakeSubsystem.IntakeState.OFF),
 				robot.transfer.setSpeed(TransferSubsystem.TransferState.OFF),
@@ -87,7 +89,7 @@ public class Runnables {
 				robot.shooters.setState(ShootersSubsystem.ShooterState.CLOSE),
 				//DRIVE FORWARD AND SHOOT
 				robot.moveToPoint(paths.farSidePoses.path1()),
-				robot.flower.setPose(FlowerSubsystem.FlowerState.DOWN),
+				//robot.flower.setPose(FlowerSubsystem.FlowerState.DOWN),
 
 /// SHOOT
 				waitMs(2000),

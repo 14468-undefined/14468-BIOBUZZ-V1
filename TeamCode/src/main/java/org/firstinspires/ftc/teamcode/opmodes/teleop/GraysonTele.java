@@ -114,7 +114,6 @@ public class GraysonTele extends NextOpMode {
 
         robot.getFollower().update();
         //ManualDrive.driveOrHold(robot.getFollower(), powers);
-        robot.getFollower().update();
         double forward = -gamepad1.left_stick_y;
         double lateral = -gamepad1.left_stick_x;
         double turn = -gamepad1.right_stick_x;
