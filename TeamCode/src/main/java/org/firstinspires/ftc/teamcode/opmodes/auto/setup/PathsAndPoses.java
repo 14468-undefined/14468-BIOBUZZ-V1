@@ -52,15 +52,15 @@ public class PathsAndPoses {
 
 	public class FarSidePoses {
 		public final Pose start = factory.of(56, 9.1107, 90);//start
-		private final Pose path1 = factory.of(58, 15.75, 90);//move forward slightly
+		private final Pose path1 = factory.of(60, 15.75, 90);//move forward slightly
 
-		public final Pose park = factory.of(85, 95, 90);
+		public final Pose park = factory.of(123, 22, 180);
 
 		public Path path1(){
 			return Paths.line(start, path1).constant(start);
 		}
 		public Path toPark(){
-			return Paths.line(path1, park).constant(park);
+			return Paths.line(path1, park).linear(path1, park);
 		}
 	}
 	public class OneTipPoses {

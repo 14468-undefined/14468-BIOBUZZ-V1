@@ -13,7 +13,7 @@ public class Config {
     public static int nectarGateServo = 4;
 
 
-    public static int flowerMechServo = 1;//TODO
+    public static int flowerMechServo = 2;//TODO
 
 
 

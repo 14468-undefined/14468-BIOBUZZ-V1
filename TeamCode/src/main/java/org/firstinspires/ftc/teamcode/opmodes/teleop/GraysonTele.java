@@ -62,6 +62,7 @@ public class GraysonTele extends NextOpMode {
 
 
 
+
         g1.dpadUp().onTrue(
                 instant(() -> shooterMultiplier += 0.03)
         );
@@ -71,7 +72,7 @@ public class GraysonTele extends NextOpMode {
         );
 
         g1.dpadRight().onTrue(
-                instant(() -> shooterMultiplier = 1.0)
+                instant(() -> shooterMultiplier = 1000.0)
         );
         g1.dpadLeft().onTrue(
                 instant(() -> shooterMultiplier = 1.0)
@@ -87,7 +88,7 @@ public class GraysonTele extends NextOpMode {
 
         g1.rightTrigger().isOver(0.2).onTrue(robot.intake.setSpeed(IntakeSubsystem.IntakeState.SHOOT));
         g1.rightTrigger().isOver(0.2).onTrue(robot.transfer.setSpeed(TransferSubsystem.TransferState.SHOOT));
-        g1.leftTrigger().isOver(0.2).onTrue(robot.shooters.setState(ShootersSubsystem.ShooterState.CLOSE));
+        g1.leftTrigger().isOver(0.2).onTrue(robot.shooters.setState(ShootersSubsystem.ShooterState.TELE));
 
         g1.leftTrigger().isOver(0.2).onFalse(robot.shooters.setState(ShootersSubsystem.ShooterState.OFF));
 
@@ -104,7 +105,10 @@ public class GraysonTele extends NextOpMode {
     @Override
     public void periodic() {
 
-        robot.shooters.setMultiplier(shooterMultiplier);
+        //robot.shooters.setMultiplier(shooterMultiplier);
+        robot.shooters.multiply(shooterMultiplier);
+
+
         ManualDrive.driveOrHold(
                 robot.getFollower(),
                 -gamepad1.left_stick_y,
@@ -114,7 +118,6 @@ public class GraysonTele extends NextOpMode {
 
         robot.getFollower().update();
         //ManualDrive.driveOrHold(robot.getFollower(), powers);
-        robot.getFollower().update();
         double forward = -gamepad1.left_stick_y;
         double lateral = -gamepad1.left_stick_x;
         double turn = -gamepad1.right_stick_x;
