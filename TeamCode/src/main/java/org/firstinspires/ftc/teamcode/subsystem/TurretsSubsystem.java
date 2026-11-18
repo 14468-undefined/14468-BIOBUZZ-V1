@@ -72,7 +72,7 @@ public class TurretsSubsystem implements Mechanism {
     private final FieldState fieldState;
 
     private FieldState.GoalSide goalSide = FieldState.GoalSide.GARDEN;
-    private FieldState.Alliance alliance = FieldState.Alliance.RED;
+    private FieldState.Alliance alliance = FieldState.Alliance.BLUE;
 
 
     public TurretsSubsystem(FieldState fieldState) {
@@ -105,7 +105,10 @@ public class TurretsSubsystem implements Mechanism {
     // ---- Targets / telemetry getters ----
 
     public double getPollenTurretTargetAngle() {
-        return fieldState.bearingToGoalDeg(POLLEN_TURRET_FORWARD_OFFSET, POLLEN_TURRET_LATERAL_OFFSET);
+        return fieldState.bearingToGoalDeg(
+                POLLEN_TURRET_FORWARD_OFFSET,
+                POLLEN_TURRET_LATERAL_OFFSET
+        ) + POLLEN_ZERO_DEG;
     }
 
     public double getNectarTurretTargetAngle() {
@@ -163,14 +166,41 @@ public class TurretsSubsystem implements Mechanism {
         return clamp01(centerPos + servoDeg / SERVO_RANGE_DEG);
     }
 
+    private static double pollenDegToPosition(double degrees) {
+        degrees *= POLLEN_ANGLE_SIGN;
+
+        degrees = Math.max(
+                POLLEN_MIN_DEG,
+                Math.min(POLLEN_MAX_DEG, degrees)
+        );
+
+        if (degrees < 0) {
+            double fraction = (degrees - POLLEN_MIN_DEG)
+                    / (0.0 - POLLEN_MIN_DEG);
+
+            return POLLEN_MIN_POS
+                    + fraction * (POLLEN_CENTER_POS - POLLEN_MIN_POS);
+        } else {
+            double fraction = degrees / POLLEN_MAX_DEG;
+
+            return POLLEN_CENTER_POS
+                    + fraction * (POLLEN_MAX_POS - POLLEN_CENTER_POS);
+        }
+    }
+
 
 
     // ---- Output ----
 
     private void commandPollenAngle(double bearingDeg) {
-        double target = resolveTarget(bearingDeg, pollenCommandedDeg, pollenSide);
+        double target = Math.max(
+                POLLEN_MIN_DEG,
+                Math.min(POLLEN_MAX_DEG, bearingDeg)
+        );
+
         pollenCommandedDeg = target;
-        setPollenPosition(degToPosition(target, POLLEN_CENTER_POS, POLLEN_GEAR_RATIO, POLLEN_ANGLE_SIGN));
+
+        setPollenPosition(pollenDegToPosition(target));
     }
 
     private void commandNectarAngle(double bearingDeg) {

@@ -32,6 +32,16 @@ public class AutoTracking extends NextOpMode {
 
     }
 
+    private Command relocalize() {
+        return instant(() -> {
+            robot.getFollower().stop();
+            Pose cornerPose = new Pose(82, 8, Math.toRadians(90));
+            x= 82;y = 8;
+            heading = Math.toRadians(90);
+            robot.getFollower().setPose(cornerPose);
+        });
+    }
+
 
 
     @Override
@@ -59,15 +69,8 @@ public class AutoTracking extends NextOpMode {
 
         x = robot.getFollower().pose().x();
         y = robot.getFollower().pose().y();
-        heading = robot.getFollower().pose().heading();
+        heading = Math.toDegrees(robot.getFollower().pose().heading());
 
-        if (y > 70)  {
-            robot.fieldState.setGoalSide(FieldState.GoalSide.GARDEN);
-        }
-        else  {
-            robot.fieldState.setGoalSide(FieldState.GoalSide.LOADING_ZONE);
-
-        }
 
         robot.turrets.setState(TurretsSubsystem.TurretState.MANUAL2).schedule();
         //intake
@@ -104,6 +107,8 @@ public class AutoTracking extends NextOpMode {
 
         g1.a().onTrue(robot.flower.setPose(FlowerSubsystem.FlowerState.DOWN));
         g1.y().onTrue(robot.flower.setPose(FlowerSubsystem.FlowerState.UP));
+
+        g1.b().onTrue(relocalize());
 
 
 
@@ -142,7 +147,7 @@ public class AutoTracking extends NextOpMode {
 
         robot.getFollower().update();
         //ManualDrive.driveOrHold(robot.getFollower(), powers);
-        robot.getFollower().update();
+        //robot.getFollower().update();
         double forward = -gamepad1.left_stick_y;
         double lateral = -gamepad1.left_stick_x;
         double turn = -gamepad1.right_stick_x;
@@ -151,12 +156,30 @@ public class AutoTracking extends NextOpMode {
         //robot.getFollower().update();
 
         Pose robotPose = robot.getFollower().pose();
-        /*telemetry.addData("Robot X", robotPose.x());
-        telemetry.addData("Robot Y", robotPose.y());
-        telemetry.addData("Robot Heading", Math.toDegrees(robotPose.heading()));
+
+        x = robotPose.x();
+        y = robotPose.y();
+        heading = Math.toDegrees(robotPose.heading());
 
 
-         */
+
+        if (y>70) {
+            robot.fieldState.setGoalSide(FieldState.GoalSide.GARDEN);
+        } else {
+            robot.fieldState.setGoalSide(FieldState.GoalSide.LOADING_ZONE);
+        }
+
+        telemetry.addData("Robot X", x);
+        telemetry.addData("Robot Y", y);
+        telemetry.addData("scoring side", robot.fieldState.getGoalSide());
+        telemetry.addData("color", robot.fieldState.getAlliance());
+        telemetry.addData("Robot Heading", heading);
+        telemetry.addData("Turret Degrees", robot.turrets.getPollenTurretTargetAngle());
+
+        telemetry.addData("Difference", heading - robot.turrets.getPollenTurretTargetAngle());
+
+
+
 
         telemetry.addData("Nectar Motor Velocity", robot.getShooter().getNectarShooter().getEncoderVelocity().into(RotationsPerMinute));
         telemetry.addData("Pollen Motor Velocity", robot.getShooter().getPollenShooter().getEncoderVelocity().into(RotationsPerMinute));

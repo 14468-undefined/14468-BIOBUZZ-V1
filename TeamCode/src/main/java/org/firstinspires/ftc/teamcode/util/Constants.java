@@ -24,7 +24,7 @@ public final class Constants{
 
 
        public static double POLLEN_TURRET_FORWARD_OFFSET = -0.0; // TODO: measure
-       public static double POLLEN_TURRET_LATERAL_OFFSET = 0.0;
+       public static double POLLEN_TURRET_LATERAL_OFFSET = -6.0;
        public static double NECTAR_TURRET_FORWARD_OFFSET = -0.0;
        public static double NECTAR_TURRET_LATERAL_OFFSET = -0.0;
 
@@ -47,15 +47,27 @@ public final class Constants{
        public static final double NECTAR_GEAR_RATIO = 1.2;
        public static final double POLLEN_GEAR_RATIO = 1.364;
        public static double NECTAR_ZERO_DEG = 0;
-       public static double POLLEN_ZERO_DEG = 0;
+
        public static double NECTAR_ANGLE_SIGN = 1;
-       public static double POLLEN_ANGLE_SIGN = 1;
+
 
        public static double TUNING_POLLEN_POSITION = 0.5;
        public static double TUNING_NECTAR_POSITION = 0.5;
        public static double NECTAR_CENTER_POS = 0.5;
-       public static double POLLEN_CENTER_POS = 0.5;
+
        public static double SERVO_RANGE_DEG = 255.0;
+
+        public static double POLLEN_MIN_POS = 0.32;
+        public static double POLLEN_CENTER_POS = 0.53;
+        public static double POLLEN_MAX_POS = 0.80;
+
+        public static double POLLEN_MIN_DEG = -90.0;
+        public static double POLLEN_MAX_DEG = 90.0;
+
+        public static double POLLEN_ZERO_DEG = -30.0;
+        public static double POLLEN_ANGLE_SIGN = -1.0;
+
+
 
    }
 
