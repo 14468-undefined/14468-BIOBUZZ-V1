@@ -133,13 +133,11 @@ public class AutoTrackingRed extends NextOpMode {
         );
 
         g1.dpadRight().onTrue(
-                instant(() -> shooterMultiplier = 1.0)
+                instant(() -> shooterMultiplier = 1000.0)
         );
-
         g1.dpadLeft().onTrue(
                 instant(() -> shooterMultiplier = 1.0)
         );
-
         // -------------------------
         // FLOWER
         // -------------------------
@@ -206,7 +204,7 @@ public class AutoTrackingRed extends NextOpMode {
         // SHOOTER MULTIPLIER
         // -------------------------
 
-        robot.shooters.setMultiplier(shooterMultiplier);
+        robot.shooters.multiply(shooterMultiplier);
 
         // -------------------------
         // DRIVE
