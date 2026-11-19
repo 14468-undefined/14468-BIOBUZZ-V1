@@ -57,18 +57,21 @@ public final class Constants{
 
        public static double SERVO_RANGE_DEG = 255.0;
 
-        public static double POLLEN_MIN_POS = 0.32;
-        public static double POLLEN_CENTER_POS = 0.53;
-        public static double POLLEN_MAX_POS = 0.80;
+        public static double POLLEN_MIN_POS = 0.3;
+        public static double POLLEN_CENTER_POS = 0.5;
+        public static double POLLEN_MAX_POS = 0.72;
 
         public static double POLLEN_MIN_DEG = -90.0;
         public static double POLLEN_MAX_DEG = 90.0;
 
-        public static double POLLEN_BLUE_UPPER_ZERO_DEG = 0.0;
-        public static double POLLEN_BLUE_LOWER_ZERO_DEG = 0.0;
+        public static double POLLEN_BLUE_UPPER_ZERO_DEG = -0;
+        public static double POLLEN_BLUE_LOWER_ZERO_DEG = -15;
+        //blue lz
 
-        public static double POLLEN_RED_UPPER_ZERO_DEG = 0.0;
-        public static double POLLEN_RED_LOWER_ZERO_DEG = 0.0;
+        public static double POLLEN_RED_UPPER_ZERO_DEG = 15.0; //Red garden
+        public static double POLLEN_RED_LOWER_ZERO_DEG = -15.0;
+        //greater number = further left
+        //red LZ
 
         public static double POLLEN_ANGLE_SIGN = -1.0;
 

@@ -48,7 +48,6 @@ public class FieldState {
     public void setAlliance(Alliance alliance) {
         this.alliance = alliance;
     }
-
     public Pose getRobotPose() {
         if (robotPose == null) {
             throw new IllegalStateException("Robot pose supplier has not been configured");
