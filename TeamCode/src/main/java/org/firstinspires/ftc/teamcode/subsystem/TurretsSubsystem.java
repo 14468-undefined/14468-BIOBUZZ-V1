@@ -105,10 +105,28 @@ public class TurretsSubsystem implements Mechanism {
     // ---- Targets / telemetry getters ----
 
     public double getPollenTurretTargetAngle() {
-        return fieldState.bearingToGoalDeg(
+        double bearing = fieldState.bearingToGoalDeg(
                 POLLEN_TURRET_FORWARD_OFFSET,
                 POLLEN_TURRET_LATERAL_OFFSET
-        ) + POLLEN_ZERO_DEG;
+        );
+
+        double targetY = fieldState.goalY(fieldState.getGoalSide());
+
+        boolean upper = targetY > 70.5;
+
+        double offset;
+
+        if (fieldState.getAlliance() == FieldState.Alliance.BLUE) {
+            offset = upper
+                    ? POLLEN_BLUE_UPPER_ZERO_DEG
+                    : POLLEN_BLUE_LOWER_ZERO_DEG;
+        } else {
+            offset = upper
+                    ? POLLEN_RED_UPPER_ZERO_DEG
+                    : POLLEN_RED_LOWER_ZERO_DEG;
+        }
+
+        return bearing + offset;
     }
 
     public double getNectarTurretTargetAngle() {

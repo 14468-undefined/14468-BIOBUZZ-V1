@@ -14,8 +14,8 @@ import org.firstinspires.ftc.teamcode.util.FieldState;
 import static com.pedropathing.ivy.commands.Commands.*;
 import static dev.nextftc.units.Units.RotationsPerMinute;
 
-@NextTeleop(name = "Auto Tracking BLUE Tests")
-public class AutoTracking extends NextOpMode {
+@NextTeleop(name = "Auto Tracking RED Tests")
+public class AutoTrackingRed extends NextOpMode {
 
     private final BaseRobot robot;
 
@@ -26,7 +26,7 @@ public class AutoTracking extends NextOpMode {
     private double heading =0;
 
 
-    public AutoTracking(BaseRobot robot) {
+    public AutoTrackingRed(BaseRobot robot) {
         super(robot);//        super(robot, BulkReadHook.INSTANCE);
         this.robot = robot;
 
@@ -35,8 +35,8 @@ public class AutoTracking extends NextOpMode {
     private Command relocalize() {
         return instant(() -> {
             robot.getFollower().stop();
-            Pose cornerPose = new Pose(82, 8, Math.toRadians(90));
-            x= 82;y = 8;
+            Pose cornerPose = new Pose(59, 8, Math.toRadians(90));
+            x= 59;y = 8;
             heading = Math.toRadians(90);
             robot.getFollower().setPose(cornerPose);
         });
@@ -49,7 +49,7 @@ public class AutoTracking extends NextOpMode {
         x = robot.getFollower().pose().x();
         y = robot.getFollower().pose().y();
         heading = robot.getFollower().pose().heading();
-        robot.fieldState.setAlliance(FieldState.Alliance.BLUE);
+        robot.fieldState.setAlliance(FieldState.Alliance.RED);
 
 
 
@@ -127,8 +127,7 @@ public class AutoTracking extends NextOpMode {
         g1.rightTrigger().isOver(0.2).onFalse(robot.intake.setSpeed(IntakeSubsystem.IntakeState.OFF));
         g1.rightTrigger().isOver(0.2).onFalse(robot.transfer.setSpeed(TransferSubsystem.TransferState.OFF));
 
-        g1.rightTrigger().isOver(0.2).onFalse(robot.intake.setSpeed(IntakeSubsystem.IntakeState.OFF));
-        g1.rightTrigger().isOver(0.2).onFalse(robot.transfer.setSpeed(TransferSubsystem.TransferState.OFF));
+
 
 
 
@@ -163,7 +162,7 @@ public class AutoTracking extends NextOpMode {
 
 
 
-        if (y>70) {
+        if (y<70) {
             robot.fieldState.setGoalSide(FieldState.GoalSide.GARDEN);
         } else {
             robot.fieldState.setGoalSide(FieldState.GoalSide.LOADING_ZONE);
