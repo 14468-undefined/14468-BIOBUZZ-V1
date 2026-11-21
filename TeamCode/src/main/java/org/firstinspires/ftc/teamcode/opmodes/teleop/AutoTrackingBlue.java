@@ -23,6 +23,8 @@ public class AutoTrackingBlue extends NextOpMode {
 
     public double shooterMultiplier = 1.0;
 
+    private TurretsSubsystem.TurretState state;
+
     private double x = 0;
     private double y = 0;
     private double heading = 0;
@@ -84,6 +86,8 @@ public class AutoTrackingBlue extends NextOpMode {
                 TurretsSubsystem.TurretState.MANUAL2
         ).schedule();
 
+        state = TurretsSubsystem.TurretState.MANUAL2;
+
         // -------------------------
         // INTAKE
         // -------------------------
@@ -119,6 +123,11 @@ public class AutoTrackingBlue extends NextOpMode {
         g1.leftBumper().onFalse(
                 robot.transfer.setSpeed(TransferSubsystem.TransferState.OFF)
         );
+
+        g1.x().onTrue(
+                instant(() -> state = TurretsSubsystem.TurretState.MANUAL2)
+        );
+
 
         // -------------------------
         // SHOOTER VELOCITY ADJUSTMENT
@@ -158,12 +167,16 @@ public class AutoTrackingBlue extends NextOpMode {
 
         g1.b().onTrue(relocalize());
 
+        g1.b().onTrue(
+                instant(() -> state = TurretsSubsystem.TurretState.AUTO)
+        );
+
         // -------------------------
         // AUTOMATIC TURRET TRACKING
         // -------------------------
 
         g1.leftTrigger().isOver(0.1).onTrue(
-                robot.turrets.setState(TurretsSubsystem.TurretState.AUTO)
+                robot.turrets.setState(state)
         );
 
         g1.leftTrigger().isOver(0.2).onFalse(

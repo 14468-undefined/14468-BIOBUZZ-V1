@@ -64,14 +64,13 @@ public final class Constants{
         public static double POLLEN_MIN_DEG = -90.0;
         public static double POLLEN_MAX_DEG = 90.0;
 
-        public static double POLLEN_BLUE_UPPER_ZERO_DEG = -0;
-        public static double POLLEN_BLUE_LOWER_ZERO_DEG = -15;
-        //blue lz
+        public static double POLLEN_BLUE_GARDEN_ZERO_DEG = 8.0;
+        public static double POLLEN_BLUE_LOADING_ZERO_DEG = -15.0;
 
-        public static double POLLEN_RED_UPPER_ZERO_DEG = 15.0; //Red garden
-        public static double POLLEN_RED_LOWER_ZERO_DEG = -15.0;
+        public static double POLLEN_RED_LOADING_ZERO_DEG = 8.0;
+        public static double POLLEN_RED_GARDEN_ZERO_DEG = -15.0;
         //greater number = further left
-        //red LZ
+
 
         public static double POLLEN_ANGLE_SIGN = -1.0;
 

@@ -110,20 +110,19 @@ public class TurretsSubsystem implements Mechanism {
                 POLLEN_TURRET_LATERAL_OFFSET
         );
 
-        double targetY = fieldState.goalY(fieldState.getGoalSide());
-
-        boolean upper = targetY > 70.5;
+        FieldState.Alliance alliance = fieldState.getAlliance();
+        FieldState.GoalSide side = fieldState.getGoalSide();
 
         double offset;
 
-        if (fieldState.getAlliance() == FieldState.Alliance.BLUE) {
-            offset = upper
-                    ? POLLEN_BLUE_UPPER_ZERO_DEG
-                    : POLLEN_BLUE_LOWER_ZERO_DEG;
+        if (alliance == FieldState.Alliance.BLUE) {
+            offset = side == FieldState.GoalSide.GARDEN
+                    ? POLLEN_BLUE_GARDEN_ZERO_DEG
+                    : POLLEN_BLUE_LOADING_ZERO_DEG;
         } else {
-            offset = upper
-                    ? POLLEN_RED_UPPER_ZERO_DEG
-                    : POLLEN_RED_LOWER_ZERO_DEG;
+            offset = side == FieldState.GoalSide.GARDEN
+                    ? POLLEN_RED_GARDEN_ZERO_DEG
+                    : POLLEN_RED_LOADING_ZERO_DEG;
         }
 
         return bearing + offset;

@@ -27,6 +27,8 @@ public class AutoTrackingRed extends NextOpMode {
     private double y = 0;
     private double heading = 0;
 
+    private TurretsSubsystem.TurretState state;
+
     public AutoTrackingRed(BaseRobot robot) {
         super(robot);
         this.robot = robot;
@@ -83,6 +85,8 @@ public class AutoTrackingRed extends NextOpMode {
         robot.turrets.setState(
                 TurretsSubsystem.TurretState.MANUAL2
         ).schedule();
+
+        state = TurretsSubsystem.TurretState.MANUAL2;
 
         // -------------------------
         // INTAKE
@@ -159,11 +163,22 @@ public class AutoTrackingRed extends NextOpMode {
         g1.b().onTrue(relocalize());
 
         // -------------------------
+        // STATES
+        // ----
+
+        g1.x().onTrue(
+                instant(() -> state = TurretsSubsystem.TurretState.MANUAL2)
+        );
+        g1.b().onTrue(
+                instant(() -> state = TurretsSubsystem.TurretState.AUTO)
+        );
+
+        // -------------------------
         // AUTOMATIC TURRET TRACKING
         // -------------------------
 
         g1.leftTrigger().isOver(0.1).onTrue(
-                robot.turrets.setState(TurretsSubsystem.TurretState.AUTO)
+                robot.turrets.setState(state)
         );
 
         g1.leftTrigger().isOver(0.2).onFalse(
