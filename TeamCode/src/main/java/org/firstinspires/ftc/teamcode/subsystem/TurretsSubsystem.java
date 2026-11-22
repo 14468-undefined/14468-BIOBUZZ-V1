@@ -238,6 +238,20 @@ public class TurretsSubsystem implements Mechanism {
         nectarTurret2.setPosition(nectarPosition);
     }
 
+    public void changeBlueLZOffsets(double change) {
+        POLLEN_BLUE_LOADING_ZERO_DEG += change;
+    }
+    public void changeRedLZOffsets(double change) {
+        POLLEN_RED_LOADING_ZERO_DEG += change;
+    }
+    public void changeRedGardenOffsets(double change) {
+        POLLEN_RED_GARDEN_ZERO_DEG += change;
+    }
+    public void changeBlueGardenOffsets(double change) {
+        POLLEN_BLUE_GARDEN_ZERO_DEG += change;
+    }
+
+
 
     @Override
     public void periodic() {

@@ -72,6 +72,7 @@ public class AutoTrackingBlue extends NextOpMode {
         Trigger.Companion.getDefaultEventLoop().clear();
 
         CommandGamepad g1 = new CommandGamepad(gamepad1);
+        CommandGamepad g2 = new CommandGamepad(gamepad2);
 
         robot.init().schedule();
 
@@ -210,10 +211,33 @@ public class AutoTrackingBlue extends NextOpMode {
         g1.rightTrigger().isOver(0.2).onFalse(
                 robot.transfer.setSpeed(TransferSubsystem.TransferState.OFF)
         );
+
+        //change offsets
+
+        g2.dpadLeft().onTrue(
+                instant(() -> {
+                    if (y > 70) {
+                        robot.turrets.changeBlueGardenOffsets(-2);
+                    } else {
+                        robot.turrets.changeBlueLZOffsets(-2);
+                    }
+                })
+        );
+
+        g2.dpadRight().onTrue(
+                instant(() -> {
+                    if (y > 70) {
+                        robot.turrets.changeBlueGardenOffsets(2);
+                    } else {
+                        robot.turrets.changeBlueLZOffsets(2);
+                    }
+                })
+        );
+
     }
 
-    @Override
-    public void periodic() {
+        @Override
+        public void periodic() {
 
         // -------------------------
         // SHOOTER MULTIPLIER
