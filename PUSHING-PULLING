@@ -2,7 +2,7 @@ Some helpful stuff
 
 Force pull (note: this gets rid of all ur local changes):
 git fetch origin
-git reset --hard origin/main
+git reset --hard origin/master
 git clean -fd
 
 Force Push (gets rid of everybody else's changes):
